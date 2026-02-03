@@ -1,14 +1,5 @@
-import { Navbar } from '@/components/ui/Navbar'
-import { Footer } from '@/components/ui/Footer'
+import MainLayout from '@/components/layouts/MainLayout'
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <Navbar />
-      <main className="min-h-screen">
-        {children}
-      </main>
-      <Footer />
-    </>
-  )
+  return <MainLayout>{children}</MainLayout>
 }

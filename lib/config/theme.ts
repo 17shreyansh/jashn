@@ -1,12 +1,12 @@
 export const themeConfig = {
   colors: {
-    primary: '#a7ba42',      // Sage Green
-    secondary: '#95ccba',    // Mint
-    accent1: '#ffdede',      // Blush
-    accent2: '#fff0cb',      // Cream
-    luxury: '#f2cc84',       // Soft Gold
-    textDark: '#2d3e2d',
-    textLight: '#6b7c6b',
+    primary: '#6B46C1',      // Royal Purple
+    secondary: '#D4AF37',    // Royal Gold
+    accent1: '#8B5CF6',      // Violet
+    accent2: '#FDF4DC',      // Ivory
+    luxury: '#FFD700',       // Pure Gold
+    textDark: '#1F1B2E',
+    textLight: '#6B5B95',
     white: '#ffffff',
     black: '#1a1a1a',
   },

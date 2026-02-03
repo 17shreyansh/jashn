@@ -3,9 +3,8 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { Card } from '@/components/ui/Card'
+import { Box, TextField, Button, Typography, Alert, Paper } from '@mui/material'
+import AuthLayout from '@/components/layouts/AuthLayout'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -34,55 +33,71 @@ export default function LoginPage() {
         router.refresh()
       }
     } catch (err) {
-      console.error('Login error:', err)
       setError('An error occurred. Please try again.')
       setLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-accent2 to-accent1">
-      <Card className="w-full max-w-md p-8 shadow-2xl">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <span className="text-white font-serif font-bold text-3xl">J</span>
-          </div>
-          <h1 className="text-3xl font-serif font-bold text-text-dark">Admin Login</h1>
-          <p className="text-text-light mt-2">Sign in to manage your platform</p>
-        </div>
+    <AuthLayout>
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
+        <Box sx={{ textAlign: 'center', mb: 4 }}>
+          <Box sx={{ 
+            width: 64, 
+            height: 64, 
+            borderRadius: '50%', 
+            background: 'linear-gradient(135deg, #a7ba42, #95ccba)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            fontFamily: 'var(--font-playfair)',
+            fontWeight: 700,
+            fontSize: '2rem',
+            mx: 'auto',
+            mb: 2,
+            boxShadow: 2
+          }}>
+            J
+          </Box>
+          <Typography variant="h4" sx={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, mb: 1 }}>
+            Admin Login
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Sign in to manage your platform
+          </Typography>
+        </Box>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <Input
-            type="email"
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <TextField
             label="Email"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder="admin@jashnplanners.com"
+            fullWidth
             disabled={loading}
+            placeholder="admin@jashnplanners.com"
           />
 
-          <Input
-            type="password"
+          <TextField
             label="Password"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            placeholder="••••••••"
+            fullWidth
             disabled={loading}
+            placeholder="••••••••"
           />
 
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm">
-              {error}
-            </div>
-          )}
+          {error && <Alert severity="error">{error}</Alert>}
 
-          <Button type="submit" className="w-full" loading={loading} disabled={loading}>
+          <Button type="submit" variant="contained" size="large" fullWidth disabled={loading}>
             {loading ? 'Signing in...' : 'Sign In'}
           </Button>
-        </form>
-      </Card>
-    </div>
+        </Box>
+      </Paper>
+    </AuthLayout>
   )
 }

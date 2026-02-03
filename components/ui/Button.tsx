@@ -1,50 +1,70 @@
 'use client'
 
 import { ButtonHTMLAttributes, forwardRef } from 'react'
+import { Button as MuiButton } from '@mui/material'
 import { motion } from 'framer-motion'
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   loading?: boolean
+  children: React.ReactNode
+  onClick?: () => void
 }
 
+const MotionButton = motion(MuiButton)
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'md', loading, children, className = '', disabled, ...props }, ref) => {
-    const baseStyles = 'font-medium rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
-    
-    const variants = {
-      primary: 'bg-primary text-white hover:bg-primary/90 shadow-soft hover:shadow-medium',
-      secondary: 'bg-secondary text-white hover:bg-secondary/90 shadow-soft hover:shadow-medium',
-      outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white',
-      ghost: 'text-primary hover:bg-primary/10',
-    }
-    
+  ({ variant = 'primary', size = 'md', loading, children, ...props }, ref) => {
     const sizes = {
-      sm: 'px-4 py-2 text-sm',
-      md: 'px-6 py-3 text-base',
-      lg: 'px-8 py-4 text-lg',
+      sm: { px: 4, py: 2, fontSize: '0.75rem' },
+      md: { px: 6, py: 3, fontSize: '0.875rem' },
+      lg: { px: 8, py: 3.5, fontSize: '0.875rem' },
+    }
+
+    const variants = {
+      primary: {
+        bgcolor: '#6B46C1',
+        color: '#fff',
+        '&:hover': { bgcolor: '#5a3aa3' }
+      },
+      secondary: {
+        bgcolor: '#D4AF37',
+        color: '#fff',
+        '&:hover': { bgcolor: '#b89530' }
+      },
+      outline: {
+        border: '2px solid #1a1a1a',
+        color: '#1a1a1a',
+        bgcolor: 'transparent',
+        '&:hover': { bgcolor: '#1a1a1a', color: '#fff' }
+      },
+      ghost: {
+        color: '#6B46C1',
+        bgcolor: 'transparent',
+        '&:hover': { bgcolor: 'rgba(107, 70, 193, 0.1)' }
+      },
     }
 
     return (
-      <motion.button
+      <MotionButton
         ref={ref}
-        whileHover={{ scale: disabled ? 1 : 1.02 }}
-        whileTap={{ scale: disabled ? 1 : 0.98 }}
-        className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
-        disabled={disabled || loading}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        disabled={loading}
+        sx={{
+          ...sizes[size],
+          ...variants[variant],
+          borderRadius: '999px',
+          fontWeight: 600,
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+          transition: 'all 0.3s ease',
+        }}
         {...props}
       >
-        {loading ? (
-          <span className="flex items-center gap-2">
-            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-            </svg>
-            Loading...
-          </span>
-        ) : children}
-      </motion.button>
+        {loading ? 'Loading...' : children}
+      </MotionButton>
     )
   }
 )

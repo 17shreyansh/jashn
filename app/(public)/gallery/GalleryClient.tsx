@@ -1,12 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Card } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
-import { Section } from '@/components/ui/Section'
-import { Heading } from '@/components/ui/Heading'
-import { X, Play, Image as ImageIcon, Video as VideoIcon } from 'lucide-react'
+import { Box, Typography, Button, Container, Tabs, Tab, Dialog, IconButton, CircularProgress } from '@mui/material'
+import Card from '@/components/ui-new/Card'
+import CloseIcon from '@mui/icons-material/Close'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import ImageIcon from '@mui/icons-material/Image'
+import VideocamIcon from '@mui/icons-material/Videocam'
 
 interface GalleryItem {
   _id: string
@@ -46,197 +46,100 @@ export default function GalleryClient() {
   const videos = items.filter(item => item.mediaType === 'video')
 
   return (
-    <>
-      <Section className="pt-32 pb-20">
-        <div className="text-center mb-12">
-          <Heading level={1}>Our Gallery</Heading>
-          <p className="text-xl text-textLight mt-4 max-w-2xl mx-auto">
-            Explore moments from our premium events and luxury tours
-          </p>
-        </div>
+    <Box>
+      <Box sx={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #fff0cb, #ffdede)', py: 8 }}>
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography variant="h2" sx={{ mb: 2 }}>Our Gallery</Typography>
+          <Typography variant="h5" color="text.secondary">Explore moments from our premium events and luxury tours</Typography>
+        </Box>
+      </Box>
 
-        {/* Tabs */}
-        <div className="flex justify-center gap-4 mb-12">
-          <Button
-            variant={activeTab === 'events' ? 'primary' : 'outline'}
-            onClick={() => setActiveTab('events')}
-            className="px-8"
-          >
-            Events Gallery
-          </Button>
-          <Button
-            variant={activeTab === 'tours' ? 'primary' : 'outline'}
-            onClick={() => setActiveTab('tours')}
-            className="px-8"
-          >
-            Tours & Travels
-          </Button>
-        </div>
+      <Box sx={{ py: { xs: 6, md: 10 } }}>
+        <Container maxWidth="xl">
+          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 6 }}>
+            <Tabs value={activeTab} onChange={(e, v) => setActiveTab(v)}>
+              <Tab label="Events Gallery" value="events" />
+              <Tab label="Tours & Travels" value="tours" />
+            </Tabs>
+          </Box>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {loading ? (
-              <div className="text-center py-20">
-                <p className="text-textLight">Loading gallery...</p>
-              </div>
-            ) : (
-              <>
-                {/* Images Section */}
-                {images.length > 0 && (
-                  <div className="mb-16">
-                    <div className="flex items-center gap-3 mb-6">
-                      <ImageIcon className="w-6 h-6 text-primary" />
-                      <h2 className="text-2xl font-serif text-textDark">Photos</h2>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                      {images.map((item, idx) => (
-                        <motion.div
-                          key={item._id}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: idx * 0.05 }}
-                        >
-                          <Card
-                            className="overflow-hidden cursor-pointer group"
-                            onClick={() => setLightbox(item)}
-                          >
-                            <div className="relative aspect-square">
-                              <img
-                                src={item.url}
-                                alt={item.title}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <div className="absolute bottom-0 left-0 right-0 p-4">
-                                  <h3 className="text-white font-semibold">{item.title}</h3>
-                                  {item.description && (
-                                    <p className="text-white/80 text-sm mt-1 line-clamp-2">
-                                      {item.description}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </Card>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Videos Section */}
-                {videos.length > 0 && (
-                  <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <VideoIcon className="w-6 h-6 text-primary" />
-                      <h2 className="text-2xl font-serif text-textDark">Videos</h2>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {videos.map((item, idx) => (
-                        <motion.div
-                          key={item._id}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: idx * 0.05 }}
-                        >
-                          <Card
-                            className="overflow-hidden cursor-pointer group"
-                            onClick={() => setLightbox(item)}
-                          >
-                            <div className="relative aspect-video">
-                              <video
-                                src={item.url}
-                                className="w-full h-full object-cover"
-                                poster={item.thumbnail}
-                              />
-                              <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/50 transition-colors">
-                                <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
-                                  <Play className="w-8 h-8 text-primary ml-1" fill="currentColor" />
-                                </div>
-                              </div>
-                            </div>
-                            <div className="p-4">
-                              <h3 className="font-semibold text-textDark">{item.title}</h3>
-                              {item.description && (
-                                <p className="text-sm text-textLight mt-1 line-clamp-2">
-                                  {item.description}
-                                </p>
-                              )}
-                            </div>
-                          </Card>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {images.length === 0 && videos.length === 0 && (
-                  <div className="text-center py-20">
-                    <p className="text-textLight text-lg">
-                      No {activeTab} gallery items yet. Check back soon!
-                    </p>
-                  </div>
-                )}
-              </>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </Section>
-
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightbox && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
-            onClick={() => setLightbox(null)}
-          >
-            <button
-              onClick={() => setLightbox(null)}
-              className="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-            >
-              <X className="w-6 h-6 text-white" />
-            </button>
-
-            <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              className="max-w-6xl w-full"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {lightbox.mediaType === 'image' ? (
-                <img
-                  src={lightbox.url}
-                  alt={lightbox.title}
-                  className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
-                />
-              ) : (
-                <video
-                  src={lightbox.url}
-                  controls
-                  autoPlay
-                  className="w-full h-auto max-h-[85vh] rounded-lg"
-                />
+          {loading ? (
+            <Box sx={{ textAlign: 'center', py: 10 }}><CircularProgress /></Box>
+          ) : (
+            <>
+              {images.length > 0 && (
+                <Box sx={{ mb: 8 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
+                    <ImageIcon color="primary" />
+                    <Typography variant="h4" sx={{ fontFamily: 'var(--font-playfair)' }}>Photos</Typography>
+                  </Box>
+                  <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 3 }}>
+                    {images.map((item) => (
+                      <Card key={item._id} hover sx={{ cursor: 'pointer' }} onClick={() => setLightbox(item)}>
+                        <Box sx={{ position: 'relative', paddingTop: '100%', overflow: 'hidden', '&:hover img': { transform: 'scale(1.1)' } }}>
+                          <img src={item.url} alt={item.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }} />
+                        </Box>
+                      </Card>
+                    ))}
+                  </Box>
+                </Box>
               )}
-              <div className="mt-4 text-center">
-                <h3 className="text-white text-xl font-semibold">{lightbox.title}</h3>
-                {lightbox.description && (
-                  <p className="text-white/70 mt-2">{lightbox.description}</p>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
+
+              {videos.length > 0 && (
+                <Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
+                    <VideocamIcon color="primary" />
+                    <Typography variant="h4" sx={{ fontFamily: 'var(--font-playfair)' }}>Videos</Typography>
+                  </Box>
+                  <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }, gap: 3 }}>
+                    {videos.map((item) => (
+                      <Card key={item._id} hover sx={{ cursor: 'pointer' }} onClick={() => setLightbox(item)}>
+                        <Box sx={{ position: 'relative', paddingTop: '56.25%', overflow: 'hidden', bgcolor: 'black' }}>
+                          <video src={item.url} poster={item.thumbnail} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <Box sx={{ position: 'absolute', inset: 0, bgcolor: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Box sx={{ width: 64, height: 64, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              <PlayArrowIcon sx={{ fontSize: 32, color: 'primary.main', ml: 0.5 }} />
+                            </Box>
+                          </Box>
+                        </Box>
+                        <Box sx={{ p: 2 }}>
+                          <Typography variant="h6" sx={{ fontWeight: 600 }}>{item.title}</Typography>
+                          {item.description && <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>{item.description}</Typography>}
+                        </Box>
+                      </Card>
+                    ))}
+                  </Box>
+                </Box>
+              )}
+
+              {images.length === 0 && videos.length === 0 && (
+                <Box sx={{ textAlign: 'center', py: 10 }}>
+                  <Typography variant="h6" color="text.secondary">No {activeTab} gallery items yet. Check back soon!</Typography>
+                </Box>
+              )}
+            </>
+          )}
+        </Container>
+      </Box>
+
+      <Dialog open={!!lightbox} onClose={() => setLightbox(null)} maxWidth="lg" fullWidth>
+        {lightbox && (
+          <Box sx={{ position: 'relative', bgcolor: 'black', p: 2 }}>
+            <IconButton onClick={() => setLightbox(null)} sx={{ position: 'absolute', top: 8, right: 8, color: 'white', bgcolor: 'rgba(255,255,255,0.1)', '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' } }}>
+              <CloseIcon />
+            </IconButton>
+            {lightbox.mediaType === 'image' ? (
+              <img src={lightbox.url} alt={lightbox.title} style={{ width: '100%', maxHeight: '85vh', objectFit: 'contain' }} />
+            ) : (
+              <video src={lightbox.url} controls autoPlay style={{ width: '100%', maxHeight: '85vh' }} />
+            )}
+            <Box sx={{ mt: 2, textAlign: 'center', color: 'white' }}>
+              <Typography variant="h5">{lightbox.title}</Typography>
+              {lightbox.description && <Typography variant="body2" sx={{ mt: 1, color: 'rgba(255,255,255,0.7)' }}>{lightbox.description}</Typography>}
+            </Box>
+          </Box>
         )}
-      </AnimatePresence>
-    </>
+      </Dialog>
+    </Box>
   )
 }

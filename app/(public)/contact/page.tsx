@@ -1,12 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Section } from '@/components/ui/Section'
-import { Heading } from '@/components/ui/Heading'
-import { Card } from '@/components/ui/Card'
-import { Input } from '@/components/ui/Input'
-import { Textarea } from '@/components/ui/Textarea'
-import { Button } from '@/components/ui/Button'
+import { Box, Typography, TextField, Button, Alert, Container, Stack } from '@mui/material'
+import Card from '@/components/ui-new/Card'
+import SendIcon from '@mui/icons-material/Send'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' })
@@ -43,108 +40,60 @@ export default function ContactPage() {
   }
 
   return (
-    <>
-      <section className="relative h-[40vh] flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20">
-        <div className="container-custom text-center">
-          <Heading level={1} className="mb-4">Get In Touch</Heading>
-          <p className="text-xl text-text-light">Let's create something extraordinary together</p>
-        </div>
-      </section>
+    <Box>
+      <Box sx={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, rgba(167, 186, 66, 0.2), rgba(149, 204, 186, 0.2))', py: 8 }}>
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography variant="h2" sx={{ mb: 2 }}>Get In Touch</Typography>
+          <Typography variant="h5" color="text.secondary">Let's create something extraordinary together</Typography>
+        </Box>
+      </Box>
 
-      <Section>
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <Card className="p-8">
-              <Heading level={2} className="mb-6">Send Us a Message</Heading>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <Input
-                  label="Name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                />
-
-                <Input
-                  type="email"
-                  label="Email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                />
-
-                <Input
-                  type="tel"
-                  label="Phone (Optional)"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                />
-
-                <Textarea
-                  label="Message"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  rows={5}
-                />
-
-                {success && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl">
-                    Thank you! We'll get back to you soon.
-                  </div>
-                )}
-
-                {error && (
-                  <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl">
-                    {error}
-                  </div>
-                )}
-
-                <Button type="submit" className="w-full" loading={loading}>
-                  Send Message
-                </Button>
-              </form>
+      <Box sx={{ py: { xs: 6, md: 10 } }}>
+        <Container maxWidth="lg">
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' }, gap: 6 }}>
+            <Card>
+              <Box sx={{ p: 4 }}>
+                <Typography variant="h4" sx={{ mb: 4, fontFamily: 'var(--font-playfair)', fontWeight: 600 }}>Send Us a Message</Typography>
+                <Box component="form" onSubmit={handleSubmit}>
+                  <Stack spacing={3}>
+                    <TextField label="Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required fullWidth />
+                    <TextField type="email" label="Email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required fullWidth />
+                    <TextField type="tel" label="Phone (Optional)" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} fullWidth />
+                    <TextField label="Message" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} multiline rows={5} fullWidth />
+                    {success && <Alert severity="success">Thank you! We'll get back to you soon.</Alert>}
+                    {error && <Alert severity="error">{error}</Alert>}
+                    <Button type="submit" variant="contained" size="large" fullWidth disabled={loading} endIcon={<SendIcon />}>{loading ? 'Sending...' : 'Send Message'}</Button>
+                  </Stack>
+                </Box>
+              </Box>
             </Card>
 
-            <div>
-              <Card className="p-8 mb-6">
-                <h3 className="font-serif text-xl font-semibold mb-4">Contact Information</h3>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-text-light text-sm mb-1">Email</p>
-                    <p className="font-medium">info@jashnplanners.com</p>
-                  </div>
-                  <div>
-                    <p className="text-text-light text-sm mb-1">Phone</p>
-                    <p className="font-medium">+91 98765 43210</p>
-                  </div>
-                  <div>
-                    <p className="text-text-light text-sm mb-1">Address</p>
-                    <p className="font-medium">123 Event Street, Mumbai, India</p>
-                  </div>
-                </div>
+            <Stack spacing={3}>
+              <Card>
+                <Box sx={{ p: 4 }}>
+                  <Typography variant="h5" sx={{ mb: 3, fontFamily: 'var(--font-playfair)', fontWeight: 600 }}>Contact Information</Typography>
+                  <Stack spacing={3}>
+                    <Box><Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>Email</Typography><Typography variant="body1" sx={{ fontWeight: 500 }}>info@jashnplanners.com</Typography></Box>
+                    <Box><Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>Phone</Typography><Typography variant="body1" sx={{ fontWeight: 500 }}>+91 98765 43210</Typography></Box>
+                    <Box><Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>Address</Typography><Typography variant="body1" sx={{ fontWeight: 500 }}>123 Event Street, Mumbai, India</Typography></Box>
+                  </Stack>
+                </Box>
               </Card>
 
-              <Card className="p-8">
-                <h3 className="font-serif text-xl font-semibold mb-4">Business Hours</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-text-light">Monday - Friday</span>
-                    <span className="font-medium">9:00 AM - 6:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-text-light">Saturday</span>
-                    <span className="font-medium">10:00 AM - 4:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-text-light">Sunday</span>
-                    <span className="font-medium">Closed</span>
-                  </div>
-                </div>
+              <Card>
+                <Box sx={{ p: 4 }}>
+                  <Typography variant="h5" sx={{ mb: 3, fontFamily: 'var(--font-playfair)', fontWeight: 600 }}>Business Hours</Typography>
+                  <Stack spacing={2}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}><Typography color="text.secondary">Monday - Friday</Typography><Typography sx={{ fontWeight: 500 }}>9:00 AM - 6:00 PM</Typography></Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}><Typography color="text.secondary">Saturday</Typography><Typography sx={{ fontWeight: 500 }}>10:00 AM - 4:00 PM</Typography></Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}><Typography color="text.secondary">Sunday</Typography><Typography sx={{ fontWeight: 500 }}>Closed</Typography></Box>
+                  </Stack>
+                </Box>
               </Card>
-            </div>
-          </div>
-        </div>
-      </Section>
-    </>
+            </Stack>
+          </Box>
+        </Container>
+      </Box>
+    </Box>
   )
 }

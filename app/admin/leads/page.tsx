@@ -1,52 +1,56 @@
 import { getLeads } from '@/lib/services/leads'
-import { Card } from '@/components/ui/Card'
-import { Heading } from '@/components/ui/Heading'
-import { Badge } from '@/components/ui/Badge'
+import { Box, Typography, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import Card from '@/components/ui-new/Card'
 
 export default async function AdminLeadsPage() {
   const leads = await getLeads()
 
   return (
-    <div>
-      <Heading level={1} className="mb-8">Leads</Heading>
+    <Box>
+      <Typography variant="h4" sx={{ mb: 4, fontFamily: 'var(--font-playfair)', fontWeight: 700 }}>Leads</Typography>
 
-      <Card className="overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-accent2/50">
-            <tr>
-              <th className="text-left p-4 font-semibold">Name</th>
-              <th className="text-left p-4 font-semibold">Email</th>
-              <th className="text-left p-4 font-semibold">Phone</th>
-              <th className="text-left p-4 font-semibold">Message</th>
-              <th className="text-left p-4 font-semibold">Status</th>
-              <th className="text-left p-4 font-semibold">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leads.map((lead) => (
-              <tr key={lead._id.toString()} className="border-t border-luxury/20">
-                <td className="p-4 font-medium">{lead.name}</td>
-                <td className="p-4 text-text-light">{lead.email}</td>
-                <td className="p-4 text-text-light">{lead.phone || '-'}</td>
-                <td className="p-4 text-sm text-text-light max-w-xs truncate">{lead.message || '-'}</td>
-                <td className="p-4">
-                  <Badge variant={lead.status === 'new' ? 'primary' : 'secondary'}>
-                    {lead.status}
-                  </Badge>
-                </td>
-                <td className="p-4 text-sm text-text-light">
-                  {new Date(lead.createdAt).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {leads.length === 0 && (
-          <div className="p-12 text-center text-text-light">
-            No leads yet.
-          </div>
-        )}
-      </Card>
-    </div>
+      {leads.length === 0 ? (
+        <Card><Box sx={{ p: 8, textAlign: 'center' }}><Typography variant="h6" color="text.secondary">No leads yet.</Typography></Box></Card>
+      ) : (
+        <Card>
+          <TableContainer>
+            <Table>
+              <TableHead sx={{ bgcolor: 'rgba(255, 240, 203, 0.5)' }}>
+                <TableRow>
+                  <TableCell sx={{ fontWeight: 600 }}>Name</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>Email</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>Phone</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>Message</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>Status</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>Date</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {leads.map((lead) => (
+                  <TableRow key={lead._id.toString()} sx={{ '&:hover': { bgcolor: 'rgba(0,0,0,0.02)' } }}>
+                    <TableCell sx={{ fontWeight: 500 }}>{lead.name}</TableCell>
+                    <TableCell>{lead.email}</TableCell>
+                    <TableCell>{lead.phone || '-'}</TableCell>
+                    <TableCell sx={{ maxWidth: 300 }}>
+                      <Typography variant="body2" sx={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                        {lead.message || '-'}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Chip label={lead.status} size="small" color={lead.status === 'new' ? 'primary' : 'default'} />
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" color="text.secondary">
+                        {new Date(lead.createdAt).toLocaleDateString()}
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      )}
+    </Box>
   )
 }

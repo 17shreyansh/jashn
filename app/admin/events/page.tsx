@@ -1,54 +1,43 @@
-import Link from 'next/link'
 import { getEvents } from '@/lib/services/events'
-import { Card } from '@/components/ui/Card'
-import { Heading } from '@/components/ui/Heading'
-import { Button } from '@/components/ui/Button'
+import { Box, Typography, Button, Chip, Container } from '@mui/material'
+import Card from '@/components/ui-new/Card'
+import Link from 'next/link'
+import Image from 'next/image'
+import AddIcon from '@mui/icons-material/Add'
 
 export default async function AdminEventsPage() {
   const events = await getEvents()
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-8">
-        <Heading level={1}>Events</Heading>
-        <Link href="/admin/events/new">
-          <Button>+ Add Event</Button>
-        </Link>
-      </div>
+    <Box>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+        <Typography variant="h4" sx={{ fontFamily: 'var(--font-playfair)', fontWeight: 700 }}>Events</Typography>
+        <Button href="/admin/events/new" component={Link} variant="contained" startIcon={<AddIcon />}>Add Event</Button>
+      </Box>
 
-      <Card className="overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-accent2/50">
-            <tr>
-              <th className="text-left p-4 font-semibold">Title</th>
-              <th className="text-left p-4 font-semibold">Slug</th>
-              <th className="text-left p-4 font-semibold">Tags</th>
-              <th className="text-left p-4 font-semibold">Featured</th>
-              <th className="text-left p-4 font-semibold">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((event) => (
-              <tr key={event._id.toString()} className="border-t border-luxury/20">
-                <td className="p-4 font-medium">{event.title}</td>
-                <td className="p-4 text-text-light">{event.slug}</td>
-                <td className="p-4 text-sm text-text-light">{event.tags.join(', ')}</td>
-                <td className="p-4">{event.featured ? '⭐' : '-'}</td>
-                <td className="p-4">
-                  <Link href={`/admin/events/${event._id}`}>
-                    <Button size="sm" variant="outline">Edit</Button>
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {events.length === 0 && (
-          <div className="p-12 text-center text-text-light">
-            No events yet. Create your first event!
-          </div>
-        )}
-      </Card>
-    </div>
+      {events.length === 0 ? (
+        <Card><Box sx={{ p: 8, textAlign: 'center' }}><Typography variant="h6" color="text.secondary">No events yet. Create your first event!</Typography></Box></Card>
+      ) : (
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }, gap: 3 }}>
+          {events.map((event) => (
+            <Card hover key={event._id.toString()}>
+              {event.images[0] && <Box sx={{ position: 'relative', height: 200, overflow: 'hidden' }}><Image src={event.images[0]} alt={event.title} fill style={{ objectFit: 'cover' }} /></Box>}
+              <Box sx={{ p: 3 }}>
+                <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+                  {event.featured && <Chip label="Featured" color="primary" size="small" />}
+                  {event.pricingEnabled && <Chip label="Pricing" color="secondary" size="small" />}
+                </Box>
+                <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>{event.title}</Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{event.shortDescription}</Typography>
+                <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
+                  {event.tags.slice(0, 3).map((tag) => <Chip key={tag} label={tag} size="small" variant="outlined" />)}
+                </Box>
+                <Button href={`/admin/events/${event._id}`} component={Link} variant="outlined" fullWidth>Edit Event</Button>
+              </Box>
+            </Card>
+          ))}
+        </Box>
+      )}
+    </Box>
   )
 }
