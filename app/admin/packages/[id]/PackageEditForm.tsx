@@ -1,21 +1,87 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { updatePackage, deletePackage } from '@/lib/actions/packages'
 import { useRouter } from 'next/navigation'
-import Button from '@/components/ui/Button'
-import { useState, useEffect } from 'react'
+import { Box, TextField, Typography, Stack, IconButton, Alert, Switch, FormControlLabel, MenuItem, Chip } from '@mui/material'
+import { Button } from '@/components/ui/Button'
+import { themeConfig } from '@/lib/config/theme'
+import { Delete, CloudUpload, Close, Add, Remove } from '@mui/icons-material'
+import Card from '@/components/ui-new/Card'
 
 export default function PackageEditForm({ pkg }: { pkg: any }) {
   const router = useRouter()
+  const [uploading, setUploading] = useState(false)
+  const [images, setImages] = useState<string[]>(pkg.images || [])
+  const [included, setIncluded] = useState<string[]>(pkg.included || [])
+  const [excluded, setExcluded] = useState<string[]>(pkg.excluded || [])
+  const [includeInput, setIncludeInput] = useState('')
+  const [excludeInput, setExcludeInput] = useState('')
+  const [pricingEnabled, setPricingEnabled] = useState(pkg.pricingEnabled || false)
   const [cities, setCities] = useState([])
+  const [error, setError] = useState('')
 
   useEffect(() => {
     fetch('/api/cities').then(r => r.json()).then(d => setCities(d.data || []))
   }, [])
 
+  async function uploadImage(file: File) {
+    setUploading(true)
+    setError('')
+    try {
+      const res = await fetch('/api/cloudinary/signature', { method: 'POST' })
+      const { timestamp, signature, cloudName, apiKey } = await res.json()
+
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('timestamp', timestamp)
+      formData.append('signature', signature)
+      formData.append('api_key', apiKey)
+      formData.append('folder', 'jashn')
+
+      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await uploadRes.json()
+      return data.secure_url
+    } catch (err) {
+      setError('Upload failed')
+      return null
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files || [])
+    for (const file of files) {
+      const url = await uploadImage(file)
+      if (url) setImages(prev => [...prev, url])
+    }
+  }
+
+  function addIncluded() {
+    if (includeInput.trim()) {
+      setIncluded([...included, includeInput.trim()])
+      setIncludeInput('')
+    }
+  }
+
+  function addExcluded() {
+    if (excludeInput.trim()) {
+      setExcluded([...excluded, excludeInput.trim()])
+      setExcludeInput('')
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
+    formData.set('images', images.join(','))
+    formData.set('included', included.join(','))
+    formData.set('excluded', excluded.join(','))
+    formData.set('pricingEnabled', pricingEnabled.toString())
     await updatePackage(pkg._id, formData)
     router.push('/admin/packages')
   }
@@ -28,131 +94,94 @@ export default function PackageEditForm({ pkg }: { pkg: any }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-md max-w-3xl">
-      <div className="space-y-6">
-        <div>
-          <label className="block font-medium mb-2">Title</label>
-          <input
-            type="text"
-            name="title"
-            required
-            defaultValue={pkg.title}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-          />
-        </div>
+    <Card sx={{ p: 4, bgcolor: 'white', border: '1px solid #e5e7eb' }}>
+      <form onSubmit={handleSubmit}>
+        <Stack spacing={3}>
+          {error && <Alert severity="error">{error}</Alert>}
 
-        <div>
-          <label className="block font-medium mb-2">Slug</label>
-          <input
-            type="text"
-            name="slug"
-            required
-            defaultValue={pkg.slug}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-          />
-        </div>
-
-        <div>
-          <label className="block font-medium mb-2">City</label>
-          <select
-            name="cityId"
-            required
-            defaultValue={pkg.cityId}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-          >
-            <option value="">Select City</option>
+          <TextField name="title" label="Package Title" required defaultValue={pkg.title} fullWidth />
+          <TextField name="slug" label="Slug" required defaultValue={pkg.slug} fullWidth helperText="URL-friendly name" />
+          
+          <TextField name="cityId" label="City" select required defaultValue={pkg.cityId} fullWidth>
+            <MenuItem value="">Select City</MenuItem>
             {cities.map((city: any) => (
-              <option key={city._id} value={city._id}>{city.name}</option>
+              <MenuItem key={city._id} value={city._id}>{city.name}</MenuItem>
             ))}
-          </select>
-        </div>
+          </TextField>
 
-        <div>
-          <label className="block font-medium mb-2">Duration</label>
-          <input
-            type="text"
-            name="duration"
-            defaultValue={pkg.duration}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-          />
-        </div>
+          <TextField name="duration" label="Duration" defaultValue={pkg.duration} fullWidth placeholder="e.g., 3 Days 2 Nights" />
+          <TextField name="description" label="Description" multiline rows={5} defaultValue={pkg.description} fullWidth />
 
-        <div>
-          <label className="block font-medium mb-2">Description</label>
-          <textarea
-            name="description"
-            rows={5}
-            defaultValue={pkg.description}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-          />
-        </div>
+          <Box>
+            <Typography sx={{ fontWeight: 600, mb: 1, color: themeConfig.colors.textDark }}>Package Images</Typography>
+            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 2, mb: 2 }}>
+              {images.map((img, idx) => (
+                <Box key={idx} sx={{ position: 'relative', height: 140, borderRadius: 2, overflow: 'hidden' }}>
+                  <img src={img} alt={`Image ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <IconButton onClick={() => setImages(images.filter((_, i) => i !== idx))} sx={{ position: 'absolute', top: 4, right: 4, bgcolor: 'white', width: 24, height: 24 }} size="small">
+                    <Close sx={{ fontSize: 16 }} />
+                  </IconButton>
+                </Box>
+              ))}
+            </Box>
+            <Button variant="secondary" component="label" disabled={uploading}>
+              <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Add Images'}
+              <input type="file" hidden accept="image/*" multiple onChange={handleImageUpload} />
+            </Button>
+          </Box>
 
-        <div>
-          <label className="block font-medium mb-2">Images (comma-separated URLs)</label>
-          <input
-            type="text"
-            name="images"
-            defaultValue={pkg.images?.join(', ')}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-          />
-        </div>
+          <Box>
+            <Typography sx={{ fontWeight: 600, mb: 1, color: themeConfig.colors.textDark }}>Included</Typography>
+            <Stack spacing={1} sx={{ mb: 2 }}>
+              {included.map((item, idx) => (
+                <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 1.5, bgcolor: '#f9fafb', borderRadius: 1 }}>
+                  <Typography sx={{ flex: 1, fontSize: '0.875rem' }}>{item}</Typography>
+                  <IconButton size="small" onClick={() => setIncluded(included.filter((_, i) => i !== idx))}>
+                    <Remove fontSize="small" />
+                  </IconButton>
+                </Box>
+              ))}
+            </Stack>
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <TextField size="small" fullWidth value={includeInput} onChange={(e) => setIncludeInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addIncluded())} placeholder="Add inclusion" />
+              <Button type="button" variant="outline" onClick={addIncluded}><Add /></Button>
+            </Box>
+          </Box>
 
-        <div>
-          <label className="block font-medium mb-2">Included (comma-separated)</label>
-          <input
-            type="text"
-            name="included"
-            defaultValue={pkg.included?.join(', ')}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-          />
-        </div>
+          <Box>
+            <Typography sx={{ fontWeight: 600, mb: 1, color: themeConfig.colors.textDark }}>Excluded</Typography>
+            <Stack spacing={1} sx={{ mb: 2 }}>
+              {excluded.map((item, idx) => (
+                <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 1.5, bgcolor: '#f9fafb', borderRadius: 1 }}>
+                  <Typography sx={{ flex: 1, fontSize: '0.875rem' }}>{item}</Typography>
+                  <IconButton size="small" onClick={() => setExcluded(excluded.filter((_, i) => i !== idx))}>
+                    <Remove fontSize="small" />
+                  </IconButton>
+                </Box>
+              ))}
+            </Stack>
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <TextField size="small" fullWidth value={excludeInput} onChange={(e) => setExcludeInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addExcluded())} placeholder="Add exclusion" />
+              <Button type="button" variant="outline" onClick={addExcluded}><Add /></Button>
+            </Box>
+          </Box>
 
-        <div>
-          <label className="block font-medium mb-2">Excluded (comma-separated)</label>
-          <input
-            type="text"
-            name="excluded"
-            defaultValue={pkg.excluded?.join(', ')}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-          />
-        </div>
+          <Box>
+            <FormControlLabel control={<Switch checked={pricingEnabled} onChange={(e) => setPricingEnabled(e.target.checked)} />} label="Enable Pricing" />
+            {pricingEnabled && (
+              <TextField name="price" label="Price" type="number" defaultValue={pkg.price} fullWidth sx={{ mt: 2 }} />
+            )}
+          </Box>
 
-        <div>
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="pricingEnabled"
-              value="true"
-              defaultChecked={pkg.pricingEnabled}
-            />
-            <span>Enable Pricing</span>
-          </label>
-        </div>
-
-        <div>
-          <label className="block font-medium mb-2">Price</label>
-          <input
-            type="number"
-            name="price"
-            defaultValue={pkg.price}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-          />
-        </div>
-
-        <div className="flex gap-4">
-          <Button type="submit">Update Package</Button>
-          <Button type="button" variant="outline" onClick={() => router.back()}>
-            Cancel
-          </Button>
-          <button
-            type="button"
-            onClick={handleDelete}
-            className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    </form>
+          <Box sx={{ display: 'flex', gap: 2, pt: 2 }}>
+            <Button type="submit" variant="primary">Update Package</Button>
+            <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
+            <Button type="button" variant="ghost" onClick={handleDelete} sx={{ ml: 'auto', color: '#ef4444' }}>
+              <Delete sx={{ mr: 1 }} /> Delete
+            </Button>
+          </Box>
+        </Stack>
+      </form>
+    </Card>
   )
 }

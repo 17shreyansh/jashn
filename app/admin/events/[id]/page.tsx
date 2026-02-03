@@ -9,8 +9,9 @@ async function getEvent(id: string) {
   return event ? JSON.parse(JSON.stringify(event)) : null
 }
 
-export default async function EditEventPage({ params }: { params: { id: string } }) {
-  const event = await getEvent(params.id)
+export default async function EditEventPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const event = await getEvent(id)
   if (!event) notFound()
 
   return (

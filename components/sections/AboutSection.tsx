@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Box, Typography, Container, Button } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { themeConfig } from '@/lib/config/theme';
 
 const MotionBox = motion(Box);
 
@@ -22,7 +23,7 @@ export default function AboutSection() {
             <Typography 
               variant="overline" 
               sx={{ 
-                color: '#a7ba42', 
+                color: themeConfig.colors.primary, 
                 letterSpacing: '0.15em', 
                 fontWeight: 600, 
                 mb: 3, 
@@ -44,10 +45,10 @@ export default function AboutSection() {
             <Typography 
               variant="h2" 
               sx={{ 
-                fontFamily: '"Playfair Display", serif', 
+                fontFamily: themeConfig.fonts.heading, 
                 fontSize: { xs: '2rem', md: '3rem' }, 
                 lineHeight: 1.2,
-                color: '#2c2c2c',
+                color: themeConfig.colors.textDark,
                 mb: 2
               }}
             >
@@ -56,10 +57,10 @@ export default function AboutSection() {
             <Typography 
               variant="h3" 
               sx={{ 
-                fontFamily: '"Playfair Display", serif', 
+                fontFamily: themeConfig.fonts.heading, 
                 fontSize: { xs: '1.5rem', md: '2rem' }, 
                 lineHeight: 1.3,
-                color: '#666',
+                color: themeConfig.colors.textLight,
                 fontWeight: 400
               }}
             >
@@ -75,7 +76,7 @@ export default function AboutSection() {
           >
             <Typography 
               sx={{ 
-                color: '#555', 
+                color: themeConfig.colors.textLight, 
                 fontSize: { xs: '1rem', md: '1.125rem' }, 
                 lineHeight: 1.8, 
                 mb: 5,
@@ -110,13 +111,13 @@ export default function AboutSection() {
                   sx={{ 
                     fontSize: { xs: '2rem', md: '2.5rem' }, 
                     fontWeight: 700, 
-                    color: '#a7ba42',
-                    fontFamily: '"Playfair Display", serif'
+                    color: themeConfig.colors.primary,
+                    fontFamily: themeConfig.fonts.heading
                   }}
                 >
                   {stat.value}
                 </Typography>
-                <Typography sx={{ fontSize: '0.875rem', color: '#666', letterSpacing: '0.05em' }}>
+                <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight, letterSpacing: '0.05em' }}>
                   {stat.label}
                 </Typography>
               </Box>
@@ -133,8 +134,8 @@ export default function AboutSection() {
               <Button
                 endIcon={<ArrowForwardIcon />}
                 sx={{
-                  bgcolor: '#a7ba42',
-                  color: '#fff',
+                  bgcolor: themeConfig.colors.primary,
+                  color: themeConfig.colors.white,
                   px: 4,
                   py: 1.5,
                   fontSize: '0.875rem',
@@ -143,7 +144,8 @@ export default function AboutSection() {
                   textTransform: 'uppercase',
                   fontWeight: 600,
                   '&:hover': {
-                    bgcolor: '#95b038'
+                    bgcolor: themeConfig.colors.primary,
+                    opacity: 0.9
                   }
                 }}
               >

@@ -2,8 +2,9 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getEventBySlug, getEvents } from '@/lib/services/events'
 import { Box, Typography, Chip, Container, Button } from '@mui/material'
-import Card from '@/components/ui-new/Card'
 import Link from 'next/link'
+import { themeConfig } from '@/lib/config/theme'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 export const revalidate = 3600
 
@@ -26,69 +27,155 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
 
   return (
     <Box>
-      <Box sx={{ position: 'relative', height: '60vh' }}>
+      {/* Hero Section with Image */}
+      <Box sx={{ position: 'relative', height: '70vh', minHeight: 500 }}>
         {event.images[0] && (
           <>
-            <Image src={event.images[0]} alt={event.title} fill style={{ objectFit: 'cover' }} priority />
-            <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)' }} />
+            <Image src={event.images[0]} alt={event.title} fill style={{ objectFit: 'cover' }} priority quality={90} />
+            <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.5) 100%)' }} />
           </>
         )}
-        <Container maxWidth="xl" sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, pb: 6, color: 'white' }}>
-          <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
-            {event.tags.map((tag) => <Chip key={tag} label={tag} sx={{ bgcolor: 'luxury.main' }} />)}
+        <Container maxWidth="xl" sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, pb: 8, color: 'white' }}>
+          <Box sx={{ display: 'flex', gap: 1.5, mb: 3, flexWrap: 'wrap' }}>
+            {event.tags.map((tag) => (
+              <Chip 
+                key={tag} 
+                label={tag} 
+                sx={{ 
+                  bgcolor: `${themeConfig.colors.luxury}20`,
+                  backdropFilter: 'blur(10px)',
+                  color: themeConfig.colors.luxury,
+                  border: `1px solid ${themeConfig.colors.luxury}40`,
+                  fontWeight: 600,
+                  fontSize: '0.875rem'
+                }} 
+              />
+            ))}
           </Box>
-          <Typography variant="h2" sx={{ color: 'white', mb: 2 }}>{event.title}</Typography>
-          <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.9)', maxWidth: 800 }}>{event.shortDescription}</Typography>
+          <Typography sx={{ 
+            fontFamily: themeConfig.fonts.heading,
+            fontSize: { xs: '2.5rem', md: '4rem' },
+            fontWeight: 700,
+            color: themeConfig.colors.white,
+            mb: 3,
+            lineHeight: 1.1,
+            letterSpacing: '-0.02em'
+          }}>{event.title}</Typography>
+          <Typography sx={{ 
+            color: 'rgba(255,255,255,0.9)', 
+            fontSize: { xs: '1.1rem', md: '1.3rem' },
+            maxWidth: 900,
+            lineHeight: 1.7,
+            fontWeight: 300
+          }}>{event.shortDescription}</Typography>
         </Container>
       </Box>
 
-      <Box sx={{ py: { xs: 6, md: 10 } }}>
+      {/* Content Section */}
+      <Box sx={{ py: { xs: 10, md: 16 }, bgcolor: '#fafaf9' }}>
         <Container maxWidth="xl">
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' }, gap: 6 }}>
+            {/* Main Content */}
             <Box>
-              <Card sx={{ p: 4, mb: 4 }}>
-                <Typography variant="h4" sx={{ mb: 3, fontFamily: 'var(--font-playfair)', fontWeight: 600 }}>About This Event</Typography>
-                <Typography variant="body1" color="text.secondary" sx={{ fontSize: '1.125rem', lineHeight: 1.8 }}>{event.description}</Typography>
-              </Card>
+              <Box sx={{ 
+                p: { xs: 4, md: 6 },
+                bgcolor: 'white',
+                borderRadius: '24px',
+                border: `1px solid ${themeConfig.colors.luxury}20`,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                mb: 5
+              }}>
+                <Typography sx={{ 
+                  fontFamily: themeConfig.fonts.heading,
+                  fontSize: { xs: '2rem', md: '2.5rem' },
+                  fontWeight: 600,
+                  mb: 4,
+                  color: themeConfig.colors.textDark
+                }}>About This Event</Typography>
+                <Typography sx={{ 
+                  fontSize: '1.0625rem', 
+                  lineHeight: 1.8,
+                  color: themeConfig.colors.textLight
+                }}>{event.description}</Typography>
+              </Box>
 
+              {/* Gallery */}
               {event.images.length > 1 && (
-                <Card sx={{ p: 4 }}>
-                  <Typography variant="h5" sx={{ mb: 3, fontFamily: 'var(--font-playfair)', fontWeight: 600 }}>Gallery</Typography>
-                  <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 2 }}>
+                <Box sx={{ 
+                  p: { xs: 4, md: 6 },
+                  bgcolor: 'white',
+                  borderRadius: '24px',
+                  border: `1px solid ${themeConfig.colors.luxury}20`,
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)'
+                }}>
+                  <Typography sx={{ 
+                    fontFamily: themeConfig.fonts.heading,
+                    fontSize: '1.75rem',
+                    fontWeight: 600,
+                    mb: 4,
+                    color: themeConfig.colors.textDark
+                  }}>Gallery</Typography>
+                  <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 3 }}>
                     {event.images.slice(1).map((img, idx) => (
-                      <Box key={idx} sx={{ position: 'relative', height: 250, borderRadius: 2, overflow: 'hidden' }}>
-                        <Image src={img} alt={`${event.title} ${idx + 1}`} fill style={{ objectFit: 'cover' }} />
+                      <Box key={idx} sx={{ 
+                        position: 'relative', 
+                        height: 280, 
+                        borderRadius: '16px', 
+                        overflow: 'hidden',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                        transition: 'transform 0.3s ease',
+                        '&:hover': { transform: 'scale(1.02)' }
+                      }}>
+                        <Image src={img} alt={`${event.title} ${idx + 1}`} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 50vw" />
                       </Box>
                     ))}
                   </Box>
-                </Card>
+                </Box>
               )}
             </Box>
 
+            {/* Sidebar */}
             <Box>
-              <Card variant="premium" sx={{ p: 3, position: 'sticky', top: 100 }}>
-                <Typography variant="h5" sx={{ mb: 3, fontFamily: 'var(--font-playfair)', fontWeight: 600 }}>Get Started</Typography>
-                {event.pricingEnabled && event.basePrice && (
-                  <Box sx={{ mb: 3, pb: 3, borderBottom: '1px solid rgba(242, 204, 132, 0.3)' }}>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>Starting Price</Typography>
-                    <Typography variant="h3" color="primary.main" sx={{ fontWeight: 700 }}>₹{event.basePrice.toLocaleString()}</Typography>
-                  </Box>
-                )}
-                {event.addons.length > 0 && (
-                  <Box sx={{ mb: 3 }}>
-                    <Typography variant="body1" sx={{ fontWeight: 600, mb: 2 }}>Available Add-ons</Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                      {event.addons.map((addon, idx) => (
-                        <Box key={idx} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <Typography variant="body2" color="text.secondary">{addon.name}</Typography>
-                          <Typography variant="body2" sx={{ fontWeight: 500 }}>₹{addon.price.toLocaleString()}</Typography>
-                        </Box>
-                      ))}
-                    </Box>
-                  </Box>
-                )}
-                <Link href="/contact"><Button variant="contained" size="large" fullWidth>Request Quote</Button></Link>
-              </Card>
+              <Box sx={{ 
+                p: 5,
+                bgcolor: themeConfig.colors.black,
+                borderRadius: '24px',
+                border: `1px solid ${themeConfig.colors.luxury}30`,
+                boxShadow: `0 8px 30px ${themeConfig.colors.luxury}20`,
+                position: 'sticky',
+                top: 100
+              }}>
+                <Typography sx={{ 
+                  fontFamily: themeConfig.fonts.heading,
+                  fontSize: '1.75rem',
+                  fontWeight: 600,
+                  mb: 4,
+                  color: themeConfig.colors.white
+                }}>Get Started</Typography>
+                
+                <Link href="/contact" style={{ textDecoration: 'none' }}>
+                  <Button 
+                    variant="contained" 
+                    size="large" 
+                    fullWidth
+                    sx={{
+                      py: 2,
+                      borderRadius: '999px',
+                      background: `linear-gradient(135deg, ${themeConfig.colors.luxury}, ${themeConfig.colors.secondary})`,
+                      color: themeConfig.colors.black,
+                      fontWeight: 700,
+                      fontSize: '1rem',
+                      letterSpacing: '0.05em',
+                      boxShadow: `0 8px 24px ${themeConfig.colors.luxury}40`,
+                      '&:hover': {
+                        boxShadow: `0 12px 32px ${themeConfig.colors.luxury}60`,
+                        transform: 'translateY(-2px)'
+                      },
+                      transition: 'all 0.3s ease'
+                    }}
+                  >Request Quote</Button>
+                </Link>
+              </Box>
             </Box>
           </Box>
         </Container>

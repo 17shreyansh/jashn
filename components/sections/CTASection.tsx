@@ -50,7 +50,7 @@ export default function CTASection() {
         >
           <Typography 
             sx={{ 
-              fontFamily: '"Playfair Display", serif',
+              fontFamily: themeConfig.fonts.heading,
               fontSize: { xs: '2.5rem', md: '3.5rem' },
               fontWeight: 700,
               color: 'white',

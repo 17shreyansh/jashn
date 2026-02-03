@@ -9,8 +9,9 @@ async function getCity(id: string) {
   return city ? JSON.parse(JSON.stringify(city)) : null
 }
 
-export default async function EditCityPage({ params }: { params: { id: string } }) {
-  const city = await getCity(params.id)
+export default async function EditCityPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const city = await getCity(id)
   if (!city) notFound()
 
   return (

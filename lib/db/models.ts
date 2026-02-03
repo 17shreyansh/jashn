@@ -9,9 +9,6 @@ export interface IEvent extends Document {
   images: string[]
   videos: string[]
   tags: string[]
-  pricingEnabled: boolean
-  basePrice?: number
-  addons: { name: string; price: number }[]
   featured: boolean
   createdAt: Date
   updatedAt: Date
@@ -35,8 +32,6 @@ export interface IPackage extends Document {
   description: string
   duration: string
   images: string[]
-  pricingEnabled: boolean
-  price?: number
   itinerary: { day: number; title: string; description: string }[]
   included: string[]
   excluded: string[]
@@ -87,12 +82,6 @@ const EventSchema = new Schema<IEvent>({
   images: [{ type: String }],
   videos: [{ type: String }],
   tags: [{ type: String, trim: true }],
-  pricingEnabled: { type: Boolean, default: false },
-  basePrice: { type: Number, min: 0 },
-  addons: [{
-    name: { type: String, required: true },
-    price: { type: Number, required: true, min: 0 },
-  }],
   featured: { type: Boolean, default: false },
 }, { timestamps: true })
 
@@ -112,8 +101,6 @@ const PackageSchema = new Schema<IPackage>({
   description: { type: String, required: true },
   duration: { type: String, required: true },
   images: [{ type: String }],
-  pricingEnabled: { type: Boolean, default: false },
-  price: { type: Number, min: 0 },
   itinerary: [{
     day: { type: Number, required: true },
     title: { type: String, required: true },

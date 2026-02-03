@@ -86,7 +86,7 @@ const StatBlock = ({ label, value, suffix, index, total }: any) => {
           sx={{
             fontSize: '0.6em',
             opacity: 0.5,
-            fontFamily: '"Playfair Display", serif'
+            fontFamily: themeConfig.fonts.heading
           }}
         >
           0{index + 1}
@@ -97,7 +97,7 @@ const StatBlock = ({ label, value, suffix, index, total }: any) => {
       <Box sx={{ display: 'flex', alignItems: 'baseline', overflow: 'hidden' }}>
         <MotionTypography
           sx={{
-            fontFamily: '"Playfair Display", serif',
+            fontFamily: themeConfig.fonts.heading,
             fontSize: { xs: '3.5rem', md: '5rem', lg: '5.5rem' },
             fontWeight: 400,
             color: '#ffffff',

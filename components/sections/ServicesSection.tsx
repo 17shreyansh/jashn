@@ -148,7 +148,7 @@ export default function ServicesSection() {
                   position: 'absolute',
                   top: { xs: 20, md: 30 },
                   right: { xs: 20, md: 30 },
-                  fontFamily: '"Playfair Display", serif',
+                  fontFamily: themeConfig.fonts.heading,
                   fontSize: { xs: '3rem', sm: '4rem', md: '5rem', lg: '6rem' },
                   fontWeight: 700,
                   color: themeConfig.colors.luxury,
@@ -165,7 +165,7 @@ export default function ServicesSection() {
               <Box sx={{ position: 'relative', zIndex: 2 }}>
                 <Typography
                   sx={{
-                    fontFamily: '"Playfair Display", serif',
+                    fontFamily: themeConfig.fonts.heading,
                     fontWeight: 700,
                     fontSize:
                       hoveredIndex === index || activeIndex === index

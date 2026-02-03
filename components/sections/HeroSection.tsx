@@ -139,7 +139,7 @@ export default function HeroSection() {
             <Typography
               component="h1"
               sx={{
-                fontFamily: '"Playfair Display", serif',
+                fontFamily: themeConfig.fonts.heading,
                 fontWeight: 700,
                 lineHeight: 1.1,
                 color: themeConfig.colors.white,
@@ -158,7 +158,7 @@ export default function HeroSection() {
 
             <Typography
               sx={{
-                fontFamily: '"Playfair Display", serif',
+                fontFamily: themeConfig.fonts.heading,
                 fontWeight: 400,
                 color: themeConfig.colors.luxury,
                 letterSpacing: '0.18em',
@@ -211,7 +211,7 @@ export default function HeroSection() {
           <Box component={motion.div} variants={itemVariants}>
             <Typography
               sx={{
-                fontFamily: '"Playfair Display", serif',
+                fontFamily: themeConfig.fonts.heading,
                 fontStyle: 'italic',
                 mt: 3,
                 mb: 6,

@@ -1,10 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { getPackages } from '@/lib/services/packages'
-import { Card } from '@/components/ui/Card'
-import { Section } from '@/components/ui/Section'
-import { Heading } from '@/components/ui/Heading'
-import { Badge } from '@/components/ui/Badge'
+import { Box, Typography, Chip, Container, Button } from '@mui/material'
+import Card from '@/components/ui-new/Card'
+import { themeConfig } from '@/lib/config/theme'
 
 export const revalidate = 3600
 
@@ -17,51 +16,44 @@ export default async function PackagesPage() {
   const packages = await getPackages()
 
   return (
-    <>
-      <section className="relative h-[40vh] flex items-center justify-center bg-gradient-to-br from-luxury/30 to-secondary/20">
-        <div className="container-custom text-center">
-          <Heading level={1} className="mb-4">Tour Packages</Heading>
-          <p className="text-xl text-text-light">Curated experiences for every traveler</p>
-        </div>
-      </section>
+    <Box>
+      <Box sx={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `linear-gradient(135deg, ${themeConfig.colors.accent2}50, ${themeConfig.colors.accent1}40)`, py: 8 }}>
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography variant="h2" sx={{ mb: 2, fontFamily: themeConfig.fonts.heading }}>Tour Packages</Typography>
+          <Typography variant="h5" color="text.secondary">Curated experiences for every traveler</Typography>
+        </Box>
+      </Box>
 
-      <Section>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {packages.map((pkg) => (
-            <Link key={pkg._id.toString()} href={`/packages/${pkg.slug}`}>
-              <Card variant="premium" className="overflow-hidden h-full">
-                {pkg.images[0] && (
-                  <div className="relative h-64">
-                    <Image
-                      src={pkg.images[0]}
-                      alt={pkg.title}
-                      fill
-                      className="object-cover"
-                    />
-                    {pkg.featured && (
-                      <Badge variant="luxury" className="absolute top-4 right-4">Featured</Badge>
-                    )}
-                  </div>
-                )}
-                <div className="p-6">
-                  <Badge variant="luxury" className="mb-3">{pkg.duration}</Badge>
-                  <h3 className="font-serif text-2xl font-semibold mb-2">{pkg.title}</h3>
-                  <p className="text-text-light line-clamp-3 mb-4">{pkg.description}</p>
-                  {pkg.pricingEnabled && pkg.price && (
-                    <p className="text-primary font-bold text-xl">₹{pkg.price.toLocaleString()}</p>
+      <Box sx={{ py: { xs: 6, md: 10 } }}>
+        <Container maxWidth="xl">
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: 4 }}>
+            {packages.map((pkg) => (
+              <Link key={pkg._id.toString()} href={`/packages/${pkg.slug}`} style={{ textDecoration: 'none' }}>
+                <Card hover sx={{ height: '100%', overflow: 'hidden' }}>
+                  {pkg.images[0] && (
+                    <Box sx={{ position: 'relative', height: 250 }}>
+                      <Image src={pkg.images[0]} alt={pkg.title} fill style={{ objectFit: 'cover' }} />
+                      {pkg.featured && <Chip label="Featured" color="secondary" sx={{ position: 'absolute', top: 16, right: 16 }} />}
+                    </Box>
                   )}
-                </div>
-              </Card>
-            </Link>
-          ))}
-        </div>
+                  <Box sx={{ p: 3 }}>
+                    <Chip label={pkg.duration} color="secondary" size="small" sx={{ mb: 2 }} />
+                    <Typography variant="h5" sx={{ mb: 1.5, fontFamily: themeConfig.fonts.heading, fontWeight: 600 }}>{pkg.title}</Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{pkg.description}</Typography>
+                    {pkg.pricingEnabled && pkg.price && <Typography variant="h6" color="primary.main" sx={{ fontWeight: 700 }}>₹{pkg.price.toLocaleString()}</Typography>}
+                  </Box>
+                </Card>
+              </Link>
+            ))}
+          </Box>
 
-        {packages.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-text-light text-lg">No packages available at the moment.</p>
-          </div>
-        )}
-      </Section>
-    </>
+          {packages.length === 0 && (
+            <Box sx={{ textAlign: 'center', py: 12 }}>
+              <Typography variant="h6" color="text.secondary">No packages available at the moment.</Typography>
+            </Box>
+          )}
+        </Container>
+      </Box>
+    </Box>
   )
 }

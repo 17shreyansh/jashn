@@ -1,81 +1,128 @@
 'use client'
 
+import { useState } from 'react'
 import { createCity } from '@/lib/actions/cities'
 import { useRouter } from 'next/navigation'
-import Button from '@/components/ui/Button'
+import { Box, TextField, Typography, Stack, IconButton, Alert } from '@mui/material'
+import { Button } from '@/components/ui/Button'
+import { themeConfig } from '@/lib/config/theme'
+import { CloudUpload, Close } from '@mui/icons-material'
+import Card from '@/components/ui-new/Card'
 
 export default function NewCityPage() {
   const router = useRouter()
+  const [uploading, setUploading] = useState(false)
+  const [bannerImage, setBannerImage] = useState('')
+  const [gallery, setGallery] = useState<string[]>([])
+  const [error, setError] = useState('')
+
+  async function uploadImage(file: File) {
+    setUploading(true)
+    setError('')
+    try {
+      const res = await fetch('/api/cloudinary/signature', { method: 'POST' })
+      const { timestamp, signature, cloudName, apiKey } = await res.json()
+
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('timestamp', timestamp)
+      formData.append('signature', signature)
+      formData.append('api_key', apiKey)
+      formData.append('folder', 'jashn')
+
+      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await uploadRes.json()
+      return data.secure_url
+    } catch (err) {
+      setError('Upload failed')
+      return null
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  async function handleBannerUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (file) {
+      const url = await uploadImage(file)
+      if (url) setBannerImage(url)
+    }
+  }
+
+  async function handleGalleryUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files || [])
+    for (const file of files) {
+      const url = await uploadImage(file)
+      if (url) setGallery(prev => [...prev, url])
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
+    formData.set('bannerImage', bannerImage)
+    formData.set('gallery', gallery.join(','))
     await createCity(formData)
     router.push('/admin/cities')
   }
 
   return (
-    <div>
-      <h1 className="text-4xl font-serif mb-8">Add New City</h1>
+    <Box>
+      <Typography sx={{ fontSize: '1.75rem', fontWeight: 700, color: themeConfig.colors.textDark, mb: 4 }}>Add New City</Typography>
+      
+      <Card sx={{ p: 4, bgcolor: 'white', border: '1px solid #e5e7eb' }}>
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={3}>
+            {error && <Alert severity="error">{error}</Alert>}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-md max-w-3xl">
-        <div className="space-y-6">
-          <div>
-            <label className="block font-medium mb-2">Name</label>
-            <input
-              type="text"
-              name="name"
-              required
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-            />
-          </div>
+            <TextField name="name" label="City Name" required fullWidth />
+            <TextField name="slug" label="Slug" required fullWidth helperText="URL-friendly name" />
+            <TextField name="description" label="Description" multiline rows={4} fullWidth />
 
-          <div>
-            <label className="block font-medium mb-2">Slug</label>
-            <input
-              type="text"
-              name="slug"
-              required
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-            />
-          </div>
+            <Box>
+              <Typography sx={{ fontWeight: 600, mb: 1, color: themeConfig.colors.textDark }}>Banner Image</Typography>
+              {bannerImage && (
+                <Box sx={{ position: 'relative', mb: 2, width: '100%', height: 200, borderRadius: 2, overflow: 'hidden' }}>
+                  <img src={bannerImage} alt="Banner" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <IconButton onClick={() => setBannerImage('')} sx={{ position: 'absolute', top: 8, right: 8, bgcolor: 'white' }} size="small">
+                    <Close />
+                  </IconButton>
+                </Box>
+              )}
+              <Button variant="secondary" component="label" disabled={uploading}>
+                <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Upload Banner'}
+                <input type="file" hidden accept="image/*" onChange={handleBannerUpload} />
+              </Button>
+            </Box>
 
-          <div>
-            <label className="block font-medium mb-2">Description</label>
-            <textarea
-              name="description"
-              rows={5}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-            />
-          </div>
+            <Box>
+              <Typography sx={{ fontWeight: 600, mb: 1, color: themeConfig.colors.textDark }}>Gallery Images</Typography>
+              <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: 2, mb: 2 }}>
+                {gallery.map((img, idx) => (
+                  <Box key={idx} sx={{ position: 'relative', height: 120, borderRadius: 2, overflow: 'hidden' }}>
+                    <img src={img} alt={`Gallery ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <IconButton onClick={() => setGallery(gallery.filter((_, i) => i !== idx))} sx={{ position: 'absolute', top: 4, right: 4, bgcolor: 'white', width: 24, height: 24 }} size="small">
+                      <Close sx={{ fontSize: 16 }} />
+                    </IconButton>
+                  </Box>
+                ))}
+              </Box>
+              <Button variant="secondary" component="label" disabled={uploading}>
+                <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Add Images'}
+                <input type="file" hidden accept="image/*" multiple onChange={handleGalleryUpload} />
+              </Button>
+            </Box>
 
-          <div>
-            <label className="block font-medium mb-2">Banner Image URL</label>
-            <input
-              type="text"
-              name="bannerImage"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-            />
-          </div>
-
-          <div>
-            <label className="block font-medium mb-2">Gallery Images (comma-separated URLs)</label>
-            <input
-              type="text"
-              name="gallery"
-              placeholder="https://example.com/img1.jpg, https://example.com/img2.jpg"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-primary)]"
-            />
-          </div>
-
-          <div className="flex gap-4">
-            <Button type="submit">Create City</Button>
-            <Button type="button" variant="outline" onClick={() => router.back()}>
-              Cancel
-            </Button>
-          </div>
-        </div>
-      </form>
-    </div>
+            <Box sx={{ display: 'flex', gap: 2, pt: 2 }}>
+              <Button type="submit" variant="primary">Create City</Button>
+              <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
+            </Box>
+          </Stack>
+        </form>
+      </Card>
+    </Box>
   )
 }

@@ -1,12 +1,9 @@
-'use client'
-
 import { auth } from '@/lib/auth/auth'
 import AdminLayout from '@/components/layouts/AdminLayout'
-import { use } from 'react'
 import { handleLogout } from '@/lib/actions/auth'
 
-export default function AdminLayoutWrapper({ children }: { children: React.ReactNode }) {
-  const session = use(auth() as any)
+export default async function AdminLayoutWrapper({ children }: { children: React.ReactNode }) {
+  const session = await auth()
   
   if (!session?.user) {
     return children

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { getCities } from '@/lib/services/cities'
 import { getPackages } from '@/lib/services/packages'
 import { Box, Typography, Button, Chip, Container } from '@mui/material'
-import Card from '@/components/ui-new/Card'
+import { themeConfig } from '@/lib/config/theme'
 
 export const revalidate = 3600
 
@@ -17,71 +17,245 @@ export default async function ToursPage() {
 
   return (
     <Box>
-      <Box sx={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, rgba(149, 204, 186, 0.3), rgba(167, 186, 66, 0.2))', py: 8 }}>
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h2" sx={{ mb: 2 }}>Tours & Travel</Typography>
-          <Typography variant="h5" color="text.secondary">Discover breathtaking destinations and curated experiences</Typography>
-        </Box>
+      {/* Hero Section - Dark Premium */}
+      <Box sx={{ 
+        minHeight: '55vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        bgcolor: themeConfig.colors.black,
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <Box sx={{ 
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.2), transparent 60%)',
+          filter: 'blur(60px)'
+        }} />
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+          <Typography sx={{ 
+            fontFamily: themeConfig.fonts.heading, 
+            fontSize: { xs: '3rem', md: '5rem' },
+            fontWeight: 700,
+            color: themeConfig.colors.white,
+            mb: 3,
+            lineHeight: 1.1,
+            letterSpacing: '-0.02em'
+          }}>Tours & Travel</Typography>
+          <Box sx={{ width: 80, height: 2, bgcolor: themeConfig.colors.luxury, mx: 'auto', mb: 4 }} />
+          <Typography sx={{ 
+            color: 'rgba(255,255,255,0.7)', 
+            fontSize: { xs: '1.1rem', md: '1.3rem' },
+            fontWeight: 300,
+            lineHeight: 1.7,
+            maxWidth: 700,
+            mx: 'auto'
+          }}>Discover breathtaking destinations and curated experiences</Typography>
+        </Container>
       </Box>
 
-      <Box sx={{ py: { xs: 6, md: 10 } }}>
+      {/* Cities Section */}
+      <Box sx={{ py: { xs: 10, md: 16 }, bgcolor: '#fafaf9' }}>
         <Container maxWidth="xl">
-          <Box sx={{ textAlign: 'center', mb: 6 }}>
-            <Typography variant="h3" sx={{ mb: 2, fontFamily: 'var(--font-playfair)' }}>Popular Destinations</Typography>
-            <Typography variant="h6" color="text.secondary">Explore our handpicked locations</Typography>
+          <Box sx={{ textAlign: 'center', mb: 10 }}>
+            <Typography sx={{ 
+              color: themeConfig.colors.primary, 
+              letterSpacing: '0.2em', 
+              fontWeight: 600,
+              fontSize: '0.75rem',
+              mb: 2,
+              textTransform: 'uppercase'
+            }}>DESTINATIONS</Typography>
+            <Typography sx={{ 
+              fontFamily: themeConfig.fonts.heading,
+              fontSize: { xs: '2.5rem', md: '3.5rem' },
+              fontWeight: 700,
+              color: themeConfig.colors.textDark,
+              lineHeight: 1.2
+            }}>Popular Destinations</Typography>
           </Box>
           
           {cities.length === 0 ? (
-            <Box sx={{ textAlign: 'center', py: 8, mb: 8 }}><Typography variant="h6" color="text.secondary">No destinations available at the moment.</Typography></Box>
+            <Box sx={{ textAlign: 'center', py: 12, mb: 8 }}>
+              <Typography sx={{ fontSize: '1.25rem', color: themeConfig.colors.textLight, fontWeight: 300 }}>No destinations available at the moment.</Typography>
+            </Box>
           ) : (
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3, mb: 10 }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 4, mb: 16 }}>
               {cities.map((city) => (
                 <Link key={city._id.toString()} href={`/cities/${city.slug}`} style={{ textDecoration: 'none' }}>
-                  <Card hover sx={{ height: '100%', cursor: 'pointer' }}>
+                  <Box sx={{ 
+                    height: '100%',
+                    borderRadius: '24px',
+                    overflow: 'hidden',
+                    position: 'relative',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                    transition: 'all 0.4s ease',
+                    '&:hover': {
+                      transform: 'translateY(-12px)',
+                      boxShadow: `0 16px 48px ${themeConfig.colors.luxury}30`
+                    }
+                  }}>
                     {city.bannerImage && (
-                      <Box sx={{ position: 'relative', height: 320, overflow: 'hidden' }}>
-                        <Image src={city.bannerImage} alt={city.name} fill style={{ objectFit: 'cover' }} />
-                        <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6), transparent)' }} />
-                        <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, p: 3, color: 'white' }}>
-                          <Typography variant="h4" sx={{ fontFamily: 'var(--font-playfair)', fontWeight: 600 }}>{city.name}</Typography>
+                      <Box sx={{ position: 'relative', height: 400 }}>
+                        <Image 
+                          src={city.bannerImage} 
+                          alt={city.name} 
+                          fill 
+                          style={{ objectFit: 'cover', transition: 'transform 0.4s ease' }} 
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        />
+                        <Box sx={{ 
+                          position: 'absolute', 
+                          inset: 0, 
+                          background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.4) 100%)' 
+                        }} />
+                        <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, p: 4 }}>
+                          <Typography sx={{ 
+                            fontFamily: themeConfig.fonts.heading, 
+                            fontSize: '2rem',
+                            fontWeight: 700,
+                            color: themeConfig.colors.white,
+                            mb: 2,
+                            lineHeight: 1.2
+                          }}>{city.name}</Typography>
+                          <Typography sx={{ 
+                            color: 'rgba(255,255,255,0.8)', 
+                            fontSize: '0.9375rem',
+                            lineHeight: 1.6,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                          }}>{city.description}</Typography>
                         </Box>
                       </Box>
                     )}
-                    <Box sx={{ p: 3 }}>
-                      <Typography variant="body2" color="text.secondary" sx={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{city.description}</Typography>
-                    </Box>
-                  </Card>
+                  </Box>
                 </Link>
               ))}
             </Box>
           )}
 
-          <Box sx={{ textAlign: 'center', mb: 6 }}>
-            <Typography variant="h3" sx={{ mb: 2, fontFamily: 'var(--font-playfair)' }}>Tour Packages</Typography>
-            <Typography variant="h6" color="text.secondary">Curated experiences for every traveler</Typography>
+          {/* Packages Section */}
+          <Box sx={{ textAlign: 'center', mb: 10 }}>
+            <Typography sx={{ 
+              color: themeConfig.colors.primary, 
+              letterSpacing: '0.2em', 
+              fontWeight: 600,
+              fontSize: '0.75rem',
+              mb: 2,
+              textTransform: 'uppercase'
+            }}>EXPERIENCES</Typography>
+            <Typography sx={{ 
+              fontFamily: themeConfig.fonts.heading,
+              fontSize: { xs: '2.5rem', md: '3.5rem' },
+              fontWeight: 700,
+              color: themeConfig.colors.textDark,
+              lineHeight: 1.2
+            }}>Tour Packages</Typography>
           </Box>
           
           {packages.length === 0 ? (
-            <Box sx={{ textAlign: 'center', py: 8 }}><Typography variant="h6" color="text.secondary">No packages available at the moment.</Typography></Box>
+            <Box sx={{ textAlign: 'center', py: 12 }}>
+              <Typography sx={{ fontSize: '1.25rem', color: themeConfig.colors.textLight, fontWeight: 300 }}>No packages available at the moment.</Typography>
+            </Box>
           ) : (
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: 4 }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }, gap: 4 }}>
               {packages.map((pkg) => (
                 <Link key={pkg._id.toString()} href={`/packages/${pkg.slug}`} style={{ textDecoration: 'none' }}>
-                  <Card variant="premium" hover sx={{ height: '100%', cursor: 'pointer' }}>
+                  <Box sx={{ 
+                    height: '100%',
+                    bgcolor: 'white',
+                    borderRadius: '24px',
+                    overflow: 'hidden',
+                    border: `1px solid ${themeConfig.colors.luxury}20`,
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                    transition: 'all 0.4s ease',
+                    '&:hover': {
+                      transform: 'translateY(-8px)',
+                      boxShadow: `0 12px 40px ${themeConfig.colors.luxury}30`,
+                      borderColor: themeConfig.colors.luxury
+                    }
+                  }}>
                     {pkg.images[0] && (
-                      <Box sx={{ position: 'relative', height: 250, overflow: 'hidden' }}>
-                        <Image src={pkg.images[0]} alt={pkg.title} fill style={{ objectFit: 'cover' }} />
-                        {pkg.featured && <Chip label="Featured" color="luxury" sx={{ position: 'absolute', top: 16, right: 16 }} />}
+                      <Box sx={{ position: 'relative', height: 280, overflow: 'hidden' }}>
+                        <Image 
+                          src={pkg.images[0]} 
+                          alt={pkg.title} 
+                          fill 
+                          style={{ objectFit: 'cover', transition: 'transform 0.4s ease' }} 
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                        {pkg.featured && (
+                          <Chip 
+                            label="Featured" 
+                            sx={{ 
+                              position: 'absolute', 
+                              top: 16, 
+                              right: 16,
+                              bgcolor: themeConfig.colors.luxury,
+                              color: themeConfig.colors.black,
+                              fontWeight: 700,
+                              fontSize: '0.75rem',
+                              letterSpacing: '0.05em',
+                              boxShadow: `0 4px 12px ${themeConfig.colors.luxury}60`
+                            }} 
+                          />
+                        )}
                       </Box>
                     )}
-                    <Box sx={{ p: 3 }}>
-                      <Chip label={pkg.duration} color="luxury" size="small" sx={{ mb: 2 }} />
-                      <Typography variant="h5" sx={{ mb: 1.5, fontFamily: 'var(--font-playfair)', fontWeight: 600 }}>{pkg.title}</Typography>
-                      <Typography variant="body2" color="text.secondary" sx={{ mb: 2, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{pkg.description}</Typography>
-                      {pkg.pricingEnabled && pkg.price && <Typography variant="h6" color="primary.main" sx={{ fontWeight: 700, mb: 2 }}>₹{pkg.price.toLocaleString()}</Typography>}
-                      <Button variant="outlined" fullWidth>View Details</Button>
+                    <Box sx={{ p: 4 }}>
+                      <Chip 
+                        label={pkg.duration} 
+                        sx={{ 
+                          mb: 3,
+                          bgcolor: `${themeConfig.colors.luxury}15`,
+                          color: themeConfig.colors.luxury,
+                          fontWeight: 600,
+                          fontSize: '0.75rem',
+                          borderRadius: '8px'
+                        }} 
+                      />
+                      <Typography sx={{ 
+                        fontFamily: themeConfig.fonts.heading,
+                        fontSize: '1.5rem',
+                        fontWeight: 600,
+                        mb: 2,
+                        color: themeConfig.colors.textDark,
+                        lineHeight: 1.3
+                      }}>{pkg.title}</Typography>
+                      <Typography sx={{ 
+                        color: themeConfig.colors.textLight, 
+                        mb: 3,
+                        fontSize: '0.9375rem',
+                        lineHeight: 1.7,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden'
+                      }}>{pkg.description}</Typography>
+                      <Button 
+                        fullWidth
+                        sx={{
+                          py: 1.5,
+                          borderRadius: '999px',
+                          border: `2px solid ${themeConfig.colors.primary}`,
+                          color: themeConfig.colors.primary,
+                          fontWeight: 600,
+                          fontSize: '0.875rem',
+                          letterSpacing: '0.05em',
+                          '&:hover': {
+                            bgcolor: themeConfig.colors.primary,
+                            color: themeConfig.colors.white,
+                            borderColor: themeConfig.colors.primary
+                          },
+                          transition: 'all 0.3s ease'
+                        }}
+                      >View Details</Button>
                     </Box>
-                  </Card>
+                  </Box>
                 </Link>
               ))}
             </Box>

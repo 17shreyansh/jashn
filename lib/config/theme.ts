@@ -10,6 +10,10 @@ export const themeConfig = {
     white: '#ffffff',
     black: '#1a1a1a',
   },
+  fonts: {
+    heading: '"Playfair Display", serif',
+    body: '"Inter", sans-serif',
+  },
   spacing: {
     section: '6rem',
     container: '1280px',
