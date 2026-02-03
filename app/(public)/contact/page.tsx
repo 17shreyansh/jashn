@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Box, Typography, TextField, Button, Alert, Container, Grid } from '@mui/material'
+import { Box, Typography, TextField, Button, Alert, Container } from '@mui/material'
+import Grid from '@mui/material/Grid2'
 import { motion } from 'framer-motion'
 import SendIcon from '@mui/icons-material/Send'
 import EmailIcon from '@mui/icons-material/Email'
@@ -96,7 +97,7 @@ export default function ContactPage() {
         <Container maxWidth="lg">
           <Grid container spacing={6}>
             {/* Form */}
-            <Grid item xs={12} lg={7}>
+            <Grid size={{ xs: 12, lg: 7 }}>
               <MotionBox
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -208,7 +209,7 @@ export default function ContactPage() {
             </Grid>
 
             {/* Contact Info */}
-            <Grid item xs={12} lg={5}>
+            <Grid size={{ xs: 12, lg: 5 }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 <MotionBox
                   initial={{ opacity: 0, x: 30 }}
