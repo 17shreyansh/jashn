@@ -1,7 +1,6 @@
 'use client'
 
-import { Box, Typography, Container } from '@mui/material'
-import Grid from '@mui/material/Grid2'
+import { Box, Typography, Container, Grid2 as Grid } from '@mui/material'
 import { motion } from 'framer-motion'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import StarIcon from '@mui/icons-material/Star'

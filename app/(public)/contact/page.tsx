@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Box, Typography, TextField, Button, Alert, Container } from '@mui/material'
-import Grid from '@mui/material/Grid2'
+import { Box, Typography, TextField, Button, Alert, Container, Grid2 as Grid } from '@mui/material'
 import { motion } from 'framer-motion'
 import SendIcon from '@mui/icons-material/Send'
 import EmailIcon from '@mui/icons-material/Email'
