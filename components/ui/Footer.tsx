@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { themeConfig } from '@/lib/config/theme'
 
@@ -24,14 +25,8 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <Link href="/" className="inline-flex items-center gap-3 mb-6 group">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#6B46C1] via-[#8B5CF6] to-[#D4AF37] flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all group-hover:scale-105">
-                <span className="text-white font-serif font-bold text-2xl">J</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-serif text-xl font-bold tracking-tight">Jashn</span>
-                <span className="text-xs text-white/60 -mt-1">Planners</span>
-              </div>
+            <Link href="/" className="inline-block mb-6 group">
+              <Image src="/logo.png" alt="Jashn Planners" width={200} height={67} className="h-14 w-auto mix-blend-lighten group-hover:scale-105 transition-transform duration-300" />
             </Link>
             <p className="text-white/70 text-sm leading-relaxed max-w-xs">
               Creating unforgettable moments through premium event planning and luxury travel experiences.

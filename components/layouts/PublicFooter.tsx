@@ -5,6 +5,7 @@ import FacebookIcon from '@mui/icons-material/Facebook'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import Link from 'next/link'
+import Image from 'next/image'
 import { themeConfig } from '@/lib/config/theme'
 
 export default function PublicFooter() {
@@ -30,30 +31,8 @@ export default function PublicFooter() {
         <Box sx={{ py: 8 }}>
           <Grid container spacing={6}>
             <Grid item xs={12} md={4}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
-                <Box sx={{ 
-                  width: 48, 
-                  height: 48, 
-                  borderRadius: 3,
-                  background: `linear-gradient(135deg, ${themeConfig.colors.primary}, ${themeConfig.colors.accent1})`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 700,
-                  fontSize: '1.5rem',
-                  fontFamily: '"Playfair Display", serif',
-                  boxShadow: `0 8px 24px ${themeConfig.colors.primary}40`
-                }}>
-                  J
-                </Box>
-                <Box>
-                  <Typography sx={{ fontWeight: 700, fontSize: '1.25rem', fontFamily: '"Playfair Display", serif' }}>
-                    Jashn
-                  </Typography>
-                  <Typography sx={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', mt: -0.5 }}>
-                    Planners
-                  </Typography>
-                </Box>
+              <Box sx={{ mb: 3 }}>
+                <Image src="/logo.png" alt="Jashn Planners" width={200} height={67} style={{ height: '60px', width: 'auto', mixBlendMode: 'lighten' }} />
               </Box>
               <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 3, lineHeight: 1.8 }}>
                 Creating unforgettable moments through premium event planning and luxury travel experiences.

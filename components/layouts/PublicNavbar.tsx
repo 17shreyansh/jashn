@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
@@ -51,58 +52,9 @@ export default function PublicNavbar() {
           <Toolbar sx={{ justifyContent: 'space-between', py: scrolled ? 1.5 : 2.5, transition: 'all 0.4s ease' }}>
             
             {/* Luxury Logo */}
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 16, textDecoration: 'none' }}>
-              <Box 
-                component={motion.div}
-                whileHover={{ scale: 1.05, rotate: 5 }}
-                sx={{ 
-                  width: 50, height: 50, 
-                  background: `linear-gradient(135deg, ${themeConfig.colors.luxury} 0%, ${themeConfig.colors.secondary} 100%)`,
-                  color: themeConfig.colors.black,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: '"Playfair Display", serif',
-                  fontWeight: 700, fontSize: '1.5rem', 
-                  borderRadius: '12px',
-                  boxShadow: `0 4px 20px ${themeConfig.colors.luxury}40`,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent)',
-                    transform: 'translateX(-100%)',
-                    transition: 'transform 0.6s'
-                  },
-                  '&:hover::before': {
-                    transform: 'translateX(100%)'
-                  }
-                }}
-              >
-                J
-              </Box>
-              <Box>
-                <Box sx={{ 
-                  fontFamily: '"Playfair Display", serif',
-                  fontWeight: 700, 
-                  fontSize: '1.8rem', 
-                  color: themeConfig.colors.white, 
-                  lineHeight: 1,
-                  letterSpacing: '0.02em',
-                  textShadow: '0 2px 10px rgba(0,0,0,0.3)'
-                }}>
-                  Jashn
-                </Box>
-                <Box sx={{ 
-                  fontSize: '0.7rem', 
-                  color: themeConfig.colors.luxury, 
-                  fontWeight: 600, 
-                  textTransform: 'uppercase', 
-                  letterSpacing: '0.25em', 
-                  mt: 0.3
-                }}>
-                  Planners
-                </Box>
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <Box component={motion.div} whileHover={{ scale: 1.05 }}>
+                <Image src="/logo.png" alt="Jashn Planners" width={240} height={80} style={{ height: '70px', width: 'auto'}} />
               </Box>
             </Link>
 

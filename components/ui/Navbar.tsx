@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -29,14 +30,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-[#a7ba42] via-[#95ccba] to-[#f2cc84] flex items-center justify-center shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-              <span className="text-white font-serif font-bold text-2xl">J</span>
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-serif text-2xl font-bold text-[#2d3e2d] tracking-tight">Jashn</span>
-              <span className="text-xs text-[#6b7c6b] font-medium -mt-1">Planners</span>
-            </div>
+            <Image src="/logo.png" alt="Jashn Planners" width={240} height={80} className="h-16 w-auto mix-blend-multiply group-hover:scale-105 transition-transform duration-300" />
           </Link>
 
           <div className="hidden lg:flex items-center gap-1">
