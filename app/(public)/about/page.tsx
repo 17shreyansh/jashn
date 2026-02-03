@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Typography, Container, Grid } from '@mui/material'
+import { Box, Typography, Container, Stack } from '@mui/material'
 import { motion } from 'framer-motion'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import StarIcon from '@mui/icons-material/Star'
@@ -70,8 +70,8 @@ export default function AboutPage() {
       {/* Story Section - Light */}
       <Box sx={{ py: { xs: 12, md: 18 }, bgcolor: '#fafaf9' }}>
         <Container maxWidth="xl">
-          <Grid container spacing={8} alignItems="center">
-            <Grid xs={12} md={6}>
+          <Stack spacing={8}>
+            <Box>
               <MotionBox
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -124,8 +124,8 @@ export default function AboutPage() {
                   ))}
                 </Box>
               </MotionBox>
-            </Grid>
-            <Grid xs={12} md={6}>
+            </Box>
+            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 3 }}>
               <MotionBox
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -159,8 +159,8 @@ export default function AboutPage() {
                   </MotionBox>
                 ))}
               </MotionBox>
-            </Grid>
-          </Grid>
+            </Box>
+          </Stack>
         </Container>
       </Box>
 
@@ -195,14 +195,14 @@ export default function AboutPage() {
               lineHeight: 1.2
             }}>Why Choose Us</Typography>
           </Box>
-          <Grid container spacing={4}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
             {[
               { title: 'Personalized Service', desc: 'Every event and trip is tailored to your unique preferences and requirements.' },
               { title: 'Expert Team', desc: 'Our experienced professionals handle every detail with care and precision.' },
               { title: 'Premium Quality', desc: 'We partner with the best vendors and destinations to ensure excellence.' },
               { title: 'Stress-Free Experience', desc: 'Relax and enjoy while we manage all the logistics and coordination.' },
             ].map((item, i) => (
-              <Grid xs={12} md={6} key={i}>
+              <Box key={i}>
                 <MotionBox
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -241,9 +241,9 @@ export default function AboutPage() {
                     </Box>
                   </Box>
                 </MotionBox>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Container>
       </Box>
     </Box>
