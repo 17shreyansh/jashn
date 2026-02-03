@@ -71,7 +71,7 @@ export default function AboutPage() {
       <Box sx={{ py: { xs: 12, md: 18 }, bgcolor: '#fafaf9' }}>
         <Container maxWidth="xl">
           <Grid container spacing={8} alignItems="center">
-            <Grid item xs={12} md={6}>
+            <Grid xs={12} md={6}>
               <MotionBox
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -125,7 +125,7 @@ export default function AboutPage() {
                 </Box>
               </MotionBox>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid xs={12} md={6}>
               <MotionBox
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -202,7 +202,7 @@ export default function AboutPage() {
               { title: 'Premium Quality', desc: 'We partner with the best vendors and destinations to ensure excellence.' },
               { title: 'Stress-Free Experience', desc: 'Relax and enjoy while we manage all the logistics and coordination.' },
             ].map((item, i) => (
-              <Grid item xs={12} md={6} key={i}>
+              <Grid xs={12} md={6} key={i}>
                 <MotionBox
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
