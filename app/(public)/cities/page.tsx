@@ -5,7 +5,7 @@ import { Box, Typography, Container } from '@mui/material'
 import Card from '@/components/ui-new/Card'
 import { themeConfig } from '@/lib/config/theme'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Destinations - Jashn Planners',

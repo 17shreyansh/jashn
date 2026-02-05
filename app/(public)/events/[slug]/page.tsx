@@ -6,12 +6,7 @@ import Link from 'next/link'
 import { themeConfig } from '@/lib/config/theme'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
-export const revalidate = 3600
-
-export async function generateStaticParams() {
-  const events = await getEvents()
-  return events.map((event) => ({ slug: event.slug }))
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

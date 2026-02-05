@@ -8,7 +8,7 @@ import ToursGallerySection from '@/components/sections/ToursGallerySection'
 import AboutSection from '@/components/sections/AboutSection'
 import CTASection from '@/components/sections/CTASection'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   return (

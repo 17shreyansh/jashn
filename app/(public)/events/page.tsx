@@ -4,7 +4,7 @@ import { getEvents } from '@/lib/services/events'
 import { Box, Typography, Chip, Container } from '@mui/material'
 import { themeConfig } from '@/lib/config/theme'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Events - Jashn Planners',

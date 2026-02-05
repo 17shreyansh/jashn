@@ -5,7 +5,7 @@ import { getPackages } from '@/lib/services/packages'
 import { Box, Typography, Button, Chip, Container } from '@mui/material'
 import { themeConfig } from '@/lib/config/theme'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Tours & Travel - Jashn Planners',

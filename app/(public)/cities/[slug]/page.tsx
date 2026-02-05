@@ -6,7 +6,7 @@ import { Box, Typography, Container, Button } from '@mui/material'
 import { notFound } from 'next/navigation'
 import { themeConfig } from '@/lib/config/theme'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 async function getCityWithPackages(slug: string) {
   await connectDB()

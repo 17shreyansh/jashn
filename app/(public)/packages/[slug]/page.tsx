@@ -8,7 +8,7 @@ import { themeConfig } from '@/lib/config/theme'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CloseIcon from '@mui/icons-material/Close'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 async function getPackage(slug: string) {
   await connectDB()
