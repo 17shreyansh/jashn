@@ -55,12 +55,14 @@ export default function HeroSection() {
       ref={ref}
       sx={{
         position: 'relative',
-        minHeight: { xs: '90vh', md: '100vh' },
+        height: { xs: 'auto', md: 'calc(100vh - 80px)' },
+        minHeight: { xs: '600px', sm: '700px', md: '800px' },
+        maxHeight: { md: '1080px' },
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
         bgcolor: themeConfig.colors.black,
-        pt: '100px'
+        pt: { xs: '80px', md: '0' }
       }}
     >
       {/* ---------------- BACKGROUND ---------------- */}

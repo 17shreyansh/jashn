@@ -7,9 +7,9 @@ import PublicFooter from './PublicFooter'
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
       <PublicNavbar />
-      <Box component="main" sx={{ flex: 1 }}>
+      <Box component="main" sx={{ flex: 1, width: '100%' }}>
         {children}
       </Box>
       <PublicFooter />
