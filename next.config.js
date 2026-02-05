@@ -12,6 +12,8 @@ const nextConfig = {
       },
     ],
     qualities: [75, 90, 95],
+    unoptimized: false,
+    minimumCacheTTL: 60,
   },
 }
 
