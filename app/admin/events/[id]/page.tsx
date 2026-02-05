@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { connectDB } from '@/lib/db/mongodb'
 import { Event } from '@/lib/db/models'
 import { notFound } from 'next/navigation'

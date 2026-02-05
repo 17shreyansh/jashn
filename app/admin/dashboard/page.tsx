@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getEvents } from '@/lib/services/events'
 import { getCities } from '@/lib/services/cities'
 import { getPackages } from '@/lib/services/packages'

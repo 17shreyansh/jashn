@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getCities } from '@/lib/services/cities'
 import { Box, Typography, Button, Chip, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Avatar } from '@mui/material'
 import Card from '@/components/ui-new/Card'

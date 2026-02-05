@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getEvents } from '@/lib/services/events'
 import { Box, Typography, Button, Chip, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Avatar } from '@mui/material'
 import Card from '@/components/ui-new/Card'

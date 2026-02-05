@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getLeads } from '@/lib/services/leads'
 import { Box, Typography, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import Card from '@/components/ui-new/Card'
