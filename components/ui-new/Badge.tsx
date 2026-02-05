@@ -5,11 +5,11 @@ interface BadgeProps extends Omit<ChipProps, 'variant'> {
 }
 
 export default function Badge({ variant = 'primary', ...props }: BadgeProps) {
-  const colorMap = {
+  const colorMap: Record<string, 'primary' | 'secondary' | 'default'> = {
     primary: 'primary',
     secondary: 'secondary',
-    luxury: 'luxury',
-  } as const
+    luxury: 'default',
+  }
 
   return (
     <Chip
@@ -18,6 +18,7 @@ export default function Badge({ variant = 'primary', ...props }: BadgeProps) {
         fontWeight: 500,
         fontSize: '0.875rem',
         px: 1,
+        ...(variant === 'luxury' && { bgcolor: '#f2cc84', color: '#000' }),
         ...props.sx,
       }}
       {...props}

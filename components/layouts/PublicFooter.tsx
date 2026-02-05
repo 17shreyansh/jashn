@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Container, Grid, Typography, IconButton, Stack, Divider } from '@mui/material'
+import { Box, Container, Typography, IconButton, Stack, Divider } from '@mui/material'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import TwitterIcon from '@mui/icons-material/Twitter'
@@ -29,8 +29,8 @@ export default function PublicFooter() {
       
       <Container maxWidth="xl" sx={{ position: 'relative' }}>
         <Box sx={{ py: 8 }}>
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={4}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(4, 1fr)' }, gap: 6 }}>
+            <Box>
               <Box sx={{ mb: 3 }}>
                 <Image src="/logo.png" alt="Jashn Planners" width={200} height={67} style={{ height: '60px', width: 'auto', mixBlendMode: 'lighten' }} />
               </Box>
@@ -84,9 +84,9 @@ export default function PublicFooter() {
                   <TwitterIcon sx={{ color: 'white', fontSize: 18 }} />
                 </IconButton>
               </Stack>
-            </Grid>
+            </Box>
 
-            <Grid item xs={6} md={2}>
+            <Box>
               <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxury }}>
                 Services
               </Typography>
@@ -101,9 +101,9 @@ export default function PublicFooter() {
                   <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxury }, transition: 'color 0.2s', cursor: 'pointer' }}>Gallery</Typography>
                 </Link>
               </Stack>
-            </Grid>
+            </Box>
 
-            <Grid item xs={6} md={2}>
+            <Box>
               <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxury }}>
                 Company
               </Typography>
@@ -115,9 +115,9 @@ export default function PublicFooter() {
                   <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxury }, transition: 'color 0.2s', cursor: 'pointer' }}>Contact</Typography>
                 </Link>
               </Stack>
-            </Grid>
+            </Box>
 
-            <Grid item xs={12} md={4}>
+            <Box>
               <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxury }}>
                 Contact Info
               </Typography>
@@ -129,8 +129,8 @@ export default function PublicFooter() {
                   Phone: +1 (555) 123-4567
                 </Typography>
               </Stack>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Box>
 
         <Divider sx={{ borderColor: 'rgba(255,255,255,0.08)' }} />

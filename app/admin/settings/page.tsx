@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Button from '@/components/ui/Button'
+import { Button } from '@/components/ui/Button'
 import { themeConfig } from '@/lib/config/theme'
 
 export default function SettingsPage() {

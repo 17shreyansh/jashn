@@ -26,7 +26,7 @@ export function Card({ variant = 'standard', hover = true, children, className =
     <Component
       className={`${variants[variant]} ${className}`}
       {...(hover ? motionProps : {})}
-      {...props}
+      {...(props as any)}
     >
       {children}
     </Component>

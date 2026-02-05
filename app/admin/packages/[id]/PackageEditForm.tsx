@@ -124,10 +124,12 @@ export default function PackageEditForm({ pkg }: { pkg: any }) {
                 </Box>
               ))}
             </Box>
-            <Button variant="secondary" component="label" disabled={uploading}>
-              <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Add Images'}
+            <Box component="label">
+              <Button variant="secondary" disabled={uploading}>
+                <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Add Images'}
+              </Button>
               <input type="file" hidden accept="image/*" multiple onChange={handleImageUpload} />
-            </Button>
+            </Box>
           </Box>
 
           <Box>

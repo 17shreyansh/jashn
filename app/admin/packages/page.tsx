@@ -55,11 +55,7 @@ export default async function AdminPackagesPage() {
                       <Chip label={pkg.featured ? 'Featured' : 'Active'} size="small" sx={{ bgcolor: pkg.featured ? '#fef3c7' : '#f3f4f6', color: pkg.featured ? '#92400e' : themeConfig.colors.textLight, fontWeight: 600 }} />
                     </TableCell>
                     <TableCell>
-                      {pkg.pricingEnabled && pkg.price ? (
-                        <Typography sx={{ fontWeight: 600, color: themeConfig.colors.textDark }}>₹{pkg.price.toLocaleString()}</Typography>
-                      ) : (
-                        <Typography sx={{ color: themeConfig.colors.textLight, fontSize: '0.875rem' }}>Custom</Typography>
-                      )}
+                      <Typography sx={{ color: themeConfig.colors.textLight, fontSize: '0.875rem' }}>Custom</Typography>
                     </TableCell>
                     <TableCell align="right">
                       <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>

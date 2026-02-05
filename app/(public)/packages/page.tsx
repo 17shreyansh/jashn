@@ -40,7 +40,6 @@ export default async function PackagesPage() {
                     <Chip label={pkg.duration} color="secondary" size="small" sx={{ mb: 2 }} />
                     <Typography variant="h5" sx={{ mb: 1.5, fontFamily: themeConfig.fonts.heading, fontWeight: 600 }}>{pkg.title}</Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{pkg.description}</Typography>
-                    {pkg.pricingEnabled && pkg.price && <Typography variant="h6" color="primary.main" sx={{ fontWeight: 700 }}>₹{pkg.price.toLocaleString()}</Typography>}
                   </Box>
                 </Card>
               </Link>

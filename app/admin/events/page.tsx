@@ -58,11 +58,7 @@ export default async function AdminEventsPage() {
                       <Chip label={event.featured ? 'Featured' : 'Active'} size="small" sx={{ bgcolor: event.featured ? '#fef3c7' : '#f3f4f6', color: event.featured ? '#92400e' : themeConfig.colors.textLight, fontWeight: 600 }} />
                     </TableCell>
                     <TableCell>
-                      {event.pricingEnabled && event.basePrice ? (
-                        <Typography sx={{ fontWeight: 600, color: themeConfig.colors.textDark }}>₹{event.basePrice.toLocaleString()}</Typography>
-                      ) : (
-                        <Typography sx={{ color: themeConfig.colors.textLight, fontSize: '0.875rem' }}>Custom</Typography>
-                      )}
+                      <Typography sx={{ color: themeConfig.colors.textLight, fontSize: '0.875rem' }}>Custom</Typography>
                     </TableCell>
                     <TableCell align="right">
                       <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>

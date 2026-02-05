@@ -33,7 +33,7 @@ const itemVariants = {
     y: 0,
     opacity: 1,
     filter: 'blur(0px)',
-    transition: { type: 'spring', stiffness: 50, damping: 20 }
+    transition: { type: 'spring' as const, stiffness: 50, damping: 20 }
   }
 }
 

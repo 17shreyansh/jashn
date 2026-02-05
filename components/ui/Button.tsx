@@ -4,18 +4,18 @@ import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { Button as MuiButton } from '@mui/material'
 import { motion } from 'framer-motion'
 
-interface ButtonProps {
+interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'size'> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   loading?: boolean
   children: React.ReactNode
-  onClick?: () => void
+  sx?: any
 }
 
 const MotionButton = motion(MuiButton)
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'md', loading, children, ...props }, ref) => {
+  ({ variant = 'primary', size = 'md', loading, children, sx, ...props }, ref) => {
     const sizes = {
       sm: { px: 4, py: 2, fontSize: '0.75rem' },
       md: { px: 6, py: 3, fontSize: '0.875rem' },
@@ -51,7 +51,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        disabled={loading}
+        disabled={loading || props.disabled}
         sx={{
           ...sizes[size],
           ...variants[variant],
@@ -60,8 +60,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           textTransform: 'uppercase',
           letterSpacing: '0.1em',
           transition: 'all 0.3s ease',
+          ...sx,
         }}
-        {...props}
+        {...(props as any)}
       >
         {loading ? 'Loading...' : children}
       </MotionButton>
