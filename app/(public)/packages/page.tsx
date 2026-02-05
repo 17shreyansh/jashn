@@ -17,7 +17,7 @@ export default async function PackagesPage() {
 
   return (
     <Box>
-      <Box sx={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `linear-gradient(135deg, ${themeConfig.colors.accent2}50, ${themeConfig.colors.accent1}40)`, py: 8 }}>
+      <Box sx={{ minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `linear-gradient(135deg, ${themeConfig.colors.accent2}50, ${themeConfig.colors.accent1}40)`, py: 8, pt: '120px' }}>
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="h2" sx={{ mb: 2, fontFamily: themeConfig.fonts.heading }}>Tour Packages</Typography>
           <Typography variant="h5" color="text.secondary">Curated experiences for every traveler</Typography>

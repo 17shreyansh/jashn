@@ -24,7 +24,8 @@ export default async function EventsPage() {
         justifyContent: 'center', 
         bgcolor: themeConfig.colors.black,
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        pt: '100px'
       }}>
         <Box sx={{ 
           position: 'absolute',

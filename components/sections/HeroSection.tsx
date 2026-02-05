@@ -59,7 +59,8 @@ export default function HeroSection() {
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
-        bgcolor: themeConfig.colors.black
+        bgcolor: themeConfig.colors.black,
+        pt: '100px'
       }}
     >
       {/* ---------------- BACKGROUND ---------------- */}
