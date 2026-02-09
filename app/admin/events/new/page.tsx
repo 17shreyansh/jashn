@@ -9,6 +9,8 @@ import { themeConfig } from '@/lib/config/theme'
 import { CloudUpload, Close } from '@mui/icons-material'
 import Card from '@/components/ui-new/Card'
 import { fileToBase64 } from '@/lib/utils/base64'
+import { compressImage } from '@/lib/utils/imageCompression'
+import { uploadToCloudinary } from '@/lib/utils/cloudinary-upload'
 
 export default function NewEventPage() {
   const router = useRouter()
@@ -25,8 +27,15 @@ export default function NewEventPage() {
     setError('')
     try {
       for (const file of files) {
-        const base64 = await fileToBase64(file)
-        setImages(prev => [...prev, base64])
+        const cloudinaryResult = await uploadToCloudinary(file, 'events', 'image')
+        if (cloudinaryResult) {
+          setImages(prev => [...prev, cloudinaryResult.url])
+        } else {
+          const sizeMB = file.size / 1024 / 1024
+          const processedFile = sizeMB > 1 ? await compressImage(file, 1) : file
+          const base64 = await fileToBase64(processedFile)
+          setImages(prev => [...prev, base64])
+        }
       }
     } catch (err) {
       setError('Upload failed')

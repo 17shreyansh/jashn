@@ -9,6 +9,8 @@ import { themeConfig } from '@/lib/config/theme'
 import { CloudUpload, Close, Add, Remove } from '@mui/icons-material'
 import Card from '@/components/ui-new/Card'
 import { fileToBase64 } from '@/lib/utils/base64'
+import { compressImage } from '@/lib/utils/imageCompression'
+import { uploadToCloudinary } from '@/lib/utils/cloudinary-upload'
 
 export default function NewPackagePage() {
   const router = useRouter()
@@ -32,8 +34,15 @@ export default function NewPackagePage() {
     setError('')
     try {
       for (const file of files) {
-        const base64 = await fileToBase64(file)
-        setImages(prev => [...prev, base64])
+        const cloudinaryResult = await uploadToCloudinary(file, 'packages', 'image')
+        if (cloudinaryResult) {
+          setImages(prev => [...prev, cloudinaryResult.url])
+        } else {
+          const sizeMB = file.size / 1024 / 1024
+          const processedFile = sizeMB > 1 ? await compressImage(file, 1) : file
+          const base64 = await fileToBase64(processedFile)
+          setImages(prev => [...prev, base64])
+        }
       }
     } catch (err) {
       setError('Upload failed')

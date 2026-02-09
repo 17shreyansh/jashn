@@ -9,6 +9,8 @@ import { themeConfig } from '@/lib/config/theme'
 import { CloudUpload, Close } from '@mui/icons-material'
 import Card from '@/components/ui-new/Card'
 import { fileToBase64 } from '@/lib/utils/base64'
+import { compressImage } from '@/lib/utils/imageCompression'
+import { uploadToCloudinary } from '@/lib/utils/cloudinary-upload'
 
 export default function NewCityPage() {
   const router = useRouter()
@@ -23,8 +25,15 @@ export default function NewCityPage() {
     setUploading(true)
     setError('')
     try {
-      const base64 = await fileToBase64(file)
-      setBannerImage(base64)
+      const cloudinaryResult = await uploadToCloudinary(file, 'cities', 'image')
+      if (cloudinaryResult) {
+        setBannerImage(cloudinaryResult.url)
+      } else {
+        const sizeMB = file.size / 1024 / 1024
+        const processedFile = sizeMB > 1 ? await compressImage(file, 1) : file
+        const base64 = await fileToBase64(processedFile)
+        setBannerImage(base64)
+      }
     } catch (err) {
       setError('Upload failed')
     } finally {
@@ -38,8 +47,15 @@ export default function NewCityPage() {
     setError('')
     try {
       for (const file of files) {
-        const base64 = await fileToBase64(file)
-        setGallery(prev => [...prev, base64])
+        const cloudinaryResult = await uploadToCloudinary(file, 'cities', 'image')
+        if (cloudinaryResult) {
+          setGallery(prev => [...prev, cloudinaryResult.url])
+        } else {
+          const sizeMB = file.size / 1024 / 1024
+          const processedFile = sizeMB > 1 ? await compressImage(file, 1) : file
+          const base64 = await fileToBase64(processedFile)
+          setGallery(prev => [...prev, base64])
+        }
       }
     } catch (err) {
       setError('Upload failed')

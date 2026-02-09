@@ -7,6 +7,7 @@ import { Add, Delete, Star, Close, Image as ImageIcon, Videocam } from '@mui/ico
 import { themeConfig } from '@/lib/config/theme'
 import { fileToBase64 } from '@/lib/utils/base64'
 import { compressImage } from '@/lib/utils/imageCompression'
+import { uploadToCloudinary } from '@/lib/utils/cloudinary-upload'
 
 interface GalleryItem {
   _id: string
@@ -48,15 +49,20 @@ export default function AdminGalleryPage() {
     setUploading(true)
     setError('')
     try {
-      let processedFile = file
-      if (file.type.startsWith('image/')) {
-        const sizeMB = file.size / 1024 / 1024
-        if (sizeMB > 1) {
-          processedFile = await compressImage(file, 1)
+      const resourceType = file.type.startsWith('image/') ? 'image' : 'video'
+      const cloudinaryResult = await uploadToCloudinary(file, 'gallery', resourceType)
+      
+      if (cloudinaryResult) {
+        setForm(prev => ({ ...prev, url: cloudinaryResult.url, thumbnail: cloudinaryResult.url }))
+      } else {
+        let processedFile = file
+        if (file.type.startsWith('image/')) {
+          const sizeMB = file.size / 1024 / 1024
+          if (sizeMB > 1) processedFile = await compressImage(file, 1)
         }
+        const base64 = await fileToBase64(processedFile)
+        setForm(prev => ({ ...prev, url: base64, thumbnail: base64 }))
       }
-      const base64 = await fileToBase64(processedFile)
-      setForm(prev => ({ ...prev, url: base64, thumbnail: base64 }))
     } catch (err: any) {
       setError('Upload failed')
     } finally {

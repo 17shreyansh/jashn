@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/Button'
 import { themeConfig } from '@/lib/config/theme'
 import { Delete, CloudUpload, Close } from '@mui/icons-material'
 import Card from '@/components/ui-new/Card'
+import { compressImage } from '@/lib/utils/imageCompression'
+import { fileToBase64 } from '@/lib/utils/base64'
 
 export default function EventEditForm({ event }: { event: any }) {
   const router = useRouter()
@@ -23,8 +25,9 @@ export default function EventEditForm({ event }: { event: any }) {
     setError('')
     try {
       const res = await fetch('/api/cloudinary/signature', { method: 'POST' })
+      if (!res.ok) throw new Error('Cloudinary not configured')
+      
       const { timestamp, signature, cloudName, apiKey } = await res.json()
-
       const formData = new FormData()
       formData.append('file', file)
       formData.append('timestamp', timestamp)
@@ -39,8 +42,9 @@ export default function EventEditForm({ event }: { event: any }) {
       const data = await uploadRes.json()
       return data.secure_url
     } catch (err) {
-      setError('Upload failed')
-      return null
+      const sizeMB = file.size / 1024 / 1024
+      const processedFile = sizeMB > 1 ? await compressImage(file, 1) : file
+      return await fileToBase64(processedFile)
     } finally {
       setUploading(false)
     }
