@@ -91,7 +91,7 @@ export default function HeroSection() {
           sx={{ position: 'relative', width: '100%', height: '100%' }}
         >
           <Image
-            src="/taj.png"
+            src="/taj3.jpeg"
             alt="Luxury Event Background"
             fill
             priority
@@ -99,19 +99,20 @@ export default function HeroSection() {
             sizes="100vw"
             style={{
               objectFit: 'cover',
-              objectPosition: 'center center'
+              objectPosition: 'center top',
+              // objectpositionY: '10%',
             }}
           />
         </Box>
 
-        <Box
+        {/* <Box
           sx={{
             position: 'absolute',
             inset: 0,
             background:
               'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.75) 100%)'
           }}
-        />
+        /> */}
       </Box>
 
       {/* ---------------- CONTENT ---------------- */}
