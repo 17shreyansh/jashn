@@ -6,6 +6,7 @@ import Card from '@/components/ui-new/Card'
 import { Add, Delete, Star, Close, Image as ImageIcon, Videocam } from '@mui/icons-material'
 import { themeConfig } from '@/lib/config/theme'
 import { fileToBase64 } from '@/lib/utils/base64'
+import { compressImage } from '@/lib/utils/imageCompression'
 
 interface GalleryItem {
   _id: string
@@ -47,7 +48,14 @@ export default function AdminGalleryPage() {
     setUploading(true)
     setError('')
     try {
-      const base64 = await fileToBase64(file)
+      let processedFile = file
+      if (file.type.startsWith('image/')) {
+        const sizeMB = file.size / 1024 / 1024
+        if (sizeMB > 1) {
+          processedFile = await compressImage(file, 1)
+        }
+      }
+      const base64 = await fileToBase64(processedFile)
       setForm(prev => ({ ...prev, url: base64, thumbnail: base64 }))
     } catch (err: any) {
       setError('Upload failed')
