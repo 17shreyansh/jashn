@@ -27,7 +27,7 @@ const itemVariants = {
   visible: {
     y: 0,
     opacity: 1,
-    transition: { duration: 0.8, ease: [0.6, 0.01, -0.05, 0.95] }
+    transition: { duration: 0.8 }
   }
 }
 
@@ -108,20 +108,21 @@ export default function HeroSection() {
         >
           {/* TITLE */}
 
-          <Typography
+          <Box
             component={motion.h1}
             variants={itemVariants}
             sx={{
               fontFamily: themeConfig.fonts.heading,
               fontWeight: 700,
               fontSize: { xs: 42, md: 72 },
-              lineHeight: 1.05
+              lineHeight: 1.05,
+              m: 0
             }}
           >
             Jashn
-          </Typography>
+          </Box>
 
-          <Typography
+          <Box
             component={motion.div}
             variants={itemVariants}
             sx={{
@@ -131,11 +132,11 @@ export default function HeroSection() {
             }}
           >
             PLANNERS
-          </Typography>
+          </Box>
 
           {/* EVENTS & HOLIDAYS */}
 
-          <Typography
+          <Box
             component={motion.div}
             variants={itemVariants}
             sx={{
@@ -147,11 +148,11 @@ export default function HeroSection() {
             }}
           >
             Events & Holidays
-          </Typography>
+          </Box>
 
           {/* TAGLINE */}
 
-          <Typography
+          <Box
             component={motion.div}
             variants={itemVariants}
             sx={{
@@ -162,7 +163,7 @@ export default function HeroSection() {
             }}
           >
             Crafting royal celebrations and unforgettable journeys across the globe
-          </Typography>
+          </Box>
 
           {/* BUTTONS */}
 
