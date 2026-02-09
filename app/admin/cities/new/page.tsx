@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { themeConfig } from '@/lib/config/theme'
 import { CloudUpload, Close } from '@mui/icons-material'
 import Card from '@/components/ui-new/Card'
+import { fileToBase64 } from '@/lib/utils/base64'
 
 export default function NewCityPage() {
   const router = useRouter()
@@ -16,47 +17,34 @@ export default function NewCityPage() {
   const [gallery, setGallery] = useState<string[]>([])
   const [error, setError] = useState('')
 
-  async function uploadImage(file: File) {
+  async function handleBannerUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
     setUploading(true)
     setError('')
     try {
-      const res = await fetch('/api/cloudinary/signature', { method: 'POST' })
-      const { timestamp, signature, cloudName, apiKey } = await res.json()
-
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('timestamp', timestamp)
-      formData.append('signature', signature)
-      formData.append('api_key', apiKey)
-      formData.append('folder', 'jashn')
-
-      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-        method: 'POST',
-        body: formData,
-      })
-      const data = await uploadRes.json()
-      return data.secure_url
+      const base64 = await fileToBase64(file)
+      setBannerImage(base64)
     } catch (err) {
       setError('Upload failed')
-      return null
     } finally {
       setUploading(false)
     }
   }
 
-  async function handleBannerUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (file) {
-      const url = await uploadImage(file)
-      if (url) setBannerImage(url)
-    }
-  }
-
   async function handleGalleryUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files || [])
-    for (const file of files) {
-      const url = await uploadImage(file)
-      if (url) setGallery(prev => [...prev, url])
+    setUploading(true)
+    setError('')
+    try {
+      for (const file of files) {
+        const base64 = await fileToBase64(file)
+        setGallery(prev => [...prev, base64])
+      }
+    } catch (err) {
+      setError('Upload failed')
+    } finally {
+      setUploading(false)
     }
   }
 

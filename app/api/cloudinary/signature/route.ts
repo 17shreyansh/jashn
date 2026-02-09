@@ -8,6 +8,15 @@ export async function POST() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  // Check if Cloudinary is configured
+  if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 
+      !process.env.CLOUDINARY_API_KEY || 
+      !process.env.CLOUDINARY_API_SECRET) {
+    return NextResponse.json({ 
+      error: 'Cloudinary not configured. Please add credentials to .env.local' 
+    }, { status: 500 })
+  }
+
   try {
     const { timestamp, signature } = await getSignature()
     return NextResponse.json({
@@ -17,6 +26,9 @@ export async function POST() {
       apiKey: process.env.CLOUDINARY_API_KEY,
     })
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to generate signature' }, { status: 500 })
+    console.error('Cloudinary signature error:', error)
+    return NextResponse.json({ 
+      error: 'Failed to generate signature. Check server logs.' 
+    }, { status: 500 })
   }
 }

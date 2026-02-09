@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Box, Typography, Button, TextField, Chip, Dialog, DialogContent, DialogTitle, IconButton, Radio, RadioGroup, FormControlLabel, Checkbox, CircularProgress } from '@mui/material'
+import { Box, Typography, Button, TextField, Chip, Dialog, DialogContent, DialogTitle, IconButton, Radio, RadioGroup, FormControlLabel, Checkbox, CircularProgress, Alert } from '@mui/material'
 import Card from '@/components/ui-new/Card'
 import { Add, Delete, Star, Close, Image as ImageIcon, Videocam } from '@mui/icons-material'
 import { themeConfig } from '@/lib/config/theme'
+import { fileToBase64 } from '@/lib/utils/base64'
 
 interface GalleryItem {
   _id: string
@@ -24,6 +25,7 @@ export default function AdminGalleryPage() {
   const [filter, setFilter] = useState<'all' | 'events' | 'tours'>('all')
   const [showUpload, setShowUpload] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState('')
   const [form, setForm] = useState({ title: '', type: 'events' as 'events' | 'tours', mediaType: 'image' as 'image' | 'video', url: '', thumbnail: '', description: '', featured: false, order: 0 })
 
   useEffect(() => { fetchItems() }, [filter])
@@ -41,26 +43,14 @@ export default function AdminGalleryPage() {
     }
   }
 
-  const handleUpload = async (file: File, type: 'image' | 'video') => {
+  const handleUpload = async (file: File) => {
     setUploading(true)
+    setError('')
     try {
-      const signRes = await fetch('/api/cloudinary/signature')
-      const { signature, timestamp, cloudName, apiKey } = await signRes.json()
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('signature', signature)
-      formData.append('timestamp', timestamp)
-      formData.append('api_key', apiKey)
-      formData.append('folder', 'gallery')
-      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${type}/upload`, { method: 'POST', body: formData })
-      const data = await uploadRes.json()
-      if (type === 'image') {
-        setForm(prev => ({ ...prev, url: data.secure_url }))
-      } else {
-        setForm(prev => ({ ...prev, url: data.secure_url, thumbnail: data.secure_url.replace('/upload/', '/upload/so_0,w_400,h_300,c_fill/') }))
-      }
-    } catch (error) {
-      alert('Upload failed')
+      const base64 = await fileToBase64(file)
+      setForm(prev => ({ ...prev, url: base64, thumbnail: base64 }))
+    } catch (err: any) {
+      setError('Upload failed')
     } finally {
       setUploading(false)
     }
@@ -123,6 +113,7 @@ export default function AdminGalleryPage() {
           <IconButton onClick={() => setShowUpload(false)}><Close /></IconButton>
         </DialogTitle>
         <DialogContent>
+          {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
           <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3, pt: 2 }}>
             <RadioGroup row value={form.mediaType} onChange={(e) => setForm(prev => ({ ...prev, mediaType: e.target.value as any }))}>
               <FormControlLabel value="image" control={<Radio />} label={<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><ImageIcon fontSize="small" />Image</Box>} />
@@ -130,7 +121,7 @@ export default function AdminGalleryPage() {
             </RadioGroup>
             <Button variant="outlined" component="label" disabled={uploading}>
               {uploading ? <CircularProgress size={20} /> : 'Upload File'}
-              <input type="file" hidden accept={form.mediaType === 'image' ? 'image/*' : 'video/*'} onChange={(e) => { const file = e.target.files?.[0]; if (file) handleUpload(file, form.mediaType) }} />
+              <input type="file" hidden accept={form.mediaType === 'image' ? 'image/*' : 'video/*'} onChange={(e) => { const file = e.target.files?.[0]; if (file) handleUpload(file) }} />
             </Button>
             {form.url && <Box sx={{ mt: 2 }}>{form.mediaType === 'image' ? <img src={form.url} alt="Preview" style={{ width: '100%', height: 200, objectFit: 'cover', borderRadius: 8 }} /> : <video src={form.url} controls style={{ width: '100%', height: 200, borderRadius: 8 }} />}</Box>}
             <TextField label="Title" value={form.title} onChange={(e) => setForm(prev => ({ ...prev, title: e.target.value }))} required fullWidth />
