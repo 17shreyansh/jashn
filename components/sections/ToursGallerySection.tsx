@@ -118,7 +118,7 @@ const GlareCard = ({ item, index }: { item: GalleryItem; index: number }) => {
           <Typography variant="overline" sx={{ color: '#D4AF37', letterSpacing: '0.2em', mb: 1 }}>
             {item.date} — {item.category}
           </Typography>
-          <Typography variant="h4" sx={{ color: '#fff', fontFamily: '"Playfair Display", serif', fontWeight: 400 }}>
+          <Typography variant="h4" sx={{ color: '#fff', fontFamily: themeConfig.fonts.heading, fontWeight: 400 }}>
             {item.title}
           </Typography>
         </Box>
@@ -169,7 +169,6 @@ export default function EventsGallerySection() {
       ref={containerRef}
       sx={{
         py: { xs: 10, md: 20 },
-        bgcolor: '#FFFFFF', // Pure, clean white
         position: 'relative',
         overflow: 'hidden'
       }}
@@ -211,7 +210,7 @@ export default function EventsGallerySection() {
                   whileInView={{ y: 0 }}
                   transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                   sx={{ 
-                    fontFamily: '"Playfair Display", serif', 
+                    fontFamily: themeConfig.fonts.heading, 
                     fontSize: { xs: '3rem', md: '4.5rem' },
                     fontWeight: 700,
                     color: '#1a1a1a', 

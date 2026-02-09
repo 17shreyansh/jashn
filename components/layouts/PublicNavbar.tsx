@@ -71,7 +71,7 @@ export default function PublicNavbar() {
                     href={link.href} 
                     disableRipple
                     sx={{
-                      color: pathname === link.href ? themeConfig.colors.luxury : themeConfig.colors.white,
+                      color: pathname === link.href ? themeConfig.colors.luxuryL : themeConfig.colors.white,
                       fontWeight: 600,
                       fontSize: '0.9rem',
                       letterSpacing: '0.05em',
@@ -80,7 +80,7 @@ export default function PublicNavbar() {
                       position: 'relative',
                       transition: 'color 0.3s ease',
                       '&:hover': {
-                        color: themeConfig.colors.luxury,
+                        color: themeConfig.colors.luxuryL,
                         bgcolor: 'transparent',
                       },
                       '&::after': {
@@ -91,7 +91,7 @@ export default function PublicNavbar() {
                         transform: 'translateX(-50%)',
                         width: pathname === link.href ? '40%' : '0%',
                         height: '2px',
-                        background: `linear-gradient(90deg, transparent, ${themeConfig.colors.luxury}, transparent)`,
+                        background: `linear-gradient(90deg, transparent, ${themeConfig.colors.luxuryL}, transparent)`,
                         transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                       },
                       '&:hover::after': {
@@ -117,15 +117,15 @@ export default function PublicNavbar() {
                   sx={{ 
                     ml: 3, px: 5, py: 1.3,
                     borderRadius: '50px',
-                    background: `linear-gradient(135deg, ${themeConfig.colors.luxury} 0%, ${themeConfig.colors.secondary} 100%)`,
+                    background: `linear-gradient(135deg, ${themeConfig.colors.luxuryL} 0%, ${themeConfig.colors.secondary} 100%)`,
                     color: themeConfig.colors.black,
                     fontSize: '0.85rem',
                     fontWeight: 700,
                     letterSpacing: '0.08em',
-                    boxShadow: `0 4px 20px ${themeConfig.colors.luxury}40`,
+                    boxShadow: `0 4px 20px ${themeConfig.colors.luxuryL}40`,
                     '&:hover': {
-                      background: `linear-gradient(135deg, ${themeConfig.colors.secondary} 0%, ${themeConfig.colors.luxury} 100%)`,
-                      boxShadow: `0 6px 30px ${themeConfig.colors.luxury}60`,
+                      background: `linear-gradient(135deg, ${themeConfig.colors.secondary} 0%, ${themeConfig.colors.luxuryL} 100%)`,
+                      boxShadow: `0 6px 30px ${themeConfig.colors.luxuryL}60`,
                     },
                     transition: 'all 0.3s ease'
                   }}

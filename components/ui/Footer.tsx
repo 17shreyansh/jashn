@@ -39,17 +39,17 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h4 className="font-serif text-lg font-semibold mb-5 text-[#FFD700]">Services</h4>
+            <h4 className="font-serif text-lg font-semibold mb-5 text-[#FFD700]" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}>Services</h4>
             <ul className="space-y-3 text-sm">
-              <li><Link href="/events" className="text-white/70 hover:text-[#D4AF37] transition-colors inline-flex items-center gap-2 group">
+              <li><Link href="/events" className="text-white/70 hover:text-[#D4AF37] transition-colors inline-flex items-center gap-2 group" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}>
                 <span className="w-1 h-1 rounded-full bg-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity" />
                 Event Planning
               </Link></li>
-              <li><Link href="/tours" className="text-white/70 hover:text-[#D4AF37] transition-colors inline-flex items-center gap-2 group">
+              <li><Link href="/tours" className="text-white/70 hover:text-[#D4AF37] transition-colors inline-flex items-center gap-2 group" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}>
                 <span className="w-1 h-1 rounded-full bg-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity" />
                 Tours & Travel
               </Link></li>
-              <li><Link href="/gallery" className="text-white/70 hover:text-[#D4AF37] transition-colors inline-flex items-center gap-2 group">
+              <li><Link href="/gallery" className="text-white/70 hover:text-[#D4AF37] transition-colors inline-flex items-center gap-2 group" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}>
                 <span className="w-1 h-1 rounded-full bg-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity" />
                 Gallery
               </Link></li>
@@ -62,13 +62,13 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h4 className="font-serif text-lg font-semibold mb-5 text-[#FFD700]">Company</h4>
+            <h4 className="font-serif text-lg font-semibold mb-5 text-[#FFD700]" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}>Company</h4>
             <ul className="space-y-3 text-sm">
-              <li><Link href="/about" className="text-white/70 hover:text-[#D4AF37] transition-colors inline-flex items-center gap-2 group">
+              <li><Link href="/about" className="text-white/70 hover:text-[#D4AF37] transition-colors inline-flex items-center gap-2 group" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}>
                 <span className="w-1 h-1 rounded-full bg-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity" />
                 About Us
               </Link></li>
-              <li><Link href="/contact" className="text-white/70 hover:text-[#D4AF37] transition-colors inline-flex items-center gap-2 group">
+              <li><Link href="/contact" className="text-white/70 hover:text-[#D4AF37] transition-colors inline-flex items-center gap-2 group" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}>
                 <span className="w-1 h-1 rounded-full bg-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity" />
                 Contact
               </Link></li>
@@ -81,7 +81,7 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <h4 className="font-serif text-lg font-semibold mb-5 text-[#FFD700]">Connect</h4>
+            <h4 className="font-serif text-lg font-semibold mb-5 text-[#FFD700]" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}>Connect</h4>
             <div className="flex gap-3">
               <a href="#" className="w-11 h-11 rounded-full bg-white/5 hover:bg-gradient-to-br hover:from-[#6B46C1] hover:to-[#D4AF37] transition-all flex items-center justify-center group border border-white/10 hover:border-transparent hover:scale-110">
                 <svg className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -106,8 +106,8 @@ export function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/50">
             <p>&copy; {currentYear} Jashn Planners. All rights reserved.</p>
             <div className="flex gap-6">
-              <Link href="#" className="hover:text-[#D4AF37] transition-colors">Privacy Policy</Link>
-              <Link href="#" className="hover:text-[#D4AF37] transition-colors">Terms of Service</Link>
+              <Link href="#" className="hover:text-[#D4AF37] transition-colors" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}>Privacy Policy</Link>
+              <Link href="#" className="hover:text-[#D4AF37] transition-colors" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}>Terms of Service</Link>
             </div>
           </div>
         </motion.div>

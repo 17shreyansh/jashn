@@ -1,17 +1,18 @@
 export const themeConfig = {
   colors: {
     primary: '#6B46C1',      // Royal Purple
-    secondary: '#D4AF37',    // Royal Gold
+    secondary: '#d7ab18',    // Royal Gold
     accent1: '#8B5CF6',      // Violet
     accent2: '#FDF4DC',      // Ivory
-    luxury: '#FFD700',       // Pure Gold
+    luxury: '#8a7600',       // Pure Gold
+    luxuryL: '#ffd900',       // Pure Gold
     textDark: '#1F1B2E',
     textLight: '#6B5B95',
     white: '#ffffff',
     black: '#1a1a1a',
   },
   fonts: {
-    heading: '"Playfair Display", serif',
+    heading: '"Tangerine", "Great Vibes", cursive',
     body: '"Inter", sans-serif',
   },
   spacing: {

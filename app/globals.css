@@ -39,7 +39,7 @@ html {
 
 body {
   color: var(--color-primary);
-  background: #FFFFFF;
+  background: #2d1b4e;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -50,9 +50,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), 'Tangerine', cursive;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
 }
 
 a {
@@ -78,4 +79,12 @@ img {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Text shadow for yellow/gold colors for better readability */
+[style*="#D4AF37"],
+[style*="#FFD700"],
+[class*="text-secondary"],
+[class*="text-luxury"] {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
 }

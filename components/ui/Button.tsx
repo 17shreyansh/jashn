@@ -31,6 +31,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       secondary: {
         bgcolor: '#D4AF37',
         color: '#fff',
+        textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)',
         '&:hover': { bgcolor: '#b89530' }
       },
       outline: {

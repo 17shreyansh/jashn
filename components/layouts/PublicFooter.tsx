@@ -44,8 +44,8 @@ export default function PublicFooter() {
                     bgcolor: 'rgba(255,255,255,0.05)',
                     border: '1px solid rgba(255,255,255,0.1)',
                     '&:hover': { 
-                      bgcolor: themeConfig.colors.luxury,
-                      borderColor: themeConfig.colors.luxury,
+                      bgcolor: themeConfig.colors.luxuryL,
+                      borderColor: themeConfig.colors.luxuryL,
                       transform: 'translateY(-2px)'
                     },
                     transition: 'all 0.3s'
@@ -59,8 +59,8 @@ export default function PublicFooter() {
                     bgcolor: 'rgba(255,255,255,0.05)',
                     border: '1px solid rgba(255,255,255,0.1)',
                     '&:hover': { 
-                      bgcolor: themeConfig.colors.luxury,
-                      borderColor: themeConfig.colors.luxury,
+                      bgcolor: themeConfig.colors.luxuryL,
+                      borderColor: themeConfig.colors.luxuryL,
                       transform: 'translateY(-2px)'
                     },
                     transition: 'all 0.3s'
@@ -74,8 +74,8 @@ export default function PublicFooter() {
                     bgcolor: 'rgba(255,255,255,0.05)',
                     border: '1px solid rgba(255,255,255,0.1)',
                     '&:hover': { 
-                      bgcolor: themeConfig.colors.luxury,
-                      borderColor: themeConfig.colors.luxury,
+                      bgcolor: themeConfig.colors.luxuryL,
+                      borderColor: themeConfig.colors.luxuryL,
                       transform: 'translateY(-2px)'
                     },
                     transition: 'all 0.3s'
@@ -87,38 +87,38 @@ export default function PublicFooter() {
             </Box>
 
             <Box>
-              <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxury }}>
+              <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxuryL }}>
                 Services
               </Typography>
               <Stack spacing={1.5}>
                 <Link href="/events" style={{ textDecoration: 'none' }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxury }, transition: 'color 0.2s', cursor: 'pointer' }}>Event Planning</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Event Planning</Typography>
                 </Link>
                 <Link href="/tours" style={{ textDecoration: 'none' }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxury }, transition: 'color 0.2s', cursor: 'pointer' }}>Tours & Travel</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Tours & Travel</Typography>
                 </Link>
                 <Link href="/gallery" style={{ textDecoration: 'none' }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxury }, transition: 'color 0.2s', cursor: 'pointer' }}>Gallery</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Gallery</Typography>
                 </Link>
               </Stack>
             </Box>
 
             <Box>
-              <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxury }}>
+              <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxuryL }}>
                 Company
               </Typography>
               <Stack spacing={1.5}>
                 <Link href="/about" style={{ textDecoration: 'none' }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxury }, transition: 'color 0.2s', cursor: 'pointer' }}>About Us</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>About Us</Typography>
                 </Link>
                 <Link href="/contact" style={{ textDecoration: 'none' }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxury }, transition: 'color 0.2s', cursor: 'pointer' }}>Contact</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Contact</Typography>
                 </Link>
               </Stack>
             </Box>
 
             <Box>
-              <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxury }}>
+              <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxuryL }}>
                 Contact Info
               </Typography>
               <Stack spacing={1.5}>
@@ -140,16 +140,16 @@ export default function PublicFooter() {
             © {year} Jashn Planners. All rights reserved.
           </Typography>
           <Link href="https://affobe.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-            <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8125rem', '&:hover': { color: themeConfig.colors.luxury }, transition: 'color 0.2s' }}>
-              Crafted with ❤️ by <Box component="span" sx={{ color: themeConfig.colors.luxury }}>AFFOBE</Box>
+            <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8125rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s' }}>
+              Crafted with ❤️ by <Box component="span" sx={{ color: themeConfig.colors.luxuryL }}>AFFOBE</Box>
             </Typography>
           </Link>
           <Stack direction="row" spacing={3}>
             <Link href="#" style={{ textDecoration: 'none' }}>
-              <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8125rem', '&:hover': { color: themeConfig.colors.luxury }, transition: 'color 0.2s', cursor: 'pointer' }}>Privacy</Typography>
+              <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8125rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Privacy</Typography>
             </Link>
             <Link href="#" style={{ textDecoration: 'none' }}>
-              <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8125rem', '&:hover': { color: themeConfig.colors.luxury }, transition: 'color 0.2s', cursor: 'pointer' }}>Terms</Typography>
+              <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8125rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Terms</Typography>
             </Link>
           </Stack>
         </Box>

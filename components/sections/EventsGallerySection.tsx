@@ -101,7 +101,6 @@ const ParallaxCard = ({ item, index }: { item: GalleryItem; index: number }) => 
           boxShadow: isHovered 
             ? '0 30px 60px rgba(0,0,0,0.15)' // Deep premium shadow on hover
             : '0 10px 20px rgba(0,0,0,0.05)', // Subtle shadow normally
-          bgcolor: '#f0f0f0',
         }}
       >
         <Image
@@ -139,13 +138,13 @@ const ParallaxCard = ({ item, index }: { item: GalleryItem; index: number }) => 
       >
         <Typography 
           variant="overline" 
-          sx={{ color: '#D4AF37', letterSpacing: '0.2em', fontWeight: 600, fontSize: '0.7rem' }}
+          sx={{ color: '#D4AF37', letterSpacing: '0.2em', fontWeight: 600, fontSize: '0.7rem', textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}
         >
           {item.category || "Highlight"}
         </Typography>
         <Typography 
           variant="h6" 
-          sx={{ color: '#fff', fontFamily: '"Playfair Display", serif', fontWeight: 400 }}
+          sx={{ color: '#fff', fontFamily: themeConfig.fonts.heading, fontWeight: 400 }}
         >
           {item.title}
         </Typography>
@@ -232,7 +231,7 @@ export default function EventsGallerySection() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
               sx={{
-                fontFamily: '"Playfair Display", serif',
+                fontFamily: themeConfig.fonts.heading,
                 fontSize: { xs: '3rem', md: '4.5rem' },
                 fontWeight: 700,
                 lineHeight: 1.1,
