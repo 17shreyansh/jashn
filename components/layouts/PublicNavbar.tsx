@@ -54,7 +54,7 @@ export default function PublicNavbar() {
             {/* Luxury Logo */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
               <Box component={motion.div} whileHover={{ scale: 1.05 }}>
-                <Image src="/logo.png" alt="Jashn Planners" width={300} height={100} style={{ height: '90px', width: 'auto'}} />
+                <Image src="/logo.png" alt="Jashn Planners" width={300} height={100} style={{ height: '120px', width: 'auto'}} />
               </Box>
             </Link>
 

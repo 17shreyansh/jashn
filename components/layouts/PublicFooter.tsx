@@ -32,7 +32,7 @@ export default function PublicFooter() {
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(4, 1fr)' }, gap: 6 }}>
             <Box>
               <Box sx={{ mb: 3 }}>
-                <Image src="/logo.png" alt="Jashn Planners" width={200} height={67} style={{ height: '60px', width: 'auto', mixBlendMode: 'lighten' }} />
+                <Image src="/logo.png" alt="Jashn Planners" width={200} height={67} style={{ height: '100px', width: 'auto', mixBlendMode: 'lighten' }} />
               </Box>
               <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 3, lineHeight: 1.8 }}>
                 Creating unforgettable moments through premium event planning and luxury travel experiences.
