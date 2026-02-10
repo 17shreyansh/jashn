@@ -70,10 +70,10 @@ const StatBlock = ({ label, value, suffix, index, total }: any) => {
         variant="overline"
         sx={{
           color: isHovered ? themeConfig.colors.luxury : 'rgba(255,255,255,0.5)',
-          fontWeight: 600,
-          letterSpacing: '0.2em',
+          fontWeight: 700,
+          letterSpacing: '0.25em',
           mb: 2,
-          fontSize: { xs: '0.7rem', md: '0.75rem' },
+          fontSize: { xs: '0.85rem', md: '0.9rem' },
           transition: 'color 0.3s ease',
           display: 'flex',
           alignItems: 'center',
@@ -98,8 +98,8 @@ const StatBlock = ({ label, value, suffix, index, total }: any) => {
         <MotionTypography
           sx={{
             fontFamily: themeConfig.fonts.heading,
-            fontSize: { xs: '3.5rem', md: '5rem', lg: '5.5rem' },
-            fontWeight: 400,
+            fontSize: { xs: '4rem', md: '5.5rem', lg: '6rem' },
+            fontWeight: 700,
             color: '#ffffff',
             lineHeight: 1,
             letterSpacing: '-0.02em'
@@ -111,9 +111,9 @@ const StatBlock = ({ label, value, suffix, index, total }: any) => {
         <Typography
           component="span"
           sx={{
-            fontSize: { xs: '2rem', md: '3rem' },
+            fontSize: { xs: '2.5rem', md: '3.5rem' },
             color: themeConfig.colors.luxury,
-            fontWeight: 300,
+            fontWeight: 600,
             ml: 1,
             opacity: 0.8
           }}

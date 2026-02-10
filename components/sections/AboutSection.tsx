@@ -24,11 +24,11 @@ export default function AboutSection() {
               variant="overline" 
               sx={{ 
                 color: themeConfig.colors.primary, 
-                letterSpacing: '0.15em', 
-                fontWeight: 600, 
+                letterSpacing: '0.2em', 
+                fontWeight: 800, 
                 mb: 3, 
                 display: 'block',
-                fontSize: '0.75rem'
+                fontSize: '1rem'
               }}
             >
               ABOUT JASHN PLANNERS
@@ -46,10 +46,11 @@ export default function AboutSection() {
               variant="h2" 
               sx={{ 
                 fontFamily: themeConfig.fonts.heading, 
-                fontSize: { xs: '2rem', md: '3rem' }, 
+                fontSize: { xs: '2.5rem', md: '3.5rem' }, 
                 lineHeight: 1.2,
                 color: themeConfig.colors.textDark,
-                mb: 2
+                mb: 2,
+                fontWeight: 800
               }}
             >
               Events & Holidays
@@ -58,10 +59,10 @@ export default function AboutSection() {
               variant="h3" 
               sx={{ 
                 fontFamily: themeConfig.fonts.heading, 
-                fontSize: { xs: '1.5rem', md: '2rem' }, 
+                fontSize: { xs: '1.75rem', md: '2.25rem' }, 
                 lineHeight: 1.3,
                 color: themeConfig.colors.textLight,
-                fontWeight: 400
+                fontWeight: 600
               }}
             >
               Crafted with Passion, Celebrated with Joy
@@ -77,11 +78,12 @@ export default function AboutSection() {
             <Typography 
               sx={{ 
                 color: themeConfig.colors.textLight, 
-                fontSize: { xs: '1rem', md: '1.125rem' }, 
+                fontSize: { xs: '1.125rem', md: '1.25rem' }, 
                 lineHeight: 1.8, 
                 mb: 5,
                 maxWidth: '700px',
-                mx: 'auto'
+                mx: 'auto',
+                fontWeight: 600
               }}
             >
               At Jashn Planners, we specialize in creating unforgettable experiences. From dream weddings to luxury holiday packages, we bring your vision to life with meticulous attention to detail and personalized service.
@@ -109,15 +111,15 @@ export default function AboutSection() {
               <Box key={i} sx={{ textAlign: 'center', minWidth: '120px' }}>
                 <Typography 
                   sx={{ 
-                    fontSize: { xs: '2rem', md: '2.5rem' }, 
-                    fontWeight: 700, 
+                    fontSize: { xs: '2.5rem', md: '3rem' }, 
+                    fontWeight: 800, 
                     color: themeConfig.colors.primary,
                     fontFamily: themeConfig.fonts.heading
                   }}
                 >
                   {stat.value}
                 </Typography>
-                <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight, letterSpacing: '0.05em' }}>
+                <Typography sx={{ fontSize: '1rem', color: themeConfig.colors.textLight, letterSpacing: '0.05em', fontWeight: 600 }}>
                   {stat.label}
                 </Typography>
               </Box>
@@ -136,13 +138,13 @@ export default function AboutSection() {
                 sx={{
                   bgcolor: themeConfig.colors.primary,
                   color: themeConfig.colors.white,
-                  px: 4,
-                  py: 1.5,
-                  fontSize: '0.875rem',
+                  px: 5,
+                  py: 2,
+                  fontSize: '1rem',
                   letterSpacing: '0.1em',
                   borderRadius: '4px',
                   textTransform: 'uppercase',
-                  fontWeight: 600,
+                  fontWeight: 800,
                   '&:hover': {
                     bgcolor: themeConfig.colors.primary,
                     opacity: 0.9

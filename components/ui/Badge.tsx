@@ -15,7 +15,7 @@ export function Badge({ variant = 'primary', children, className = '', ...props 
 
   return (
     <span
-      className={`inline-block px-3 py-1 text-sm font-medium rounded-full border ${variants[variant]} ${className}`}
+      className={`inline-block px-4 py-1.5 text-base font-bold rounded-full border ${variants[variant]} ${className}`}
       {...props}
     >
       {children}

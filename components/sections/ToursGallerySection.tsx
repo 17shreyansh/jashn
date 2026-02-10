@@ -115,10 +115,10 @@ const GlareCard = ({ item, index }: { item: GalleryItem; index: number }) => {
             transform: 'translateZ(30px)' // Text floats above image
           }}
         >
-          <Typography variant="overline" sx={{ color: '#D4AF37', letterSpacing: '0.2em', mb: 1 }}>
+          <Typography variant="overline" sx={{ color: '#D4AF37', letterSpacing: '0.2em', mb: 1, fontWeight: 900, fontSize: '0.9rem', textShadow: '0 3px 6px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.4)' }}>
             {item.date} — {item.category}
           </Typography>
-          <Typography variant="h4" sx={{ color: '#fff', fontFamily: themeConfig.fonts.heading, fontWeight: 400 }}>
+          <Typography variant="h4" sx={{ color: '#fff', fontFamily: themeConfig.fonts.heading, fontWeight: 700, fontSize: '1.75rem' }}>
             {item.title}
           </Typography>
         </Box>
@@ -195,8 +195,8 @@ export default function EventsGallerySection() {
                     display: 'block',
                     textTransform: 'uppercase',
                     letterSpacing: '0.35em',
-                    fontWeight: 300,
-                    fontSize: { xs: 12, md: 14 },
+                    fontWeight: 900,
+                    fontSize: { xs: 16, md: 18 },
                     color: themeConfig.colors.luxury,
                     mb: 1
                   }}

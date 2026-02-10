@@ -36,8 +36,8 @@ export default async function EventsPage() {
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <Typography sx={{ 
             fontFamily: themeConfig.fonts.heading, 
-            fontSize: { xs: '3rem', md: '5rem' },
-            fontWeight: 700,
+            fontSize: { xs: '3.5rem', md: '5.5rem' },
+            fontWeight: 800,
             color: themeConfig.colors.white,
             mb: 3,
             lineHeight: 1.1,
@@ -46,8 +46,8 @@ export default async function EventsPage() {
           <Box sx={{ width: 80, height: 2, bgcolor: themeConfig.colors.luxury, mx: 'auto', mb: 4 }} />
           <Typography sx={{ 
             color: 'rgba(255,255,255,0.7)', 
-            fontSize: { xs: '1.1rem', md: '1.3rem' },
-            fontWeight: 300,
+            fontSize: { xs: '1.25rem', md: '1.5rem' },
+            fontWeight: 600,
             lineHeight: 1.7
           }}>Celebrations crafted to perfection</Typography>
         </Container>
@@ -59,9 +59,9 @@ export default async function EventsPage() {
           {events.length === 0 ? (
             <Box sx={{ textAlign: 'center', py: 12 }}>
               <Typography sx={{ 
-                fontSize: '1.25rem', 
+                fontSize: '1.5rem', 
                 color: themeConfig.colors.textLight,
-                fontWeight: 300
+                fontWeight: 600
               }}>No events available at the moment.</Typography>
             </Box>
           ) : (
@@ -122,8 +122,8 @@ export default async function EventsPage() {
                     <Box sx={{ p: 4, flex: 1, display: 'flex', flexDirection: 'column' }}>
                       <Typography sx={{ 
                         fontFamily: themeConfig.fonts.heading,
-                        fontSize: '1.5rem',
-                        fontWeight: 600,
+                        fontSize: '1.75rem',
+                        fontWeight: 700,
                         mb: 2,
                         color: themeConfig.colors.textDark,
                         lineHeight: 1.3
@@ -132,8 +132,9 @@ export default async function EventsPage() {
                         color: themeConfig.colors.textLight, 
                         mb: 3, 
                         flex: 1,
-                        fontSize: '0.9375rem',
+                        fontSize: '1.0625rem',
                         lineHeight: 1.7,
+                        fontWeight: 600,
                         display: '-webkit-box',
                         WebkitLineClamp: 3,
                         WebkitBoxOrient: 'vertical',

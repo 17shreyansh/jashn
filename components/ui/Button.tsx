@@ -17,9 +17,9 @@ const MotionButton = motion(MuiButton)
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', size = 'md', loading, children, sx, ...props }, ref) => {
     const sizes = {
-      sm: { px: 4, py: 2, fontSize: '0.75rem' },
-      md: { px: 6, py: 3, fontSize: '0.875rem' },
-      lg: { px: 8, py: 3.5, fontSize: '0.875rem' },
+      sm: { px: 5, py: 2.5, fontSize: '1rem' },
+      md: { px: 7, py: 3.5, fontSize: '1.125rem' },
+      lg: { px: 9, py: 4, fontSize: '1.25rem' },
     }
 
     const variants = {
@@ -57,9 +57,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ...sizes[size],
           ...variants[variant],
           borderRadius: '999px',
-          fontWeight: 600,
+          fontWeight: 800,
           textTransform: 'uppercase',
-          letterSpacing: '0.1em',
+          letterSpacing: '0.12em',
           transition: 'all 0.3s ease',
           ...sx,
         }}

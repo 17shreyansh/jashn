@@ -87,45 +87,45 @@ export default function PublicFooter() {
             </Box>
 
             <Box>
-              <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxuryL }}>
+              <Typography sx={{ fontWeight: 700, mb: 2.5, fontSize: '1rem', color: themeConfig.colors.luxuryL }}>
                 Services
               </Typography>
               <Stack spacing={1.5}>
                 <Link href="/events" style={{ textDecoration: 'none' }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Event Planning</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer', fontWeight: 600 }}>Event Planning</Typography>
                 </Link>
                 <Link href="/tours" style={{ textDecoration: 'none' }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Tours & Travel</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer', fontWeight: 600 }}>Tours & Travel</Typography>
                 </Link>
                 <Link href="/gallery" style={{ textDecoration: 'none' }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Gallery</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer', fontWeight: 600 }}>Gallery</Typography>
                 </Link>
               </Stack>
             </Box>
 
             <Box>
-              <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxuryL }}>
+              <Typography sx={{ fontWeight: 700, mb: 2.5, fontSize: '1rem', color: themeConfig.colors.luxuryL }}>
                 Company
               </Typography>
               <Stack spacing={1.5}>
                 <Link href="/about" style={{ textDecoration: 'none' }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>About Us</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer', fontWeight: 600 }}>About Us</Typography>
                 </Link>
                 <Link href="/contact" style={{ textDecoration: 'none' }}>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Contact</Typography>
+                  <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer', fontWeight: 600 }}>Contact</Typography>
                 </Link>
               </Stack>
             </Box>
 
             <Box>
-              <Typography sx={{ fontWeight: 600, mb: 2.5, fontSize: '0.875rem', color: themeConfig.colors.luxuryL }}>
+              <Typography sx={{ fontWeight: 700, mb: 2.5, fontSize: '1rem', color: themeConfig.colors.luxuryL }}>
                 Contact Info
               </Typography>
               <Stack spacing={1.5}>
-                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem' }}>
+                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', fontWeight: 600 }}>
                   Email: hello@jashn.com
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem' }}>
+                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', fontWeight: 600 }}>
                   Phone: +1 (555) 123-4567
                 </Typography>
               </Stack>
@@ -136,20 +136,20 @@ export default function PublicFooter() {
         <Divider sx={{ borderColor: 'rgba(255,255,255,0.08)' }} />
 
         <Box sx={{ py: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
-          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8125rem' }}>
+          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem', fontWeight: 600 }}>
             © {year} Jashn Planners. All rights reserved.
           </Typography>
           <Link href="https://affobe.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-            <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8125rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s' }}>
+            <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', fontWeight: 600 }}>
               Crafted with ❤️ by <Box component="span" sx={{ color: themeConfig.colors.luxuryL }}>AFFOBE</Box>
             </Typography>
           </Link>
           <Stack direction="row" spacing={3}>
             <Link href="#" style={{ textDecoration: 'none' }}>
-              <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8125rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Privacy</Typography>
+              <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer', fontWeight: 600 }}>Privacy</Typography>
             </Link>
             <Link href="#" style={{ textDecoration: 'none' }}>
-              <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8125rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer' }}>Terms</Typography>
+              <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem', '&:hover': { color: themeConfig.colors.luxuryL }, transition: 'color 0.2s', cursor: 'pointer', fontWeight: 600 }}>Terms</Typography>
             </Link>
           </Stack>
         </Box>

@@ -40,16 +40,16 @@ export default function AboutPage() {
           >
             <Typography sx={{ 
               color: themeConfig.colors.luxury, 
-              letterSpacing: '0.25em', 
-              fontWeight: 600, 
-              fontSize: '0.75rem',
+              letterSpacing: '0.3em', 
+              fontWeight: 800, 
+              fontSize: '1rem',
               mb: 3,
               textTransform: 'uppercase'
             }}>SINCE 2009</Typography>
             <Typography sx={{ 
               fontFamily: themeConfig.fonts.heading, 
-              fontSize: { xs: '3rem', md: '5rem' },
-              fontWeight: 700,
+              fontSize: { xs: '3.5rem', md: '5.5rem' },
+              fontWeight: 800,
               color: themeConfig.colors.white,
               mb: 3,
               lineHeight: 1.1,
@@ -58,10 +58,10 @@ export default function AboutPage() {
             <Box sx={{ width: 80, height: 2, bgcolor: themeConfig.colors.luxury, mx: 'auto', mb: 4 }} />
             <Typography sx={{ 
               color: 'rgba(255,255,255,0.7)', 
-              fontSize: { xs: '1.1rem', md: '1.3rem' },
+              fontSize: { xs: '1.25rem', md: '1.5rem' },
               maxWidth: 700, 
               mx: 'auto', 
-              fontWeight: 300,
+              fontWeight: 600,
               lineHeight: 1.7
             }}>Creating unforgettable moments and extraordinary memories</Typography>
           </MotionBox>
@@ -81,16 +81,16 @@ export default function AboutPage() {
               >
                 <Typography sx={{ 
                   color: themeConfig.colors.primary, 
-                  letterSpacing: '0.2em', 
-                  fontWeight: 600,
-                  fontSize: '0.75rem',
+                  letterSpacing: '0.25em', 
+                  fontWeight: 800,
+                  fontSize: '1rem',
                   mb: 2,
                   textTransform: 'uppercase'
                 }}>OUR STORY</Typography>
                 <Typography sx={{ 
                   fontFamily: themeConfig.fonts.heading,
-                  fontSize: { xs: '2.5rem', md: '3.5rem' },
-                  fontWeight: 700,
+                  fontSize: { xs: '3rem', md: '4rem' },
+                  fontWeight: 800,
                   mb: 4,
                   lineHeight: 1.2,
                   color: themeConfig.colors.textDark
@@ -98,16 +98,18 @@ export default function AboutPage() {
                 <Typography sx={{ 
                   color: themeConfig.colors.textLight, 
                   mb: 3, 
-                  fontSize: '1.0625rem', 
-                  lineHeight: 1.8 
+                  fontSize: '1.2rem', 
+                  lineHeight: 1.8,
+                  fontWeight: 600
                 }}>
                   Jashn Planners was founded with a simple vision: to transform ordinary moments into extraordinary memories. With over 15 years of experience in event planning and luxury travel, we bring creativity, precision, and passion to every project.
                 </Typography>
                 <Typography sx={{ 
                   color: themeConfig.colors.textLight, 
                   mb: 5, 
-                  fontSize: '1.0625rem', 
-                  lineHeight: 1.8 
+                  fontSize: '1.2rem', 
+                  lineHeight: 1.8,
+                  fontWeight: 600
                 }}>
                   From intimate gatherings to grand celebrations, from exotic destinations to hidden gems, we curate experiences that reflect your unique style and exceed your expectations.
                 </Typography>
@@ -120,7 +122,7 @@ export default function AboutPage() {
                   ].map((text, i) => (
                     <Box key={i} sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                       <CheckCircleIcon sx={{ color: themeConfig.colors.luxury, fontSize: 24 }} />
-                      <Typography sx={{ fontSize: '1rem', fontWeight: 500, color: themeConfig.colors.textDark }}>{text}</Typography>
+                      <Typography sx={{ fontSize: '1.125rem', fontWeight: 700, color: themeConfig.colors.textDark }}>{text}</Typography>
                     </Box>
                   ))}
                 </Box>
@@ -155,8 +157,8 @@ export default function AboutPage() {
                     }}
                   >
                     <Box sx={{ color: themeConfig.colors.luxury, mb: 2 }}>{card.icon}</Box>
-                    <Typography sx={{ fontWeight: 600, fontSize: '1.125rem', mb: 0.5, color: themeConfig.colors.textDark }}>{card.title}</Typography>
-                    <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight }}>{card.sub}</Typography>
+                    <Typography sx={{ fontWeight: 700, fontSize: '1.3rem', mb: 0.5, color: themeConfig.colors.textDark }}>{card.title}</Typography>
+                    <Typography sx={{ fontSize: '1rem', color: themeConfig.colors.textLight, fontWeight: 600 }}>{card.sub}</Typography>
                   </MotionBox>
                 ))}
               </MotionBox>
@@ -182,16 +184,16 @@ export default function AboutPage() {
           <Box sx={{ textAlign: 'center', mb: 10 }}>
             <Typography sx={{ 
               color: themeConfig.colors.luxury, 
-              letterSpacing: '0.2em', 
-              fontWeight: 600,
-              fontSize: '0.75rem',
+              letterSpacing: '0.25em', 
+              fontWeight: 800,
+              fontSize: '1rem',
               mb: 2,
               textTransform: 'uppercase'
             }}>EXCELLENCE</Typography>
             <Typography sx={{ 
               fontFamily: themeConfig.fonts.heading,
-              fontSize: { xs: '2.5rem', md: '3.5rem' },
-              fontWeight: 700,
+              fontSize: { xs: '3rem', md: '4rem' },
+              fontWeight: 800,
               color: themeConfig.colors.white,
               lineHeight: 1.2
             }}>Why Choose Us</Typography>
@@ -229,15 +231,16 @@ export default function AboutPage() {
                     <Box>
                       <Typography sx={{ 
                         fontFamily: themeConfig.fonts.heading,
-                        fontSize: '1.5rem',
-                        fontWeight: 600,
+                        fontSize: '1.75rem',
+                        fontWeight: 700,
                         mb: 2,
                         color: themeConfig.colors.white
                       }}>{item.title}</Typography>
                       <Typography sx={{ 
                         color: 'rgba(255,255,255,0.7)', 
                         lineHeight: 1.8,
-                        fontSize: '1rem'
+                        fontSize: '1.125rem',
+                        fontWeight: 600
                       }}>{item.desc}</Typography>
                     </Box>
                   </Box>

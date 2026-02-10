@@ -71,9 +71,9 @@ export default function PublicNavbar() {
                     href={link.href} 
                     disableRipple
                     sx={{
-                      color: pathname === link.href ? themeConfig.colors.luxuryL : themeConfig.colors.white,
-                      fontWeight: 600,
-                      fontSize: '0.9rem',
+                      color: themeConfig.colors.luxuryL,
+                      fontWeight: 700,
+                      fontSize: '1.1rem',
                       letterSpacing: '0.05em',
                       px: 3,
                       py: 1,
@@ -115,12 +115,12 @@ export default function PublicNavbar() {
                   variant="contained"
                   disableElevation
                   sx={{ 
-                    ml: 3, px: 5, py: 1.3,
+                    ml: 3, px: 6, py: 1.6,
                     borderRadius: '50px',
                     background: `linear-gradient(135deg, ${themeConfig.colors.luxuryL} 0%, ${themeConfig.colors.secondary} 100%)`,
                     color: themeConfig.colors.black,
-                    fontSize: '0.85rem',
-                    fontWeight: 700,
+                    fontSize: '1rem',
+                    fontWeight: 800,
                     letterSpacing: '0.08em',
                     boxShadow: `0 4px 20px ${themeConfig.colors.luxuryL}40`,
                     '&:hover': {
@@ -229,8 +229,8 @@ export default function PublicNavbar() {
                   <ListItemText 
                     primary={link.label} 
                     primaryTypographyProps={{ 
-                      fontSize: '1.4rem', 
-                      fontWeight: 600, 
+                      fontSize: '1.6rem', 
+                      fontWeight: 700, 
                       color: pathname === link.href ? themeConfig.colors.luxury : themeConfig.colors.white,
                       letterSpacing: '0.02em'
                     }} 
@@ -252,12 +252,12 @@ export default function PublicNavbar() {
               href="/contact"
               onClick={() => setOpen(false)}
               sx={{ 
-                py: 2.5, 
+                py: 3, 
                 borderRadius: '50px',
                 background: `linear-gradient(135deg, ${themeConfig.colors.luxury} 0%, ${themeConfig.colors.secondary} 100%)`,
                 color: themeConfig.colors.black,
-                fontWeight: 700,
-                fontSize: '1rem',
+                fontWeight: 800,
+                fontSize: '1.1rem',
                 letterSpacing: '0.08em',
                 boxShadow: `0 4px 20px ${themeConfig.colors.luxury}40`,
                 '&:hover': {

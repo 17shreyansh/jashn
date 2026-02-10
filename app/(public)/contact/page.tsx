@@ -74,8 +74,8 @@ export default function ContactPage() {
           >
             <Typography sx={{ 
               fontFamily: themeConfig.fonts.heading,
-              fontSize: { xs: '3rem', md: '4.5rem' },
-              fontWeight: 700,
+              fontSize: { xs: '3.5rem', md: '5rem' },
+              fontWeight: 800,
               color: themeConfig.colors.white,
               mb: 3,
               lineHeight: 1.1,
@@ -84,8 +84,8 @@ export default function ContactPage() {
             <Box sx={{ width: 80, height: 2, bgcolor: themeConfig.colors.luxury, mx: 'auto', mb: 4 }} />
             <Typography sx={{ 
               color: 'rgba(255,255,255,0.7)', 
-              fontSize: { xs: '1.1rem', md: '1.3rem' },
-              fontWeight: 300,
+              fontSize: { xs: '1.25rem', md: '1.5rem' },
+              fontWeight: 600,
               lineHeight: 1.7
             }}>Let's create something extraordinary together</Typography>
           </MotionBox>
@@ -113,8 +113,8 @@ export default function ContactPage() {
               >
                 <Typography sx={{ 
                   fontFamily: themeConfig.fonts.heading,
-                  fontSize: { xs: '2rem', md: '2.5rem' },
-                  fontWeight: 600,
+                  fontSize: { xs: '2.25rem', md: '2.75rem' },
+                  fontWeight: 700,
                   mb: 5,
                   color: themeConfig.colors.textDark
                 }}>Send Us a Message</Typography>
@@ -188,12 +188,12 @@ export default function ContactPage() {
                       disabled={loading} 
                       endIcon={<SendIcon />}
                       sx={{
-                        py: 2,
+                        py: 2.5,
                         borderRadius: '999px',
                         background: `linear-gradient(135deg, ${themeConfig.colors.luxury}, ${themeConfig.colors.secondary})`,
                         color: themeConfig.colors.black,
-                        fontWeight: 700,
-                        fontSize: '1rem',
+                        fontWeight: 800,
+                        fontSize: '1.125rem',
                         letterSpacing: '0.05em',
                         boxShadow: `0 8px 24px ${themeConfig.colors.luxury}40`,
                         '&:hover': {
@@ -226,8 +226,8 @@ export default function ContactPage() {
                 >
                   <Typography sx={{ 
                     fontFamily: themeConfig.fonts.heading,
-                    fontSize: '1.75rem',
-                    fontWeight: 600,
+                    fontSize: '2rem',
+                    fontWeight: 700,
                     mb: 4,
                     color: themeConfig.colors.textDark
                   }}>Contact Information</Typography>
@@ -246,8 +246,8 @@ export default function ContactPage() {
                         <EmailIcon sx={{ color: themeConfig.colors.luxury, fontSize: 24 }} />
                       </Box>
                       <Box>
-                        <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight, mb: 0.5 }}>Email</Typography>
-                        <Typography sx={{ fontWeight: 600, color: themeConfig.colors.textDark }}>info@jashnplanners.com</Typography>
+                        <Typography sx={{ fontSize: '1rem', color: themeConfig.colors.textLight, mb: 0.5, fontWeight: 600 }}>Email</Typography>
+                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.125rem' }}>info@jashnplanners.com</Typography>
                       </Box>
                     </Box>
                     <Box sx={{ display: 'flex', gap: 2.5, alignItems: 'flex-start' }}>
@@ -264,8 +264,8 @@ export default function ContactPage() {
                         <PhoneIcon sx={{ color: themeConfig.colors.luxury, fontSize: 24 }} />
                       </Box>
                       <Box>
-                        <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight, mb: 0.5 }}>Phone</Typography>
-                        <Typography sx={{ fontWeight: 600, color: themeConfig.colors.textDark }}>+91 98765 43210</Typography>
+                        <Typography sx={{ fontSize: '1rem', color: themeConfig.colors.textLight, mb: 0.5, fontWeight: 600 }}>Phone</Typography>
+                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.125rem' }}>+91 98765 43210</Typography>
                       </Box>
                     </Box>
                     <Box sx={{ display: 'flex', gap: 2.5, alignItems: 'flex-start' }}>
@@ -282,8 +282,8 @@ export default function ContactPage() {
                         <LocationOnIcon sx={{ color: themeConfig.colors.luxury, fontSize: 24 }} />
                       </Box>
                       <Box>
-                        <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight, mb: 0.5 }}>Address</Typography>
-                        <Typography sx={{ fontWeight: 600, color: themeConfig.colors.textDark }}>123 Event Street, Mumbai, India</Typography>
+                        <Typography sx={{ fontSize: '1rem', color: themeConfig.colors.textLight, mb: 0.5, fontWeight: 600 }}>Address</Typography>
+                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.125rem' }}>123 Event Street, Mumbai, India</Typography>
                       </Box>
                     </Box>
                   </Box>
@@ -306,23 +306,23 @@ export default function ContactPage() {
                     <AccessTimeIcon sx={{ color: themeConfig.colors.luxury, fontSize: 28 }} />
                     <Typography sx={{ 
                       fontFamily: themeConfig.fonts.heading,
-                      fontSize: '1.75rem',
-                      fontWeight: 600,
+                      fontSize: '2rem',
+                      fontWeight: 700,
                       color: themeConfig.colors.white
                     }}>Business Hours</Typography>
                   </Box>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <Typography sx={{ color: 'rgba(255,255,255,0.6)' }}>Monday - Friday</Typography>
-                      <Typography sx={{ fontWeight: 600, color: themeConfig.colors.white }}>9:00 AM - 6:00 PM</Typography>
+                      <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1.125rem', fontWeight: 600 }}>Monday - Friday</Typography>
+                      <Typography sx={{ fontWeight: 700, color: themeConfig.colors.white, fontSize: '1.125rem' }}>9:00 AM - 6:00 PM</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <Typography sx={{ color: 'rgba(255,255,255,0.6)' }}>Saturday</Typography>
-                      <Typography sx={{ fontWeight: 600, color: themeConfig.colors.white }}>10:00 AM - 4:00 PM</Typography>
+                      <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1.125rem', fontWeight: 600 }}>Saturday</Typography>
+                      <Typography sx={{ fontWeight: 700, color: themeConfig.colors.white, fontSize: '1.125rem' }}>10:00 AM - 4:00 PM</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <Typography sx={{ color: 'rgba(255,255,255,0.6)' }}>Sunday</Typography>
-                      <Typography sx={{ fontWeight: 600, color: themeConfig.colors.luxury }}>Closed</Typography>
+                      <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1.125rem', fontWeight: 600 }}>Sunday</Typography>
+                      <Typography sx={{ fontWeight: 700, color: themeConfig.colors.luxury, fontSize: '1.125rem' }}>Closed</Typography>
                     </Box>
                   </Box>
                 </MotionBox>

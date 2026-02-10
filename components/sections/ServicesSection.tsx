@@ -166,18 +166,18 @@ export default function ServicesSection() {
                 <Typography
                   sx={{
                     fontFamily: themeConfig.fonts.heading,
-                    fontWeight: 700,
                     fontSize:
                       hoveredIndex === index || activeIndex === index
-                        ? { xs: '2.2rem', sm: '2.5rem', md: '3rem', lg: '3.5rem' }
-                        : { xs: '1.8rem', sm: '2rem', md: '2.5rem', lg: '2.8rem' },
+                        ? { xs: '2.5rem', sm: '3rem', md: '3.5rem', lg: '4rem' }
+                        : { xs: '2rem', sm: '2.5rem', md: '3rem', lg: '3.5rem' },
                     lineHeight: 1.1,
                     mb: { xs: 2, md: 3 },
                     color: themeConfig.colors.white,
                     transition: 'font-size 0.5s ease',
                     letterSpacing: '-0.02em',
                     pr: { xs: 8, md: 10 },
-                    textShadow: '0 2px 10px rgba(0,0,0,0.3)'
+                    textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                    fontWeight: 800
                   }}
                 >
                   {service.title.split(' ').map((word, i) => (
@@ -197,11 +197,11 @@ export default function ServicesSection() {
                     >
                       <Typography
                         sx={{
-                          fontSize: { xs: '0.95rem', sm: '1rem', md: '1.05rem' },
+                          fontSize: { xs: '1.1rem', sm: '1.15rem', md: '1.2rem' },
                           lineHeight: 1.8,
                           color: 'rgba(255,255,255,0.9)',
                           maxWidth: { xs: '100%', md: '450px' },
-                          fontWeight: 300,
+                          fontWeight: 600,
                           pr: { xs: 2, md: 0 },
                           textShadow: '0 1px 5px rgba(0,0,0,0.3)'
                         }}
@@ -229,9 +229,9 @@ export default function ServicesSection() {
                   >
                     <Typography
                       sx={{
-                        fontWeight: 600,
+                        fontWeight: 700,
                         letterSpacing: { xs: '0.1em', md: '0.15em' },
-                        fontSize: { xs: '0.7rem', md: '0.75rem' },
+                        fontSize: { xs: '0.85rem', md: '0.9rem' },
                         textTransform: 'uppercase'
                       }}
                     >

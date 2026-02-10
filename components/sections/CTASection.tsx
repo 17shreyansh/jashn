@@ -51,8 +51,8 @@ export default function CTASection() {
           <Typography 
             sx={{ 
               fontFamily: themeConfig.fonts.heading,
-              fontSize: { xs: '2.5rem', md: '3.5rem' },
-              fontWeight: 700,
+              fontSize: { xs: '3rem', md: '4rem' },
+              fontWeight: 800,
               color: 'white',
               mb: 3,
               lineHeight: 1.2
@@ -65,9 +65,9 @@ export default function CTASection() {
           
           <Typography sx={{ 
             mb: 6, 
-            fontSize: { xs: '1.1rem', md: '1.3rem' }, 
+            fontSize: { xs: '1.25rem', md: '1.5rem' }, 
             color: 'rgba(255,255,255,0.8)',
-            fontWeight: 300,
+            fontWeight: 600,
             maxWidth: 600,
             mx: 'auto',
             lineHeight: 1.7
@@ -81,10 +81,10 @@ export default function CTASection() {
                 variant="contained"
                 size="large"
                 sx={{ 
-                  px: 7, 
-                  py: 2, 
-                  fontSize: '1.1rem',
-                  fontWeight: 700,
+                  px: 8, 
+                  py: 2.5, 
+                  fontSize: '1.25rem',
+                  fontWeight: 800,
                   borderRadius: '999px',
                   bgcolor: themeConfig.colors.luxury,
                   color: themeConfig.colors.black,
@@ -106,10 +106,10 @@ export default function CTASection() {
                 variant="outlined"
                 size="large"
                 sx={{ 
-                  px: 7, 
-                  py: 2, 
-                  fontSize: '1.1rem',
-                  fontWeight: 700,
+                  px: 8, 
+                  py: 2.5, 
+                  fontSize: '1.25rem',
+                  fontWeight: 800,
                   borderRadius: '999px',
                   borderWidth: 2,
                   borderColor: 'white',

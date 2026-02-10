@@ -138,13 +138,13 @@ const ParallaxCard = ({ item, index }: { item: GalleryItem; index: number }) => 
       >
         <Typography 
           variant="overline" 
-          sx={{ color: '#D4AF37', letterSpacing: '0.2em', fontWeight: 600, fontSize: '0.7rem', textShadow: '0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)' }}
+          sx={{ color: '#D4AF37', letterSpacing: '0.2em', fontWeight: 900, fontSize: '0.9rem', textShadow: '0 3px 6px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.4)' }}
         >
           {item.category || "Highlight"}
         </Typography>
         <Typography 
           variant="h6" 
-          sx={{ color: '#fff', fontFamily: themeConfig.fonts.heading, fontWeight: 400 }}
+          sx={{ color: '#fff', fontFamily: themeConfig.fonts.heading, fontWeight: 700, fontSize: '1.5rem' }}
         >
           {item.title}
         </Typography>
@@ -216,8 +216,8 @@ export default function EventsGallerySection() {
               sx={{ 
                 textTransform: 'uppercase',
                 letterSpacing: '0.35em',
-                fontWeight: 300,
-                fontSize: { xs: 12, md: 14 },
+                fontWeight: 900,
+                fontSize: { xs: 16, md: 18 },
                 color: themeConfig.colors.luxury,
                 mb: 2,
                 display: 'block'

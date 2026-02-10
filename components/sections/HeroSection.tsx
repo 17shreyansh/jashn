@@ -18,16 +18,16 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 }
+    transition: { staggerChildren: 0.18 }
   }
 }
 
 const itemVariants = {
-  hidden: { y: 30, opacity: 0 },
+  hidden: { y: 40, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
-    transition: { duration: 0.8 }
+    transition: { duration: 0.9, ease: 'easeOut' }
   }
 }
 
@@ -39,7 +39,11 @@ export default function HeroSection() {
     offset: ['start start', 'end start']
   })
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '25%'])
+  const backgroundY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ['0%', '30%']
+  )
 
   return (
     <Box
@@ -49,38 +53,43 @@ export default function HeroSection() {
         height: '100vh',
         minHeight: 720,
         overflow: 'hidden',
-        color: 'white'
+        color: '#fff'
       }}
     >
-      {/* IMAGE */}
+
+      {/* PARALLAX IMAGE */}
 
       <motion.div
         style={{ y: backgroundY, position: 'absolute', inset: 0 }}
       >
         <Image
-          src="/taj3.jpeg"
+          src="/bg.jpg"
           alt="Luxury"
           fill
           priority
           style={{
             objectFit: 'cover',
-            objectPosition: 'center'
+            objectPosition: 'center',
+            filter: 'brightness(1.5) saturate(1.2)'
           }}
         />
       </motion.div>
 
-      {/* SUBTLE GRADIENT FOR READABILITY */}
+      {/* DARK LUXURY OVERLAY (FIXES CONTRAST) */}
+
+      
+
+      {/* GOLD ACCENT GLOW */}
 
       <Box
         sx={{
           position: 'absolute',
           inset: 0,
           background: `
-            linear-gradient(
-              to top,
-              rgba(0,0,0,0.55) 0%,
-              rgba(0,0,0,0.25) 30%,
-              transparent 60%
+            radial-gradient(
+              circle at 20% 30%,
+              rgba(212,175,55,0.18),
+              transparent 40%
             )
           `
         }}
@@ -106,6 +115,7 @@ export default function HeroSection() {
           animate="visible"
           maxWidth={650}
         >
+
           {/* TITLE */}
 
           <Box
@@ -113,38 +123,41 @@ export default function HeroSection() {
             variants={itemVariants}
             sx={{
               fontFamily: themeConfig.fonts.heading,
-              fontWeight: 700,
-              fontSize: { xs: 42, md: 72 },
+              fontWeight: 900,
+              fontSize: { xs: 56, md: 110 },
               lineHeight: 1.05,
-              m: 0
+              m: 0,
+              mb: 2,
+              background: 'linear-gradient(90deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #FFA500 75%, #FFD700 100%)',
+              backgroundSize: '200% auto',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              letterSpacing: '-1px',
+              animation: 'sparkle 3s linear infinite',
+              filter: 'drop-shadow(0 6px 30px rgba(255,215,0,0.8)) drop-shadow(0 2px 10px rgba(255,215,0,0.9))',
+              '@keyframes sparkle': {
+                '0%': { backgroundPosition: '0% center' },
+                '100%': { backgroundPosition: '200% center' }
+              }
             }}
           >
-            Jashn
+            Jashn Planners
           </Box>
 
-          <Box
-            component={motion.div}
-            variants={itemVariants}
-            sx={{
-              letterSpacing: '0.4em',
-              color: themeConfig.colors.luxuryL,
-              mb: 2
-            }}
-          >
-            PLANNERS
-          </Box>
-
-          {/* EVENTS & HOLIDAYS */}
+          {/* LABEL */}
 
           <Box
             component={motion.div}
             variants={itemVariants}
             sx={{
               textTransform: 'uppercase',
-              letterSpacing: '0.35em',
-              fontSize: 13,
-              opacity: 0.85,
-              mb: 3
+              letterSpacing: '0.4em',
+              fontSize: 22,
+              fontWeight: 900,
+              color: '#fff',
+              mb: 3,
+              textShadow: '0 2px 10px rgba(0,0,0,0.5)'
             }}
           >
             Events & Holidays
@@ -152,18 +165,21 @@ export default function HeroSection() {
 
           {/* TAGLINE */}
 
-          <Box
+          <Typography
             component={motion.div}
             variants={itemVariants}
             sx={{
-              fontSize: { xs: 16, md: 18 },
-              mb: 5,
-              maxWidth: 520,
-              opacity: 0.9
+              fontSize: { xs: 22, md: 26 },
+              fontWeight: 800,
+              mb: 6,
+              maxWidth: 560,
+              color: '#fff',
+              lineHeight: 1.7,
+              textShadow: '0 2px 12px rgba(0,0,0,0.6)'
             }}
           >
-            Crafting royal celebrations and unforgettable journeys across the globe
-          </Box>
+            Crafting royal celebrations and unforgettable journeys across the globe.
+          </Typography>
 
           {/* BUTTONS */}
 
@@ -178,12 +194,19 @@ export default function HeroSection() {
               <Button
                 variant="contained"
                 sx={{
-                  px: 5,
-                  py: 1.6,
+                  px: 6,
+                  py: 2.2,
                   borderRadius: 50,
-                  fontWeight: 600,
-                  background: themeConfig.colors.luxury,
-                  color: '#000'
+                  fontWeight: 800,
+                  fontSize: 17,
+                  background: '#D4AF37',
+                  color: '#000',
+                  boxShadow: '0 8px 30px rgba(212,175,55,0.35)',
+
+                  '&:hover': {
+                    background: '#E6C35C',
+                    transform: 'translateY(-3px)'
+                  }
                 }}
               >
                 Explore Events
@@ -194,14 +217,18 @@ export default function HeroSection() {
               <Button
                 variant="outlined"
                 sx={{
-                  px: 5,
-                  py: 1.6,
+                  px: 6,
+                  py: 2.2,
                   borderRadius: 50,
+                  fontWeight: 800,
+                  fontSize: 17,
                   color: '#fff',
-                  borderColor: '#fff',
+                  borderColor: 'rgba(255,255,255,0.7)',
+                  borderWidth: 2,
+
                   '&:hover': {
-                    borderColor: themeConfig.colors.luxury,
-                    color: themeConfig.colors.luxury
+                    borderColor: '#fff',
+                    background: 'rgba(255,255,255,0.12)'
                   }
                 }}
               >
@@ -209,6 +236,7 @@ export default function HeroSection() {
               </Button>
             </Link>
           </Box>
+
         </Box>
       </Container>
     </Box>
