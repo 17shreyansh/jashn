@@ -27,7 +27,7 @@ const itemVariants = {
   visible: {
     y: 0,
     opacity: 1,
-    transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }
+    transition: { duration: 0.9 }
   }
 }
 
@@ -108,26 +108,24 @@ export default function HeroSection() {
           pb: { xs: 10, md: 14 }
         }}
       >
-        <Box
-          component={motion.div}
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          maxWidth={650}
+          style={{ maxWidth: 650 }}
         >
 
           {/* TITLE */}
 
-          <Box
-            component={motion.h1}
+          <motion.h1
             variants={itemVariants}
-            sx={{
+            style={{
               fontFamily: themeConfig.fonts.heading,
               fontWeight: 900,
-              fontSize: { xs: 56, md: 110 },
+              fontSize: 'clamp(56px, 10vw, 110px)',
               lineHeight: 1.05,
-              m: 0,
-              mb: 2,
+              margin: 0,
+              marginBottom: 16,
               background: 'linear-gradient(90deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #FFA500 75%, #FFD700 100%)',
               backgroundSize: '200% auto',
               backgroundClip: 'text',
@@ -135,43 +133,37 @@ export default function HeroSection() {
               WebkitTextFillColor: 'transparent',
               letterSpacing: '-1px',
               animation: 'sparkle 3s linear infinite',
-              filter: 'drop-shadow(0 6px 30px rgba(255,215,0,0.8)) drop-shadow(0 2px 10px rgba(255,215,0,0.9))',
-              '@keyframes sparkle': {
-                '0%': { backgroundPosition: '0% center' },
-                '100%': { backgroundPosition: '200% center' }
-              }
+              filter: 'drop-shadow(0 6px 30px rgba(255,215,0,0.8)) drop-shadow(0 2px 10px rgba(255,215,0,0.9))'
             }}
           >
             Jashn Planners
-          </Box>
+          </motion.h1>
 
           {/* LABEL */}
 
-          <Box
-            component={motion.div}
+          <motion.div
             variants={itemVariants}
-            sx={{
+            style={{
               textTransform: 'uppercase',
               letterSpacing: '0.4em',
               fontSize: 22,
               fontWeight: 900,
               color: '#fff',
-              mb: 3,
+              marginBottom: 24,
               textShadow: '0 2px 10px rgba(0,0,0,0.5)'
             }}
           >
             Events & Holidays
-          </Box>
+          </motion.div>
 
           {/* TAGLINE */}
 
-          <Typography
-            component={motion.div}
+          <motion.p
             variants={itemVariants}
-            sx={{
-              fontSize: { xs: 22, md: 26 },
+            style={{
+              fontSize: 'clamp(22px, 3vw, 26px)',
               fontWeight: 800,
-              mb: 6,
+              marginBottom: 48,
               maxWidth: 560,
               color: '#fff',
               lineHeight: 1.7,
@@ -179,16 +171,13 @@ export default function HeroSection() {
             }}
           >
             Crafting royal celebrations and unforgettable journeys across the globe.
-          </Typography>
+          </motion.p>
 
           {/* BUTTONS */}
 
-          <Box
-            component={motion.div}
+          <motion.div
             variants={itemVariants}
-            display="flex"
-            gap={3}
-            flexWrap="wrap"
+            style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}
           >
             <Link href="/events" style={{ textDecoration: 'none' }}>
               <Button
@@ -235,9 +224,9 @@ export default function HeroSection() {
                 Discover Tours
               </Button>
             </Link>
-          </Box>
+          </motion.div>
 
-        </Box>
+        </motion.div>
       </Container>
     </Box>
   )
