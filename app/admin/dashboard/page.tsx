@@ -5,9 +5,10 @@ import { getCities } from '@/lib/services/cities'
 import { getPackages } from '@/lib/services/packages'
 import { getLeads } from '@/lib/services/leads'
 import { getGalleryStats } from '@/lib/services/gallery'
-import { Box, Typography, Stack, Chip } from '@mui/material'
+import { Box, Typography, Stack, Chip, Avatar, LinearProgress } from '@mui/material'
 import Card from '@/components/ui-new/Card'
-import { TrendingUp, Event, LocationCity, CardTravel, PhotoLibrary, Email, ArrowForward } from '@mui/icons-material'
+import StatsCard from '@/components/admin/StatsCard'
+import { Event, LocationCity, CardTravel, PhotoLibrary, Email, ArrowForward, Visibility, Star } from '@mui/icons-material'
 import { themeConfig } from '@/lib/config/theme'
 
 export default async function DashboardPage() {
@@ -20,81 +21,120 @@ export default async function DashboardPage() {
   ])
 
   const stats = [
-    { label: 'Total Events', value: events.length, icon: Event, color: themeConfig.colors.primary, change: '+12%' },
-    { label: 'Destinations', value: cities.length, icon: LocationCity, color: themeConfig.colors.secondary, change: '+8%' },
-    { label: 'Tour Packages', value: packages.length, icon: CardTravel, color: themeConfig.colors.accent1, change: '+15%' },
-    { label: 'Gallery Items', value: galleryStats.total, icon: PhotoLibrary, color: themeConfig.colors.luxury, change: '+20%' },
+    { label: 'Total Events', value: events.length, icon: Event, color: themeConfig.colors.primary, change: '+12%', trend: 'up' as const },
+    { label: 'Destinations', value: cities.length, icon: LocationCity, color: themeConfig.colors.secondary, change: '+8%', trend: 'up' as const },
+    { label: 'Tour Packages', value: packages.length, icon: CardTravel, color: '#f59e0b', change: '+15%', trend: 'up' as const },
+    { label: 'Gallery Items', value: galleryStats.total, icon: PhotoLibrary, color: themeConfig.colors.luxury, change: '+20%', trend: 'up' as const },
   ]
 
   const newLeads = leads.filter(l => l.status === 'new')
+  const featuredEvents = events.filter(e => e.featured)
 
   return (
     <Box>
-      <Box sx={{ mb: 4 }}>
-        <Typography sx={{ fontSize: '1.75rem', fontWeight: 700, color: themeConfig.colors.textDark, mb: 0.5 }}>Dashboard</Typography>
-        <Typography sx={{ color: themeConfig.colors.textLight }}>Welcome back! Here's what's happening.</Typography>
+      <Box sx={{ mb: 5 }}>
+        <Typography sx={{ fontSize: '2rem', fontWeight: 700, color: themeConfig.colors.textDark, mb: 1 }}>Dashboard Overview</Typography>
+        <Typography sx={{ color: themeConfig.colors.textLight, fontSize: '1rem' }}>Welcome back! Here's your business performance at a glance.</Typography>
       </Box>
 
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 3, mb: 4 }}>
-        {stats.map((stat) => {
-          const Icon = stat.icon
-          return (
-            <Card key={stat.label} sx={{ p: 3, bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3, transition: 'all 0.2s', '&:hover': { boxShadow: '0 4px 12px rgba(0,0,0,0.08)', transform: 'translateY(-2px)' } }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                <Box sx={{ width: 48, height: 48, borderRadius: 2, bgcolor: `${stat.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Icon sx={{ color: stat.color, fontSize: 24 }} />
-                </Box>
-                <Chip label={stat.change} size="small" sx={{ bgcolor: '#10b98115', color: '#10b981', fontWeight: 600, fontSize: '0.75rem', height: 24 }} icon={<TrendingUp sx={{ fontSize: 14 }} />} />
-              </Box>
-              <Typography sx={{ fontSize: '2rem', fontWeight: 700, color: themeConfig.colors.textDark, mb: 0.5 }}>{stat.value}</Typography>
-              <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight }}>{stat.label}</Typography>
-            </Card>
-          )
-        })}
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 3, mb: 5 }}>
+        {stats.map((stat) => (
+          <StatsCard key={stat.label} {...stat} />
+        ))}
       </Box>
 
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' }, gap: 3 }}>
-        <Card sx={{ p: 3, bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-            <Typography sx={{ fontSize: '1.125rem', fontWeight: 600, color: themeConfig.colors.textDark }}>Recent Leads</Typography>
-            <Chip label={`${newLeads.length} New`} size="small" color="error" sx={{ fontWeight: 600 }} />
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '1.5fr 1fr' }, gap: 3, mb: 4 }}>
+        <Card sx={{ p: 4, bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+            <Box>
+              <Typography sx={{ fontSize: '1.25rem', fontWeight: 600, color: themeConfig.colors.textDark }}>Recent Leads</Typography>
+              <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight, mt: 0.5 }}>Latest inquiries from customers</Typography>
+            </Box>
+            <Chip label={`${newLeads.length} New`} size="small" sx={{ bgcolor: '#ef444415', color: '#ef4444', fontWeight: 600, height: 28, fontSize: '0.8125rem' }} />
           </Box>
           <Stack spacing={0}>
-            {leads.slice(0, 6).map((lead, idx) => (
-              <Box key={lead._id.toString()} sx={{ py: 2.5, borderBottom: idx < 5 ? '1px solid #f3f4f6' : 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Box sx={{ flex: 1 }}>
+            {leads.slice(0, 5).map((lead, idx) => (
+              <Box key={lead._id.toString()} sx={{ py: 3, borderBottom: idx < 4 ? '1px solid #f3f4f6' : 'none', display: 'flex', gap: 2, alignItems: 'center' }}>
+                <Avatar sx={{ width: 44, height: 44, bgcolor: `${themeConfig.colors.primary}15`, color: themeConfig.colors.primary, fontWeight: 600, fontSize: '1rem' }}>
+                  {lead.name[0].toUpperCase()}
+                </Avatar>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                   <Typography sx={{ fontWeight: 600, fontSize: '0.9375rem', color: themeConfig.colors.textDark, mb: 0.5 }}>{lead.name}</Typography>
-                  <Typography sx={{ fontSize: '0.8125rem', color: themeConfig.colors.textLight }}>{lead.email}</Typography>
+                  <Typography sx={{ fontSize: '0.8125rem', color: themeConfig.colors.textLight, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{lead.email}</Typography>
                 </Box>
-                <Chip label={lead.status} size="small" sx={{ bgcolor: lead.status === 'new' ? '#fef3c7' : '#f3f4f6', color: lead.status === 'new' ? '#92400e' : themeConfig.colors.textLight, fontWeight: 600, fontSize: '0.75rem', textTransform: 'capitalize' }} />
+                <Chip label={lead.status} size="small" sx={{ bgcolor: lead.status === 'new' ? '#fef3c7' : '#f3f4f6', color: lead.status === 'new' ? '#92400e' : themeConfig.colors.textLight, fontWeight: 600, fontSize: '0.75rem', textTransform: 'capitalize', minWidth: 70 }} />
               </Box>
             ))}
           </Stack>
-          <Box component="a" href="/admin/leads" sx={{ mt: 3, pt: 3, borderTop: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', gap: 1, color: themeConfig.colors.primary, fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer', textDecoration: 'none', '&:hover': { gap: 1.5 }, transition: 'all 0.2s' }}>
+          <Box component="a" href="/admin/leads" sx={{ mt: 4, pt: 3, borderTop: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', gap: 1, color: themeConfig.colors.primary, fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer', textDecoration: 'none', '&:hover': { gap: 1.5 }, transition: 'all 0.2s' }}>
             View All Leads <ArrowForward sx={{ fontSize: 18 }} />
           </Box>
         </Card>
 
-        <Card sx={{ p: 3, bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3 }}>
-          <Typography sx={{ fontSize: '1.125rem', fontWeight: 600, color: themeConfig.colors.textDark, mb: 3 }}>Quick Actions</Typography>
+        <Card sx={{ p: 4, bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3 }}>
+          <Typography sx={{ fontSize: '1.25rem', fontWeight: 600, color: themeConfig.colors.textDark, mb: 1 }}>Quick Actions</Typography>
+          <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight, mb: 4 }}>Frequently used shortcuts</Typography>
           <Stack spacing={2}>
             {[
-              { href: '/admin/events/new', label: 'Create Event', icon: Event },
-              { href: '/admin/cities/new', label: 'Add City', icon: LocationCity },
-              { href: '/admin/packages/new', label: 'New Package', icon: CardTravel },
-              { href: '/admin/gallery', label: 'Upload Media', icon: PhotoLibrary },
+              { href: '/admin/events/new', label: 'Create Event', icon: Event, color: themeConfig.colors.primary },
+              { href: '/admin/cities/new', label: 'Add City', icon: LocationCity, color: themeConfig.colors.secondary },
+              { href: '/admin/packages/new', label: 'New Package', icon: CardTravel, color: '#f59e0b' },
+              { href: '/admin/gallery', label: 'Upload Media', icon: PhotoLibrary, color: themeConfig.colors.luxury },
             ].map((action) => {
               const Icon = action.icon
               return (
-                <Box key={action.href} component="a" href={action.href} sx={{ p: 2.5, bgcolor: '#f8f9fa', borderRadius: 2, display: 'flex', alignItems: 'center', gap: 2, transition: 'all 0.2s', '&:hover': { bgcolor: `${themeConfig.colors.primary}10`, transform: 'translateX(4px)' }, cursor: 'pointer', textDecoration: 'none' }}>
-                  <Box sx={{ width: 36, height: 36, borderRadius: 1.5, bgcolor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Icon sx={{ fontSize: 20, color: themeConfig.colors.primary }} />
+                <Box key={action.href} component="a" href={action.href} sx={{ p: 3, bgcolor: '#f8f9fa', borderRadius: 2.5, display: 'flex', alignItems: 'center', gap: 2.5, transition: 'all 0.3s', '&:hover': { bgcolor: `${action.color}10`, transform: 'translateX(6px)', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }, cursor: 'pointer', textDecoration: 'none' }}>
+                  <Box sx={{ width: 40, height: 40, borderRadius: 2, bgcolor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                    <Icon sx={{ fontSize: 22, color: action.color }} />
                   </Box>
-                  <Typography sx={{ fontWeight: 500, fontSize: '0.9375rem', color: themeConfig.colors.textDark }}>{action.label}</Typography>
-                  <ArrowForward sx={{ ml: 'auto', fontSize: 18, color: themeConfig.colors.textLight }} />
+                  <Typography sx={{ fontWeight: 600, fontSize: '0.9375rem', color: themeConfig.colors.textDark, flex: 1 }}>{action.label}</Typography>
+                  <ArrowForward sx={{ fontSize: 18, color: themeConfig.colors.textLight }} />
                 </Box>
               )
             })}
+          </Stack>
+        </Card>
+      </Box>
+
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: 'repeat(2, 1fr)' }, gap: 3 }}>
+        <Card sx={{ p: 4, bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3 }}>
+          <Typography sx={{ fontSize: '1.25rem', fontWeight: 600, color: themeConfig.colors.textDark, mb: 1 }}>Popular Events</Typography>
+          <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight, mb: 4 }}>Most viewed events this month</Typography>
+          <Stack spacing={3}>
+            {events.slice(0, 4).map((event) => (
+              <Box key={event._id.toString()} sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                <Avatar src={event.images[0]} variant="rounded" sx={{ width: 56, height: 56 }} />
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '0.9375rem', color: themeConfig.colors.textDark, mb: 0.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{event.title}</Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Visibility sx={{ fontSize: 14, color: themeConfig.colors.textLight }} />
+                    <Typography sx={{ fontSize: '0.8125rem', color: themeConfig.colors.textLight }}>1.2k views</Typography>
+                    {event.featured && <Star sx={{ fontSize: 14, color: '#f59e0b', ml: 1 }} />}
+                  </Box>
+                </Box>
+              </Box>
+            ))}
+          </Stack>
+        </Card>
+
+        <Card sx={{ p: 4, bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3 }}>
+          <Typography sx={{ fontSize: '1.25rem', fontWeight: 600, color: themeConfig.colors.textDark, mb: 1 }}>Content Status</Typography>
+          <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight, mb: 4 }}>Your content distribution</Typography>
+          <Stack spacing={3}>
+            {[
+              { label: 'Events', value: events.length, total: 50, color: themeConfig.colors.primary },
+              { label: 'Cities', value: cities.length, total: 30, color: themeConfig.colors.secondary },
+              { label: 'Packages', value: packages.length, total: 40, color: '#f59e0b' },
+              { label: 'Gallery', value: galleryStats.total, total: 200, color: themeConfig.colors.luxury },
+            ].map((item) => (
+              <Box key={item.label}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                  <Typography sx={{ fontSize: '0.875rem', fontWeight: 600, color: themeConfig.colors.textDark }}>{item.label}</Typography>
+                  <Typography sx={{ fontSize: '0.875rem', fontWeight: 600, color: themeConfig.colors.textLight }}>{item.value}/{item.total}</Typography>
+                </Box>
+                <LinearProgress variant="determinate" value={(item.value / item.total) * 100} sx={{ height: 8, borderRadius: 4, bgcolor: '#f3f4f6', '& .MuiLinearProgress-bar': { bgcolor: item.color, borderRadius: 4 } }} />
+              </Box>
+            ))}
           </Stack>
         </Card>
       </Box>
