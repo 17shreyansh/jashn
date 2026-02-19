@@ -5,7 +5,11 @@ export async function uploadToCloudinary(
 ): Promise<{ url: string; publicId: string } | null> {
   try {
     // Get signature from server
-    const signRes = await fetch('/api/cloudinary/signature', { method: 'POST' })
+    const signRes = await fetch('/api/cloudinary/signature', { 
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ folder })
+    })
     
     if (!signRes.ok) {
       const error = await signRes.json()
@@ -13,6 +17,8 @@ export async function uploadToCloudinary(
     }
 
     const { timestamp, signature, cloudName, apiKey } = await signRes.json()
+
+    console.log('Uploading to:', cloudName, 'with API key:', apiKey)
 
     // Upload to Cloudinary
     const formData = new FormData()
@@ -28,7 +34,9 @@ export async function uploadToCloudinary(
     )
 
     if (!uploadRes.ok) {
-      throw new Error('Upload to Cloudinary failed')
+      const errorData = await uploadRes.json().catch(() => ({}))
+      console.error('Cloudinary response:', uploadRes.status, errorData)
+      throw new Error(errorData.error?.message || `Upload failed: ${uploadRes.status} - Check credentials`)
     }
 
     const data = await uploadRes.json()

@@ -6,13 +6,13 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-export async function getSignature() {
+export async function getSignature(folder: string = 'jashn') {
   const timestamp = Math.round(new Date().getTime() / 1000)
   const signature = cloudinary.utils.api_sign_request(
-    { timestamp, folder: 'jashn' },
+    { timestamp, folder },
     process.env.CLOUDINARY_API_SECRET!
   )
-  return { timestamp, signature }
+  return { timestamp, signature, folder }
 }
 
 export async function deleteImage(publicId: string) {
