@@ -77,17 +77,17 @@ export default function PackagesClient({ packages }: { packages: any[] }) {
   ]
 
   return (
-    <div style={{ padding: 24 }}>
-      <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ padding: '16px' }}>
+      <div style={{ marginBottom: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div>
           <h1 style={{ fontSize: 28, fontWeight: 700, margin: 0, marginBottom: 8 }}>Packages Management</h1>
           <p style={{ color: '#666', margin: 0 }}>Manage tour packages and itineraries</p>
         </div>
-        <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => router.push('/admin/packages/new')}>Add Package</Button>
+        <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => router.push('/admin/packages/new')} block style={{ maxWidth: 300 }}>Add Package</Button>
       </div>
       <Card>
-        <Input.Search placeholder="Search packages..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ marginBottom: 16, maxWidth: 400 }} size="large" />
-        <Table columns={columns} dataSource={filteredPackages} rowKey="_id" pagination={{ pageSize: 10 }} />
+        <Input.Search placeholder="Search packages..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ marginBottom: 16 }} size="large" />
+        <Table columns={columns} dataSource={filteredPackages} rowKey="_id" pagination={{ pageSize: 10 }} scroll={{ x: 800 }} />
       </Card>
     </div>
   )

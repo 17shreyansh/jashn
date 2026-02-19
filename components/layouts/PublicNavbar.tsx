@@ -53,8 +53,8 @@ export default function PublicNavbar() {
             
             {/* Luxury Logo */}
             <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-              <Box component={motion.div} whileHover={{ scale: 1.05 }}>
-                <Image src="/logo.png" alt="Jashn Planners" width={300} height={100} style={{ height: '120px', width: 'auto'}} />
+              <Box component={motion.div} whileHover={{ scale: 1.05 }} sx={{ position: 'relative', width: { xs: 150, md: 200, lg: 250 }, height: { xs: 50, md: 70, lg: 90 } }}>
+                <Image src="/logo.png" alt="Jashn Planners" fill style={{ objectFit: 'contain' }} priority />
               </Box>
             </Link>
 

@@ -114,8 +114,8 @@ export default function EventsClient({ events }: { events: any[] }) {
   ]
 
   return (
-    <div style={{ padding: 24 }}>
-      <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ padding: '16px' }}>
+      <div style={{ marginBottom: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div>
           <h1 style={{ fontSize: 28, fontWeight: 700, margin: 0, marginBottom: 8 }}>Events Management</h1>
           <p style={{ color: '#666', margin: 0 }}>Manage your event portfolio and showcase</p>
@@ -125,6 +125,8 @@ export default function EventsClient({ events }: { events: any[] }) {
           icon={<PlusOutlined />}
           size="large"
           onClick={() => router.push('/admin/events/new')}
+          block
+          style={{ maxWidth: 300 }}
         >
           Create Event
         </Button>
@@ -135,7 +137,7 @@ export default function EventsClient({ events }: { events: any[] }) {
           placeholder="Search events..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ marginBottom: 16, maxWidth: 400 }}
+          style={{ marginBottom: 16 }}
           size="large"
         />
         <Table
@@ -143,6 +145,7 @@ export default function EventsClient({ events }: { events: any[] }) {
           dataSource={filteredEvents}
           rowKey="_id"
           pagination={{ pageSize: 10 }}
+          scroll={{ x: 800 }}
         />
       </Card>
     </div>

@@ -71,17 +71,17 @@ export default function CitiesClient({ cities }: { cities: any[] }) {
   ]
 
   return (
-    <div style={{ padding: 24 }}>
-      <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ padding: '16px' }}>
+      <div style={{ marginBottom: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div>
           <h1 style={{ fontSize: 28, fontWeight: 700, margin: 0, marginBottom: 8 }}>Cities Management</h1>
           <p style={{ color: '#666', margin: 0 }}>Manage travel destinations and city guides</p>
         </div>
-        <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => router.push('/admin/cities/new')}>Add City</Button>
+        <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => router.push('/admin/cities/new')} block style={{ maxWidth: 300 }}>Add City</Button>
       </div>
       <Card>
-        <Input.Search placeholder="Search cities..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ marginBottom: 16, maxWidth: 400 }} size="large" />
-        <Table columns={columns} dataSource={filteredCities} rowKey="_id" pagination={{ pageSize: 10 }} />
+        <Input.Search placeholder="Search cities..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ marginBottom: 16 }} size="large" />
+        <Table columns={columns} dataSource={filteredCities} rowKey="_id" pagination={{ pageSize: 10 }} scroll={{ x: 800 }} />
       </Card>
     </div>
   )

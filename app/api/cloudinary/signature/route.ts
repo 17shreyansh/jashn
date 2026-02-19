@@ -29,10 +29,10 @@ export async function POST(request: Request) {
       cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
       apiKey: process.env.CLOUDINARY_API_KEY,
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Cloudinary signature error:', error)
     return NextResponse.json({ 
-      error: 'Failed to generate signature. Check server logs.' 
+      error: error?.message || 'Failed to generate signature' 
     }, { status: 500 })
   }
 }

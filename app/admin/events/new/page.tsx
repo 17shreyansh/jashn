@@ -14,17 +14,21 @@ export default function NewEventPage() {
   const [fileList, setFileList] = useState<UploadFile[]>([])
 
   const uploadToCloudinary = async (file: File): Promise<string> => {
-    const signRes = await fetch('/api/cloudinary/signature', { method: 'POST' })
+    const signRes = await fetch('/api/cloudinary/signature', { 
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ folder: 'jashn/events' })
+    })
     if (!signRes.ok) throw new Error('Failed to get signature')
     
-    const { timestamp, signature, cloudName, apiKey } = await signRes.json()
+    const { timestamp, signature, cloudName, apiKey, folder } = await signRes.json()
     
     const formData = new FormData()
     formData.append('file', file)
     formData.append('timestamp', timestamp.toString())
     formData.append('signature', signature)
     formData.append('api_key', apiKey)
-    formData.append('folder', 'jashn/events')
+    formData.append('folder', folder)
     
     const uploadRes = await fetch(
       `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
@@ -82,7 +86,7 @@ export default function NewEventPage() {
   }
 
   return (
-    <div style={{ padding: 24 }}>
+    <div style={{ padding: '8px' }}>
       <Card title="Create New Event" bordered={false}>
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={{ featured: false }}>
           <Form.Item label="Event Title" name="title" rules={[{ required: true, message: 'Required' }]}>

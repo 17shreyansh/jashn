@@ -48,14 +48,14 @@ export default function HeroSection() {
       ref={ref}
       sx={{
         position: 'relative',
-        height: '100vh',
-        minHeight: 800,
+        height: { xs: '100svh', md: '100vh' },
+        minHeight: { xs: 600, md: 800 },
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#1a0505', // Deep brown fallback
-        color: '#fff' // FORCE ALL TEXT WHITE BY DEFAULT
+        background: '#1a0505',
+        color: '#fff'
       }}
     >
       {/* 1. PARALLAX BACKGROUND IMAGE */}

@@ -22,16 +22,20 @@ export default function CityEditForm({ city }: { city: any }) {
     setUploading(true)
     setError('')
     try {
-      const res = await fetch('/api/cloudinary/signature', { method: 'POST' })
+      const res = await fetch('/api/cloudinary/signature', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ folder: 'jashn/cities' })
+      })
       if (!res.ok) throw new Error('Cloudinary not configured')
       
-      const { timestamp, signature, cloudName, apiKey } = await res.json()
+      const { timestamp, signature, cloudName, apiKey, folder } = await res.json()
       const formData = new FormData()
       formData.append('file', file)
       formData.append('timestamp', timestamp)
       formData.append('signature', signature)
       formData.append('api_key', apiKey)
-      formData.append('folder', 'jashn')
+      formData.append('folder', folder)
 
       const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: 'POST',
