@@ -1,129 +1,150 @@
 'use client'
 
-import { Box, Typography, Button, Chip, Avatar, Tabs, Tab, TextField, InputAdornment } from '@mui/material'
-import Card from '@/components/ui-new/Card'
-import DataTable from '@/components/admin/DataTable'
-import { Add, Star, Search } from '@mui/icons-material'
-import { themeConfig } from '@/lib/config/theme'
 import { useState } from 'react'
+import { Table, Button, Space, Tag, Image, Input, Card, Popconfirm, message } from 'antd'
+import { PlusOutlined, EditOutlined, DeleteOutlined, EyeOutlined, StarOutlined, StarFilled } from '@ant-design/icons'
+import { useRouter } from 'next/navigation'
 
 export default function EventsClient({ events }: { events: any[] }) {
-  const [tab, setTab] = useState(0)
+  const router = useRouter()
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState<string | null>(null)
 
-  const filteredEvents = events.filter(e => {
-    const matchesSearch = e.title.toLowerCase().includes(search.toLowerCase())
-    if (tab === 1) return matchesSearch && e.featured
-    if (tab === 2) return matchesSearch && !e.featured
-    return matchesSearch
-  })
+  const filteredEvents = events.filter(e => 
+    e.title.toLowerCase().includes(search.toLowerCase())
+  )
+
+  const handleDelete = async (id: string) => {
+    setLoading(id)
+    try {
+      const res = await fetch(`/api/events?id=${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error('Failed to delete')
+      message.success('Event deleted')
+      router.refresh()
+    } catch (error) {
+      message.error('Failed to delete event')
+    } finally {
+      setLoading(null)
+    }
+  }
 
   const columns = [
     {
-      id: 'event',
-      label: 'Event',
-      render: (row: any) => (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Avatar src={row.images[0]} variant="rounded" sx={{ width: 64, height: 64 }} />
-          <Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-              <Typography sx={{ fontWeight: 600, fontSize: '0.9375rem', color: themeConfig.colors.textDark }}>{row.title}</Typography>
-              {row.featured && <Star sx={{ fontSize: 16, color: '#f59e0b' }} />}
-            </Box>
-            <Typography sx={{ fontSize: '0.8125rem', color: themeConfig.colors.textLight }}>{row.shortDescription.slice(0, 60)}...</Typography>
-          </Box>
-        </Box>
+      title: 'Event',
+      dataIndex: 'title',
+      key: 'title',
+      render: (_: any, record: any) => (
+        <Space>
+          <Image
+            src={record.images[0] || '/placeholder.jpg'}
+            alt={record.title}
+            width={60}
+            height={60}
+            style={{ objectFit: 'cover', borderRadius: 8 }}
+            preview={false}
+          />
+          <div>
+            <div style={{ fontWeight: 600, marginBottom: 4 }}>
+              {record.title}
+              {record.featured && <StarFilled style={{ color: '#faad14', marginLeft: 8 }} />}
+            </div>
+            <div style={{ fontSize: 12, color: '#666' }}>
+              {record.shortDescription?.slice(0, 60)}...
+            </div>
+          </div>
+        </Space>
       ),
     },
     {
-      id: 'tags',
-      label: 'Tags',
-      render: (row: any) => (
-        <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', maxWidth: 200 }}>
-          {row.tags.slice(0, 2).map((tag: string) => <Chip key={tag} label={tag} size="small" sx={{ fontSize: '0.75rem', height: 24 }} />)}
-          {row.tags.length > 2 && <Chip label={`+${row.tags.length - 2}`} size="small" sx={{ fontSize: '0.75rem', height: 24 }} />}
-        </Box>
+      title: 'Tags',
+      dataIndex: 'tags',
+      key: 'tags',
+      render: (tags: string[]) => (
+        <>
+          {tags?.slice(0, 3).map(tag => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+          {tags?.length > 3 && <Tag>+{tags.length - 3}</Tag>}
+        </>
       ),
     },
     {
-      id: 'status',
-      label: 'Status',
-      render: (row: any) => (
-        <Chip
-          label={row.featured ? 'Featured' : 'Active'}
-          size="small"
-          sx={{ bgcolor: row.featured ? '#fef3c7' : '#dbeafe', color: row.featured ? '#92400e' : '#1e40af', fontWeight: 600, fontSize: '0.75rem' }}
-        />
+      title: 'Status',
+      key: 'status',
+      render: (_: any, record: any) => (
+        <Tag color={record.featured ? 'gold' : 'blue'}>
+          {record.featured ? 'Featured' : 'Active'}
+        </Tag>
       ),
     },
     {
-      id: 'created',
-      label: 'Created',
-      render: (row: any) => (
-        <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight }}>
-          {new Date(row.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-        </Typography>
+      title: 'Created',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (date: string) => new Date(date).toLocaleDateString(),
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_: any, record: any) => (
+        <Space>
+          <Button
+            icon={<EyeOutlined />}
+            onClick={() => window.open(`/events/${record.slug}`, '_blank')}
+          />
+          <Button
+            icon={<EditOutlined />}
+            onClick={() => router.push(`/admin/events/${record._id}`)}
+          />
+          <Popconfirm
+            title="Delete this event?"
+            onConfirm={() => handleDelete(record._id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button
+              icon={<DeleteOutlined />}
+              danger
+              loading={loading === record._id}
+            />
+          </Popconfirm>
+        </Space>
       ),
     },
   ]
-
-  const actions = [
-    { label: 'View', value: 'view' },
-    { label: 'Edit', value: 'edit' },
-    { label: 'Toggle Featured', value: 'feature' },
-    { label: 'Delete', value: 'delete' },
-  ]
-
-  const handleAction = (action: string, row: any) => {
-    if (action === 'view') window.open(`/events/${row.slug}`, '_blank')
-    if (action === 'edit') window.location.href = `/admin/events/${row._id}`
-  }
 
   return (
-    <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
-        <Box>
-          <Typography sx={{ fontSize: '2rem', fontWeight: 700, color: themeConfig.colors.textDark, mb: 1 }}>Events Management</Typography>
-          <Typography sx={{ color: themeConfig.colors.textLight, fontSize: '1rem' }}>Manage your event portfolio and showcase</Typography>
-        </Box>
-        <Button href="/admin/events/new" variant="contained" startIcon={<Add />} sx={{ bgcolor: themeConfig.colors.black, px: 3, py: 1.5, fontSize: '0.9375rem', fontWeight: 600, '&:hover': { bgcolor: themeConfig.colors.primary } }}>Create Event</Button>
-      </Box>
+    <div style={{ padding: 24 }}>
+      <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h1 style={{ fontSize: 28, fontWeight: 700, margin: 0, marginBottom: 8 }}>Events Management</h1>
+          <p style={{ color: '#666', margin: 0 }}>Manage your event portfolio and showcase</p>
+        </div>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          size="large"
+          onClick={() => router.push('/admin/events/new')}
+        >
+          Create Event
+        </Button>
+      </div>
 
-      {events.length === 0 ? (
-        <Card sx={{ p: 10, textAlign: 'center', bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3 }}>
-          <Box sx={{ width: 80, height: 80, borderRadius: '50%', bgcolor: `${themeConfig.colors.primary}10`, display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 3 }}>
-            <Add sx={{ fontSize: 40, color: themeConfig.colors.primary }} />
-          </Box>
-          <Typography sx={{ fontSize: '1.25rem', fontWeight: 600, color: themeConfig.colors.textDark, mb: 1 }}>No events yet</Typography>
-          <Typography sx={{ color: themeConfig.colors.textLight, mb: 4, maxWidth: 400, mx: 'auto' }}>Create your first event to start showcasing your services to potential clients</Typography>
-          <Button href="/admin/events/new" variant="contained" startIcon={<Add />} sx={{ bgcolor: themeConfig.colors.black, px: 4, py: 1.5 }}>Create Your First Event</Button>
-        </Card>
-      ) : (
-        <Card sx={{ bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3, overflow: 'hidden', p: 3 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-            <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ '& .MuiTab-root': { textTransform: 'none', fontWeight: 600, fontSize: '0.9375rem' } }}>
-              <Tab label={`All (${events.length})`} />
-              <Tab label={`Featured (${events.filter(e => e.featured).length})`} />
-              <Tab label={`Regular (${events.filter(e => !e.featured).length})`} />
-            </Tabs>
-            <TextField
-              placeholder="Search events..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              size="small"
-              sx={{ width: 300 }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search fontSize="small" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
-          <DataTable columns={columns} data={filteredEvents} actions={actions} onRowAction={handleAction} searchable={false} />
-        </Card>
-      )}
-    </Box>
+      <Card>
+        <Input.Search
+          placeholder="Search events..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{ marginBottom: 16, maxWidth: 400 }}
+          size="large"
+        />
+        <Table
+          columns={columns}
+          dataSource={filteredEvents}
+          rowKey="_id"
+          pagination={{ pageSize: 10 }}
+        />
+      </Card>
+    </div>
   )
 }

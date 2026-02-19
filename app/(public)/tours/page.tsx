@@ -26,7 +26,7 @@ export default async function ToursPage() {
         bgcolor: themeConfig.colors.black,
         position: 'relative',
         overflow: 'hidden',
-        pt: '100px'
+        pt: { xs: '100px', lg: '120px' }
       }}>
         <Box sx={{ 
           position: 'absolute',

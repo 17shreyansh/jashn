@@ -1,117 +1,88 @@
 'use client'
 
 import { useState } from 'react'
-import { Box, Typography, Button, Chip, Avatar, TextField, InputAdornment } from '@mui/material'
-import Card from '@/components/ui-new/Card'
-import DataTable from '@/components/admin/DataTable'
-import { Add, LocationCity, Search, Star } from '@mui/icons-material'
-import { themeConfig } from '@/lib/config/theme'
+import { Table, Button, Space, Tag, Image, Input, Card, Popconfirm, message } from 'antd'
+import { PlusOutlined, EditOutlined, DeleteOutlined, EyeOutlined, StarFilled } from '@ant-design/icons'
+import { useRouter } from 'next/navigation'
 
 export default function CitiesClient({ cities }: { cities: any[] }) {
+  const router = useRouter()
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState<string | null>(null)
 
   const filteredCities = cities.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
 
-  const columns = [
-    {
-      id: 'city',
-      label: 'City',
-      render: (row: any) => (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Avatar src={row.bannerImage} variant="rounded" sx={{ width: 64, height: 64 }} />
-          <Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-              <Typography sx={{ fontWeight: 600, fontSize: '0.9375rem', color: themeConfig.colors.textDark }}>{row.name}</Typography>
-              {row.featured && <Star sx={{ fontSize: 16, color: '#f59e0b' }} />}
-            </Box>
-            <Typography sx={{ fontSize: '0.8125rem', color: themeConfig.colors.textLight }}>{row.description.slice(0, 60)}...</Typography>
-          </Box>
-        </Box>
-      ),
-    },
-    {
-      id: 'highlights',
-      label: 'Highlights',
-      render: (row: any) => (
-        <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight }}>
-          {row.highlights?.length || 0} items
-        </Typography>
-      ),
-    },
-    {
-      id: 'gallery',
-      label: 'Gallery',
-      render: (row: any) => (
-        <Typography sx={{ fontSize: '0.875rem', color: themeConfig.colors.textLight }}>
-          {row.galleryImages?.length || 0} images
-        </Typography>
-      ),
-    },
-    {
-      id: 'status',
-      label: 'Status',
-      render: (row: any) => (
-        <Chip
-          label={row.featured ? 'Featured' : 'Active'}
-          size="small"
-          sx={{ bgcolor: row.featured ? '#fef3c7' : '#dbeafe', color: row.featured ? '#92400e' : '#1e40af', fontWeight: 600, fontSize: '0.75rem' }}
-        />
-      ),
-    },
-  ]
-
-  const actions = [
-    { label: 'View', value: 'view' },
-    { label: 'Edit', value: 'edit' },
-    { label: 'Toggle Featured', value: 'feature' },
-    { label: 'Delete', value: 'delete' },
-  ]
-
-  const handleAction = (action: string, row: any) => {
-    if (action === 'view') window.open(`/cities/${row.slug}`, '_blank')
-    if (action === 'edit') window.location.href = `/admin/cities/${row._id}`
+  const handleDelete = async (id: string) => {
+    setLoading(id)
+    try {
+      const res = await fetch(`/api/cities?id=${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error('Failed to delete')
+      message.success('City deleted')
+      router.refresh()
+    } catch (error) {
+      message.error('Failed to delete city')
+    } finally {
+      setLoading(null)
+    }
   }
 
-  return (
-    <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
-        <Box>
-          <Typography sx={{ fontSize: '2rem', fontWeight: 700, color: themeConfig.colors.textDark, mb: 1 }}>Cities Management</Typography>
-          <Typography sx={{ color: themeConfig.colors.textLight, fontSize: '1rem' }}>Manage travel destinations and city guides</Typography>
-        </Box>
-        <Button href="/admin/cities/new" variant="contained" startIcon={<Add />} sx={{ bgcolor: themeConfig.colors.black, px: 3, py: 1.5, fontSize: '0.9375rem', fontWeight: 600, '&:hover': { bgcolor: themeConfig.colors.primary } }}>Add City</Button>
-      </Box>
+  const columns = [
+    {
+      title: 'City',
+      dataIndex: 'name',
+      key: 'name',
+      render: (_: any, record: any) => (
+        <Space>
+          <Image src={record.bannerImage || '/placeholder.jpg'} alt={record.name} width={60} height={60} style={{ objectFit: 'cover', borderRadius: 8 }} preview={false} />
+          <div>
+            <div style={{ fontWeight: 600, marginBottom: 4 }}>
+              {record.name}
+              {record.featured && <StarFilled style={{ color: '#faad14', marginLeft: 8 }} />}
+            </div>
+            <div style={{ fontSize: 12, color: '#666' }}>{record.description?.slice(0, 60)}...</div>
+          </div>
+        </Space>
+      ),
+    },
+    {
+      title: 'Gallery',
+      dataIndex: 'gallery',
+      key: 'gallery',
+      render: (gallery: string[]) => <span>{gallery?.length || 0} images</span>,
+    },
+    {
+      title: 'Status',
+      key: 'status',
+      render: (_: any, record: any) => <Tag color={record.featured ? 'gold' : 'blue'}>{record.featured ? 'Featured' : 'Active'}</Tag>,
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_: any, record: any) => (
+        <Space>
+          <Button icon={<EyeOutlined />} onClick={() => window.open(`/cities/${record.slug}`, '_blank')} />
+          <Button icon={<EditOutlined />} onClick={() => router.push(`/admin/cities/${record._id}`)} />
+          <Popconfirm title="Delete this city?" onConfirm={() => handleDelete(record._id)} okText="Yes" cancelText="No">
+            <Button icon={<DeleteOutlined />} danger loading={loading === record._id} />
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ]
 
-      {cities.length === 0 ? (
-        <Card sx={{ p: 10, textAlign: 'center', bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3 }}>
-          <Box sx={{ width: 80, height: 80, borderRadius: '50%', bgcolor: `${themeConfig.colors.secondary}10`, display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 3 }}>
-            <LocationCity sx={{ fontSize: 40, color: themeConfig.colors.secondary }} />
-          </Box>
-          <Typography sx={{ fontSize: '1.25rem', fontWeight: 600, color: themeConfig.colors.textDark, mb: 1 }}>No cities yet</Typography>
-          <Typography sx={{ color: themeConfig.colors.textLight, mb: 4, maxWidth: 400, mx: 'auto' }}>Add your first destination to showcase travel packages</Typography>
-          <Button href="/admin/cities/new" variant="contained" startIcon={<Add />} sx={{ bgcolor: themeConfig.colors.black, px: 4, py: 1.5 }}>Add Your First City</Button>
-        </Card>
-      ) : (
-        <Card sx={{ bgcolor: 'white', border: '1px solid #e5e7eb', borderRadius: 3, overflow: 'hidden', p: 3 }}>
-          <Box sx={{ mb: 3 }}>
-            <TextField
-              placeholder="Search cities..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              size="small"
-              sx={{ width: 400 }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search fontSize="small" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
-          <DataTable columns={columns} data={filteredCities} actions={actions} onRowAction={handleAction} searchable={false} />
-        </Card>
-      )}
-    </Box>
+  return (
+    <div style={{ padding: 24 }}>
+      <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h1 style={{ fontSize: 28, fontWeight: 700, margin: 0, marginBottom: 8 }}>Cities Management</h1>
+          <p style={{ color: '#666', margin: 0 }}>Manage travel destinations and city guides</p>
+        </div>
+        <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => router.push('/admin/cities/new')}>Add City</Button>
+      </div>
+      <Card>
+        <Input.Search placeholder="Search cities..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ marginBottom: 16, maxWidth: 400 }} size="large" />
+        <Table columns={columns} dataSource={filteredCities} rowKey="_id" pagination={{ pageSize: 10 }} />
+      </Card>
+    </div>
   )
 }

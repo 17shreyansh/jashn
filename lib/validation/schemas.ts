@@ -5,15 +5,9 @@ export const eventSchema = z.object({
   slug: z.string().min(3).regex(/^[a-z0-9-]+$/),
   description: z.string().min(20),
   shortDescription: z.string().min(10).max(200),
-  images: z.array(z.string().url()).default([]),
-  videos: z.array(z.string().url()).default([]),
+  images: z.array(z.string()).default([]),
+  videos: z.array(z.string()).default([]),
   tags: z.array(z.string()).default([]),
-  pricingEnabled: z.boolean().default(false),
-  basePrice: z.number().min(0).optional(),
-  addons: z.array(z.object({
-    name: z.string().min(1),
-    price: z.number().min(0),
-  })).default([]),
   featured: z.boolean().default(false),
 })
 

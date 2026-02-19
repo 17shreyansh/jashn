@@ -23,7 +23,7 @@ export default function AboutPage() {
         bgcolor: themeConfig.colors.black,
         position: 'relative',
         overflow: 'hidden',
-        pt: '100px'
+        pt: { xs: '100px', lg: '120px' }
       }}>
         <Box sx={{ 
           position: 'absolute',
