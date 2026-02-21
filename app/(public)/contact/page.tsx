@@ -247,7 +247,7 @@ export default function ContactPage() {
                       </Box>
                       <Box>
                         <Typography sx={{ fontSize: '1rem', color: themeConfig.colors.textLight, mb: 0.5, fontWeight: 600 }}>Email</Typography>
-                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.125rem' }}>info@jashnplanners.com</Typography>
+                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.05rem' }}>jashnplanners786@gmail.com</Typography>
                       </Box>
                     </Box>
                     <Box sx={{ display: 'flex', gap: 2.5, alignItems: 'flex-start' }}>
@@ -265,7 +265,8 @@ export default function ContactPage() {
                       </Box>
                       <Box>
                         <Typography sx={{ fontSize: '1rem', color: themeConfig.colors.textLight, mb: 0.5, fontWeight: 600 }}>Phone</Typography>
-                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.125rem' }}>+91 98765 43210</Typography>
+                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.05rem' }}>+91 9027761524</Typography>
+                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.05rem' }}>+91 9368223339</Typography>
                       </Box>
                     </Box>
                     <Box sx={{ display: 'flex', gap: 2.5, alignItems: 'flex-start' }}>
@@ -282,8 +283,26 @@ export default function ContactPage() {
                         <LocationOnIcon sx={{ color: themeConfig.colors.luxury, fontSize: 24 }} />
                       </Box>
                       <Box>
-                        <Typography sx={{ fontSize: '1rem', color: themeConfig.colors.textLight, mb: 0.5, fontWeight: 600 }}>Address</Typography>
-                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.125rem' }}>123 Event Street, Mumbai, India</Typography>
+                        <Typography sx={{ fontSize: '1rem', color: themeConfig.colors.textLight, mb: 0.5, fontWeight: 600 }}>Office Address</Typography>
+                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.05rem', lineHeight: 1.6 }}>Opp Mughal Pulia, Near ITC 5 Star Hotel, Fatehabad Road, Agra, UP 282001</Typography>
+                      </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', gap: 2.5, alignItems: 'flex-start' }}>
+                      <Box sx={{ 
+                        width: 48, 
+                        height: 48, 
+                        borderRadius: '12px',
+                        bgcolor: `${themeConfig.colors.luxury}15`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        <LocationOnIcon sx={{ color: themeConfig.colors.luxury, fontSize: 24 }} />
+                      </Box>
+                      <Box>
+                        <Typography sx={{ fontSize: '1rem', color: themeConfig.colors.textLight, mb: 0.5, fontWeight: 600 }}>Permanent Address</Typography>
+                        <Typography sx={{ fontWeight: 700, color: themeConfig.colors.textDark, fontSize: '1.05rem', lineHeight: 1.6 }}>28/35 Panni Gali, Kashmiri Bazar, Agra, UP 282003</Typography>
                       </Box>
                     </Box>
                   </Box>

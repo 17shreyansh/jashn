@@ -127,67 +127,76 @@ export default function HeroSection() {
           }}
         >
           
+          {/* MAIN HEADLINE */}
+          <motion.h1
+  variants={itemVariants}
+  style={{
+    margin: 0,
+    fontFamily: themeConfig?.fonts?.heading || 'Cinzel, serif',
+    fontWeight: 700,
+    fontSize: 'clamp(64px, 14vw, 140px)',
+    lineHeight: 0.95,
+    letterSpacing: '-0.03em',
+    marginBottom: '24px'
+  }}
+>
+  {/* CLEAN GOLD TEXT */}
+  <span
+    style={{
+      background: 'linear-gradient(180deg, #F5E6A8 0%, #D4AF37 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      letterSpacing: '-0.02em'
+    }}
+  >
+    Jashn
+  </span>{' '}
+
+  {/* CONTRAST TEXT */}
+  <span
+    style={{
+      fontStyle: 'italic',
+      fontWeight: 400,
+      color: 'rgba(255,255,255,0.9)',
+      letterSpacing: '0.02em'
+    }}
+  >
+    Planners
+  </span>
+</motion.h1>
+
           {/* SUPERTITLE */}
           <motion.div variants={itemVariants}>
             <Typography
               variant="subtitle1"
               sx={{
-                color: '#FFD700', // Gold Text
-                fontSize: 'clamp(14px, 2vw, 18px)',
-                letterSpacing: '0.4em',
-                fontWeight: 700,
+                color: '#FFD700',
+                fontSize: 'clamp(16px, 2.5vw, 22px)',
+                letterSpacing: '0.5em',
+                fontWeight: 800,
                 textTransform: 'uppercase',
-                mb: 3,
-                textShadow: '0 2px 20px rgba(0,0,0,0.9)',
+                mb: 4,
+                textShadow: '0 3px 25px rgba(255,215,0,0.6), 0 2px 10px rgba(0,0,0,0.9)',
                 display: 'inline-block',
-                borderBottom: '1px solid rgba(255, 215, 0, 0.6)',
-                pb: 1
+                borderBottom: '2px solid rgba(255, 215, 0, 0.8)',
+                pb: 1.5
               }}
             >
               Events & Holidays
             </Typography>
           </motion.div>
 
-          {/* MAIN HEADLINE */}
-          <motion.h1
-            variants={itemVariants}
-            style={{
-              margin: 0,
-              fontFamily: themeConfig?.fonts?.heading || 'serif',
-              fontWeight: 800,
-              fontSize: 'clamp(56px, 13vw, 130px)',
-              lineHeight: 1,
-              letterSpacing: '-0.03em',
-              color: '#fff',
-              marginBottom: '32px',
-              textShadow: '0 4px 30px rgba(0,0,0,0.7)' // Heavy shadow for contrast against sun
-            }}
-          >
-            {/* Gradient Text for "Jashn" - White to Gold */}
-            <span style={{ 
-              background: 'linear-gradient(180deg, #FFFFFF 30%, #FFC107 100%)', 
-              WebkitBackgroundClip: 'text', 
-              WebkitTextFillColor: 'transparent',
-              filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
-            }}>
-              Jashn
-            </span>{' '}
-            <span style={{ fontStyle: 'italic', fontWeight: 300, opacity: 0.95 }}>
-              Planners
-            </span>
-          </motion.h1>
-
           {/* SUBTEXT */}
           <motion.p
             variants={itemVariants}
             style={{
-              fontSize: 'clamp(18px, 2.5vw, 24px)',
-              fontWeight: 400,
-              color: '#fff', // Pure White
-              maxWidth: 680,
-              margin: '0 auto 56px auto',
-              lineHeight: 1.6,
-              textShadow: '0 2px 10px rgba(0,0,0,0.9)' // Strong shadow ensures readability
+              fontSize: 'clamp(20px, 3vw, 28px)',
+              fontWeight: 500,
+              color: '#FFFFFF',
+              maxWidth: 750,
+              margin: '0 auto 48px auto',
+              lineHeight: 1.7,
+              textShadow: '0 3px 15px rgba(0,0,0,0.95), 0 1px 5px rgba(0,0,0,0.8)'
             }}
           >
             Crafting royal celebrations and unforgettable journeys amidst the world&apos;s timeless wonders.

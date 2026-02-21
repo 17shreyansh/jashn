@@ -122,11 +122,17 @@ export default function PublicFooter() {
                 Contact Info
               </Typography>
               <Stack spacing={1.5}>
-                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', fontWeight: 600 }}>
-                  Email: hello@jashn.com
+                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem', fontWeight: 600 }}>
+                  Email: jashnplanners786@gmail.com
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', fontWeight: 600 }}>
-                  Phone: +1 (555) 123-4567
+                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem', fontWeight: 600 }}>
+                  Phone: +91 9027761524, +91 9368223339
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem', fontWeight: 600, lineHeight: 1.6 }}>
+                  Office: Opp Mughal Pulia, Near ITC 5 Star Hotel, Fatehabad Road, Agra, UP 282001
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem', fontWeight: 600, lineHeight: 1.6 }}>
+                  Permanent: 28/35 Panni Gali, Kashmiri Bazar, Agra, UP 282003
                 </Typography>
               </Stack>
             </Box>

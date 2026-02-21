@@ -180,11 +180,7 @@ export default function ServicesSection() {
                     fontWeight: 800
                   }}
                 >
-                  {service.title.split(' ').map((word, i) => (
-                    <span key={i} style={{ display: 'block' }}>
-                      {word}
-                    </span>
-                  ))}
+                  {service.title}
                 </Typography>
 
                 <AnimatePresence>
