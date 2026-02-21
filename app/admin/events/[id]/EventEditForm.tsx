@@ -73,6 +73,7 @@ export default function EventEditForm({ event }: { event: any }) {
         ...values,
         images: imageUrls,
         tags: values.tags || [],
+        featured: values.featured || false,
       }
 
       const res = await fetch(`/api/events?id=${event._id}`, {
@@ -81,12 +82,14 @@ export default function EventEditForm({ event }: { event: any }) {
         body: JSON.stringify(payload),
       })
 
-      if (!res.ok) throw new Error('Failed to update event')
+      const data = await res.json()
+      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to update event')
       
       message.success('Event updated successfully')
       router.push('/admin/events')
-    } catch (error) {
-      message.error('Failed to update event')
+      router.refresh()
+    } catch (error: any) {
+      message.error(error.message || 'Failed to update event')
     } finally {
       setLoading(false)
     }

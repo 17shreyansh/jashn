@@ -15,8 +15,8 @@ export const citySchema = z.object({
   name: z.string().min(2),
   slug: z.string().min(2).regex(/^[a-z0-9-]+$/),
   description: z.string().min(20),
-  bannerImage: z.string().url(),
-  gallery: z.array(z.string().url()).default([]),
+  bannerImage: z.string().min(1),
+  gallery: z.array(z.string()).default([]),
   featured: z.boolean().default(false),
 })
 
@@ -26,7 +26,7 @@ export const packageSchema = z.object({
   cityId: z.string().min(1),
   description: z.string().min(20),
   duration: z.string().min(1),
-  images: z.array(z.string().url()).default([]),
+  images: z.array(z.string()).default([]),
   pricingEnabled: z.boolean().default(false),
   price: z.number().min(0).optional(),
   itinerary: z.array(z.object({
@@ -55,8 +55,8 @@ export const gallerySchema = z.object({
   title: z.string().min(3),
   type: z.enum(['events', 'tours']),
   mediaType: z.enum(['image', 'video']),
-  url: z.string().url(),
-  thumbnail: z.string().url().optional(),
+  url: z.string().min(1),
+  thumbnail: z.string().optional(),
   description: z.string().optional(),
   featured: z.boolean().default(false),
   order: z.number().default(0),

@@ -72,16 +72,24 @@ export default function AdminGalleryPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!form.url || !form.title) {
+      setError('Title and media file are required')
+      return
+    }
     try {
-      const res = await fetch('/api/gallery', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
+      const res = await fetch('/api/gallery', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify(form) 
+      })
       const data = await res.json()
-      if (data.success) {
-        setItems(prev => [data.data, ...prev])
-        setShowUpload(false)
-        setForm({ title: '', type: 'events', mediaType: 'image', url: '', thumbnail: '', description: '', featured: false, order: 0 })
-      }
-    } catch (error) {
-      alert('Failed to add item')
+      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to add item')
+      setItems(prev => [data.data, ...prev])
+      setShowUpload(false)
+      setForm({ title: '', type: 'events', mediaType: 'image', url: '', thumbnail: '', description: '', featured: false, order: 0 })
+      setError('')
+    } catch (error: any) {
+      setError(error.message || 'Failed to add item')
     }
   }
 
@@ -89,19 +97,26 @@ export default function AdminGalleryPage() {
     if (!confirm('Delete this item?')) return
     try {
       const res = await fetch(`/api/gallery?id=${id}`, { method: 'DELETE' })
-      if (res.ok) setItems(prev => prev.filter(item => item._id !== id))
-    } catch (error) {
-      alert('Failed to delete')
+      const data = await res.json()
+      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to delete')
+      setItems(prev => prev.filter(item => item._id !== id))
+    } catch (error: any) {
+      alert(error.message || 'Failed to delete')
     }
   }
 
   const toggleFeatured = async (item: GalleryItem) => {
     try {
-      const res = await fetch('/api/gallery', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: item._id, featured: !item.featured }) })
+      const res = await fetch('/api/gallery', { 
+        method: 'PATCH', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ id: item._id, featured: !item.featured }) 
+      })
       const data = await res.json()
-      if (data.success) setItems(prev => prev.map(i => i._id === item._id ? data.data : i))
-    } catch (error) {
-      alert('Failed to update')
+      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to update')
+      setItems(prev => prev.map(i => i._id === item._id ? data.data : i))
+    } catch (error: any) {
+      alert(error.message || 'Failed to update')
     }
   }
 

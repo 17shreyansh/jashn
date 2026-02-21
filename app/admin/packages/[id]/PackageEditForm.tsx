@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { updatePackage, deletePackage } from '@/lib/actions/packages'
 import { useRouter } from 'next/navigation'
 import { Box, TextField, Typography, Stack, IconButton, Alert, Switch, FormControlLabel, MenuItem, Chip } from '@mui/material'
 import { Button } from '@/components/ui/Button'
@@ -85,19 +84,49 @@ export default function PackageEditForm({ pkg }: { pkg: any }) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    formData.set('images', images.join(','))
-    formData.set('included', included.join(','))
-    formData.set('excluded', excluded.join(','))
-    formData.set('pricingEnabled', pricingEnabled.toString())
-    await updatePackage(pkg._id, formData)
-    router.push('/admin/packages')
+    setError('')
+    try {
+      const formData = new FormData(e.currentTarget)
+      const payload = {
+        title: formData.get('title'),
+        slug: formData.get('slug'),
+        cityId: formData.get('cityId'),
+        description: formData.get('description'),
+        duration: formData.get('duration'),
+        images: images,
+        included: included,
+        excluded: excluded,
+        pricingEnabled: pricingEnabled,
+        price: pricingEnabled ? Number(formData.get('price')) : undefined,
+      }
+
+      const res = await fetch(`/api/packages?id=${pkg._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+
+      const data = await res.json()
+      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to update package')
+      
+      router.push('/admin/packages')
+      router.refresh()
+    } catch (err: any) {
+      setError(err.message || 'Failed to update package')
+    }
   }
 
   async function handleDelete() {
     if (confirm('Delete this package?')) {
-      await deletePackage(pkg._id)
-      router.push('/admin/packages')
+      try {
+        const res = await fetch(`/api/packages?id=${pkg._id}`, { method: 'DELETE' })
+        const data = await res.json()
+        if (!res.ok || !data.success) throw new Error(data.error || 'Failed to delete')
+        router.push('/admin/packages')
+        router.refresh()
+      } catch (err: any) {
+        setError(err.message || 'Failed to delete package')
+      }
     }
   }
 

@@ -42,8 +42,12 @@ export async function PUT(request: NextRequest) {
     }
     const body = await request.json()
     const event = await updateEvent(id, body)
+    if (!event) {
+      return NextResponse.json({ success: false, error: 'Event not found' }, { status: 404 })
+    }
     return NextResponse.json({ success: true, data: event })
   } catch (error: any) {
+    console.error('Update event error:', error)
     return NextResponse.json({ success: false, error: error.message || 'Failed to update' }, { status: 400 })
   }
 }

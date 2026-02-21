@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { updateCity, deleteCity } from '@/lib/actions/cities'
 import { useRouter } from 'next/navigation'
 import { Box, TextField, Typography, Stack, IconButton, Alert } from '@mui/material'
 import { Button } from '@/components/ui/Button'
@@ -70,17 +69,44 @@ export default function CityEditForm({ city }: { city: any }) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    formData.set('bannerImage', bannerImage)
-    formData.set('gallery', gallery.join(','))
-    await updateCity(city._id, formData)
-    router.push('/admin/cities')
+    setError('')
+    try {
+      const formData = new FormData(e.currentTarget)
+      const payload = {
+        name: formData.get('name'),
+        slug: formData.get('slug'),
+        description: formData.get('description'),
+        bannerImage: bannerImage,
+        gallery: gallery,
+      }
+
+      const res = await fetch(`/api/cities?id=${city._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+
+      const data = await res.json()
+      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to update city')
+      
+      router.push('/admin/cities')
+      router.refresh()
+    } catch (err: any) {
+      setError(err.message || 'Failed to update city')
+    }
   }
 
   async function handleDelete() {
     if (confirm('Delete this city?')) {
-      await deleteCity(city._id)
-      router.push('/admin/cities')
+      try {
+        const res = await fetch(`/api/cities?id=${city._id}`, { method: 'DELETE' })
+        const data = await res.json()
+        if (!res.ok || !data.success) throw new Error(data.error || 'Failed to delete')
+        router.push('/admin/cities')
+        router.refresh()
+      } catch (err: any) {
+        setError(err.message || 'Failed to delete city')
+      }
     }
   }
 

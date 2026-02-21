@@ -42,8 +42,12 @@ export async function PUT(request: NextRequest) {
     }
     const body = await request.json()
     const city = await updateCity(id, body)
+    if (!city) {
+      return NextResponse.json({ success: false, error: 'City not found' }, { status: 404 })
+    }
     return NextResponse.json({ success: true, data: city })
   } catch (error: any) {
+    console.error('Update city error:', error)
     return NextResponse.json({ success: false, error: error.message || 'Failed to update' }, { status: 400 })
   }
 }

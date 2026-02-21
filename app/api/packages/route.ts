@@ -42,8 +42,12 @@ export async function PUT(request: NextRequest) {
     }
     const body = await request.json()
     const pkg = await updatePackage(id, body)
+    if (!pkg) {
+      return NextResponse.json({ success: false, error: 'Package not found' }, { status: 404 })
+    }
     return NextResponse.json({ success: true, data: pkg })
   } catch (error: any) {
+    console.error('Update package error:', error)
     return NextResponse.json({ success: false, error: error.message || 'Failed to update' }, { status: 400 })
   }
 }
