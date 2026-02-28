@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { leadSchema } from '@/lib/validation/schemas'
-import { createLead, getLeads, deleteLead } from '@/lib/services/leads'
+import { createLead, getLeads, deleteLead, updateLeadStatus } from '@/lib/services/leads'
 import { auth } from '@/lib/auth/auth'
 
 export async function GET() {
@@ -44,5 +44,32 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (error) {
     return NextResponse.json({ success: false, error: 'Failed to delete lead' }, { status: 500 })
+  }
+}
+
+export async function PATCH(request: NextRequest) {
+  const session = await auth()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    if (!id) {
+      return NextResponse.json({ success: false, error: 'ID required' }, { status: 400 })
+    }
+    
+    const body = await request.json()
+    const { status } = body
+    
+    if (!status || !['new', 'contacted', 'converted', 'closed'].includes(status)) {
+      return NextResponse.json({ success: false, error: 'Invalid status' }, { status: 400 })
+    }
+    
+    const lead = await updateLeadStatus(id, status)
+    return NextResponse.json({ success: true, data: lead })
+  } catch (error) {
+    return NextResponse.json({ success: false, error: 'Failed to update lead' }, { status: 500 })
   }
 }

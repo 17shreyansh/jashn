@@ -140,10 +140,9 @@ const StatBlock = ({ label, value, suffix, index, total }: any) => {
 
 export default function StatsSection() {
   const stats = [
-    { label: 'Events Curated', value: 500, suffix: '+' },
-    { label: 'Royal Clients', value: 1000, suffix: '+' },
-    { label: 'Global Destinations', value: 50, suffix: '+' },
-    { label: 'Years Legacy', value: 15, suffix: '' }
+    { label: 'Years Legacy', value: 5, suffix: '' },
+    { label: 'Royal Clients', value: 500, suffix: '' },
+    { label: 'Events Curated', value: 50, suffix: '+' }
   ]
 
   return (

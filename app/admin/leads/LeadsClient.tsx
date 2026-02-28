@@ -1,15 +1,20 @@
 'use client'
 
 import { useState } from 'react'
-import { Box, Typography, Chip, Avatar, Tabs, Tab, Dialog, DialogTitle, DialogContent, IconButton, Divider } from '@mui/material'
+import { Box, Typography, Chip, Avatar, Tabs, Tab, Dialog, DialogTitle, DialogContent, IconButton, Divider, Snackbar, Alert, CircularProgress } from '@mui/material'
 import Card from '@/components/ui-new/Card'
 import DataTable from '@/components/admin/DataTable'
 import { Email, CheckCircle, Phone, Message, CalendarToday, Close } from '@mui/icons-material'
 import { themeConfig } from '@/lib/config/theme'
+import { useRouter } from 'next/navigation'
 
-export default function LeadsClient({ leads }: { leads: any[] }) {
+export default function LeadsClient({ leads: initialLeads }: { leads: any[] }) {
+  const router = useRouter()
+  const [leads, setLeads] = useState(initialLeads)
   const [tab, setTab] = useState(0)
   const [selectedLead, setSelectedLead] = useState<any>(null)
+  const [loading, setLoading] = useState(false)
+  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({ open: false, message: '', severity: 'success' })
 
   const filteredLeads = leads.filter(lead => {
     if (tab === 1) return lead.status === 'new'
@@ -92,8 +97,56 @@ export default function LeadsClient({ leads }: { leads: any[] }) {
     { label: 'Delete', value: 'delete' },
   ]
 
-  const handleAction = (action: string, row: any) => {
-    if (action === 'view') setSelectedLead(row)
+  const handleAction = async (action: string, row: any) => {
+    if (action === 'view') {
+      setSelectedLead(row)
+      return
+    }
+
+    if (action === 'delete') {
+      if (!confirm('Are you sure you want to delete this lead?')) return
+      
+      setLoading(true)
+      try {
+        const res = await fetch(`/api/leads?id=${row._id}`, { method: 'DELETE' })
+        const data = await res.json()
+        
+        if (data.success) {
+          setLeads(leads.filter(l => l._id !== row._id))
+          setSnackbar({ open: true, message: 'Lead deleted successfully', severity: 'success' })
+        } else {
+          throw new Error(data.error)
+        }
+      } catch (error: any) {
+        setSnackbar({ open: true, message: error.message || 'Failed to delete lead', severity: 'error' })
+      } finally {
+        setLoading(false)
+      }
+      return
+    }
+
+    if (action === 'contacted' || action === 'converted') {
+      setLoading(true)
+      try {
+        const res = await fetch(`/api/leads?id=${row._id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: action })
+        })
+        const data = await res.json()
+        
+        if (data.success) {
+          setLeads(leads.map(l => l._id === row._id ? { ...l, status: action } : l))
+          setSnackbar({ open: true, message: `Lead marked as ${action}`, severity: 'success' })
+        } else {
+          throw new Error(data.error)
+        }
+      } catch (error: any) {
+        setSnackbar({ open: true, message: error.message || 'Failed to update lead', severity: 'error' })
+      } finally {
+        setLoading(false)
+      }
+    }
   }
 
   const newLeads = leads.filter(l => l.status === 'new').length
@@ -218,6 +271,23 @@ export default function LeadsClient({ leads }: { leads: any[] }) {
           </>
         )}
       </Dialog>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert severity={snackbar.severity} onClose={() => setSnackbar({ ...snackbar, open: false })}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+
+      {loading && (
+        <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+          <CircularProgress sx={{ color: themeConfig.colors.primary }} />
+        </Box>
+      )}
     </Box>
   )
 }
