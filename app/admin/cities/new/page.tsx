@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Form, Input, Button, Upload, message, Card, Space } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import type { UploadFile } from 'antd'
+import { uploadToCloudinary } from '@/lib/utils/upload'
 
 export default function NewCityPage() {
   const router = useRouter()
@@ -15,47 +16,27 @@ export default function NewCityPage() {
   const [bannerFile, setBannerFile] = useState<UploadFile[]>([])
   const [galleryFiles, setGalleryFiles] = useState<UploadFile[]>([])
 
-  const uploadToCloudinary = async (file: File): Promise<string> => {
-    const signRes = await fetch('/api/cloudinary/signature', { 
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ folder: 'jashn/cities' })
-    })
-    if (!signRes.ok) throw new Error('Failed to get signature')
-    const { timestamp, signature, cloudName, apiKey, folder } = await signRes.json()
-    const formData = new FormData()
-    formData.append('file', file)
-    formData.append('timestamp', timestamp.toString())
-    formData.append('signature', signature)
-    formData.append('api_key', apiKey)
-    formData.append('folder', folder)
-    const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, { method: 'POST', body: formData })
-    if (!uploadRes.ok) throw new Error('Upload failed')
-    const data = await uploadRes.json()
-    return data.secure_url
-  }
-
   const handleBannerUpload = async ({ file, onSuccess, onError }: any) => {
     try {
-      const url = await uploadToCloudinary(file)
+      const url = await uploadToCloudinary(file, 'jashn/cities')
       setBannerUrl(url)
       onSuccess(url)
       message.success('Banner uploaded')
-    } catch (error) {
+    } catch (error: any) {
       onError(error)
-      message.error('Upload failed')
+      message.error(error.message || 'Upload failed')
     }
   }
 
   const handleGalleryUpload = async ({ file, onSuccess, onError }: any) => {
     try {
-      const url = await uploadToCloudinary(file)
+      const url = await uploadToCloudinary(file, 'jashn/cities')
       setGalleryUrls(prev => [...prev, url])
       onSuccess(url)
       message.success('Image uploaded')
-    } catch (error) {
+    } catch (error: any) {
       onError(error)
-      message.error('Upload failed')
+      message.error(error.message || 'Upload failed')
     }
   }
 

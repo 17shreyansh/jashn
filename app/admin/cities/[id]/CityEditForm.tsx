@@ -7,8 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { themeConfig } from '@/lib/config/theme'
 import { Delete, CloudUpload, Close } from '@mui/icons-material'
 import Card from '@/components/ui-new/Card'
-import { compressImage } from '@/lib/utils/imageCompression'
-import { fileToBase64 } from '@/lib/utils/base64'
+import { uploadToCloudinary } from '@/lib/utils/upload'
 
 export default function CityEditForm({ city }: { city: any }) {
   const router = useRouter()
@@ -21,31 +20,11 @@ export default function CityEditForm({ city }: { city: any }) {
     setUploading(true)
     setError('')
     try {
-      const res = await fetch('/api/cloudinary/signature', { 
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ folder: 'jashn/cities' })
-      })
-      if (!res.ok) throw new Error('Cloudinary not configured')
-      
-      const { timestamp, signature, cloudName, apiKey, folder } = await res.json()
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('timestamp', timestamp)
-      formData.append('signature', signature)
-      formData.append('api_key', apiKey)
-      formData.append('folder', folder)
-
-      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-        method: 'POST',
-        body: formData,
-      })
-      const data = await uploadRes.json()
-      return data.secure_url
-    } catch (err) {
-      const sizeMB = file.size / 1024 / 1024
-      const processedFile = sizeMB > 1 ? await compressImage(file, 1) : file
-      return await fileToBase64(processedFile)
+      const url = await uploadToCloudinary(file, 'jashn/cities')
+      return url
+    } catch (err: any) {
+      setError(err.message || 'Failed to upload image')
+      return null
     } finally {
       setUploading(false)
     }
@@ -53,10 +32,10 @@ export default function CityEditForm({ city }: { city: any }) {
 
   async function handleBannerUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
-    if (file) {
-      const url = await uploadImage(file)
-      if (url) setBannerImage(url)
-    }
+    if (!file) return
+    const url = await uploadImage(file)
+    if (url) setBannerImage(url)
+    e.target.value = ''
   }
 
   async function handleGalleryUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -65,6 +44,7 @@ export default function CityEditForm({ city }: { city: any }) {
       const url = await uploadImage(file)
       if (url) setGallery(prev => [...prev, url])
     }
+    e.target.value = ''
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
