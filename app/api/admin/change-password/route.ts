@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth/auth'
+import { auth } from '@/lib/auth/auth'
 import { connectDB } from '@/lib/db/mongodb'
 import { getAdmin } from '@/lib/db/models'
 import bcrypt from 'bcryptjs'
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
+    const session = await auth()
     
     if (!session?.user?.email) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
