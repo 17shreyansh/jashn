@@ -110,12 +110,12 @@ export default function CityEditForm({ city }: { city: any }) {
                 </IconButton>
               </Box>
             )}
-            <Box component="label">
-              <Button variant="secondary" disabled={uploading}>
+            <input type="file" hidden accept="image/*" onChange={handleBannerUpload} id="banner-upload" />
+            <label htmlFor="banner-upload">
+              <Button variant="secondary" disabled={uploading} component="span">
                 <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Upload Banner'}
               </Button>
-              <input type="file" hidden accept="image/*" onChange={handleBannerUpload} />
-            </Box>
+            </label>
           </Box>
 
           <Box>
@@ -130,12 +130,12 @@ export default function CityEditForm({ city }: { city: any }) {
                 </Box>
               ))}
             </Box>
-            <Box component="label">
-              <Button variant="secondary" disabled={uploading}>
+            <input type="file" hidden accept="image/*" multiple onChange={handleGalleryUpload} id="gallery-upload" />
+            <label htmlFor="gallery-upload">
+              <Button variant="secondary" disabled={uploading} component="span">
                 <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Add Images'}
               </Button>
-              <input type="file" hidden accept="image/*" multiple onChange={handleGalleryUpload} />
-            </Box>
+            </label>
           </Box>
 
           <Box sx={{ display: 'flex', gap: 2, pt: 2 }}>
