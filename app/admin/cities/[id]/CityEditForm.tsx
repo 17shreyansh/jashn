@@ -111,10 +111,12 @@ export default function CityEditForm({ city }: { city: any }) {
               </Box>
             )}
             <input type="file" hidden accept="image/*" onChange={handleBannerUpload} id="banner-upload" />
-            <label htmlFor="banner-upload">
-              <Button variant="secondary" disabled={uploading} component="span">
-                <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Upload Banner'}
-              </Button>
+            <label htmlFor="banner-upload" style={{ cursor: uploading ? 'not-allowed' : 'pointer' }}>
+              <Box sx={{ display: 'inline-block', pointerEvents: uploading ? 'none' : 'auto', opacity: uploading ? 0.6 : 1 }}>
+                <Button variant="secondary" disabled={uploading} sx={{ pointerEvents: 'none' }}>
+                  <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Upload Banner'}
+                </Button>
+              </Box>
             </label>
           </Box>
 
@@ -131,10 +133,12 @@ export default function CityEditForm({ city }: { city: any }) {
               ))}
             </Box>
             <input type="file" hidden accept="image/*" multiple onChange={handleGalleryUpload} id="gallery-upload" />
-            <label htmlFor="gallery-upload">
-              <Button variant="secondary" disabled={uploading} component="span">
-                <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Add Images'}
-              </Button>
+            <label htmlFor="gallery-upload" style={{ cursor: uploading ? 'not-allowed' : 'pointer' }}>
+              <Box sx={{ display: 'inline-block', pointerEvents: uploading ? 'none' : 'auto', opacity: uploading ? 0.6 : 1 }}>
+                <Button variant="secondary" disabled={uploading} sx={{ pointerEvents: 'none' }}>
+                  <CloudUpload sx={{ mr: 1 }} /> {uploading ? 'Uploading...' : 'Add Images'}
+                </Button>
+              </Box>
             </label>
           </Box>
 
